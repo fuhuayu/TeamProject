@@ -42,7 +42,8 @@ public class CrabCatcherGameTest {
 	
 	@Test
 	public void setupAndEndTest(){
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 3);
+		Animal[] animals = new Animal[3];
+		CrabCatcherGame game = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3);
 		
 		//check if we make all the animals on start
 		game.startGame();
@@ -60,11 +61,7 @@ public class CrabCatcherGameTest {
 		game.addAnimal(crab);
 		game.addAnimal(mittencrab);
 		game.addAnimal(fish);
-		
-		MouseEvent clickCrab = new MouseEvent(null, MouseEvent.MOUSE_CLICKED, 0, 0, 1, 1, 0, false);
-		MouseEvent clickFish = new MouseEvent(null, MouseEvent.MOUSE_CLICKED, 0, 0, 2, 2, 0, false);
-		MouseEvent clickMittenCrab = new MouseEvent(null, MouseEvent.MOUSE_CLICKED, 0, 0, 3, 3, 0, false);
-		MouseEvent clickNothing = new MouseEvent(null, MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, 0, false);
+
 		
 		//check if getAnimalClicked returns correct animal
 		assertEquals("get animal clicked: should be crab", crab, game.getAnimalClicked(1, 1));
@@ -75,24 +72,24 @@ public class CrabCatcherGameTest {
 		
 		//check if clicking animals effects score
 		//mitten crab increase by 5
-		game.onClick(clickMittenCrab);
+		game.onClickTest(3,3);
 		assertEquals("on click mitten crab: game score should increase to 5", 5, game.getScore());
 		
 		//fish decrease by 3
-		game.onClick(clickFish);
+		game.onClickTest(2,2);
 		assertEquals("on click fish: game score should decrease to 2", 2, game.getScore());
 		
 		//score should not be negative
-		game.onClick(clickCrab);
+		game.onClickTest(1,1);
 		assertEquals("on click crab: game score should decrease to 0 (non-negative)", 0, game.getScore());
 		
 		//mitten crab decrease by 5
 		game.setScore(10);
-		game.onClick(clickCrab);
+		game.onClickTest(1,1);
 		assertEquals("on click crab: game score should decrease to 5", 5, game.getScore());	
 		
 		//click nothing
-		game.onClick(clickCrab);
+		game.onClickTest(0,0);
 		assertEquals("on click nothing: game score should stay at 5", 5, game.getScore());	
 	}
 		

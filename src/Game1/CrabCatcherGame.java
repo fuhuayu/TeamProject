@@ -57,6 +57,10 @@ public class CrabCatcherGame {
 		//call regenerateAnimal() and add animal's scoreEffect to game score (not going below 0)
 	}
 	
+	public void onClickTest(int x, int y){	
+		//does same as onClick, but for testing this just takes x and y
+	}
+	
 	public Animal getAnimalClicked(int x, int y){
 		//return the animal if user clicked animal (mouseXY == animalXY), else return null;
 		return null;
@@ -80,7 +84,7 @@ public class CrabCatcherGame {
 		public void setSpeed(double speed) {
 		}
 		public Animal[] getAnimals() {
-			return null;
+			return new Animal[0];
 		}
 		public void setAnimals(Animal[] animals) {
 		}
