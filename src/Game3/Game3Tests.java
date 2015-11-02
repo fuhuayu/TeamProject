@@ -1,6 +1,7 @@
 package Game3;
 import static org.junit.Assert.*;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -31,36 +32,38 @@ public class Game3Tests {
 		testGame.addPlant(1, 1, "Grass");
 		testGame.addRunoff(1, 3);
 		testGame.update(); //runoff will move next to plant
-		//Score will go up by 1, money will go up by 1, time will go down by 1
+		//Score will go up by 1, money will go up by 1
 		assertEquals(testGame.getScore(), 1);
 		assertEquals(testGame.getMoney(), 101);
-		assertEquals(testGame.getTime(), 299.0);
 		assertEquals(testGame.getRunoff().get(0).getCol(), 2);
-		testGame.update(); //Plant and Runoff should fight now and stay in the same position
+		testGame.update(); 
+		//Plant and Runoff should fight now and stay in the same position
 		assertEquals(testGame.getScore(), 2);
 		assertEquals(testGame.getMoney(), 102);
-		assertEquals(testGame.getTime(), 298.0);
 		assertEquals(testGame.getRunoff().get(0).getHealth(), 7);
 		assertEquals(testGame.getPlants().get(0).getHealth(), 8);
 		assertEquals(testGame.getRunoff().get(0).getCol(), 2);
 	}
 
 	@Test
-	public void testUseMenu() {
+	public void testonClick() {
 		OverallGame testBigGame = new OverallGame();
 		Game3 testGame = new Game3(testBigGame) ;
-		testGame.useMenu() ; //Simulate player input of placing grass at 1,1
+		MouseEvent e = new MouseEvent(null, 0, 0, 0, 1, 1, 1, false);
+		testGame.onClick(e) ; //Simulate player input of placing grass at 1,1
 		Plant testPlant = new Plant(1,1,"Grass")  ; 
 		assertEquals(testGame.getPlants().get(0), testPlant);
 		//Simulate the addition of another plant
-		testGame.useMenu() ;
+		MouseEvent e2 = new MouseEvent(null, 0, 0, 0, 2, 1, 1, false);
+		testGame.onClick(e2) ;
 		Plant testPlant2 = new Plant(2,1,"Grass") ;
 		ArrayList<Plant> testPlants = new ArrayList<Plant>() ;
 		testPlants.add(testPlant) ; testPlants.add(testPlant2);
 		assertEquals(testGame.getPlants(),testPlants);
 		//Simulate the player exiting the game
-		testGame.useMenu() ;
-		assertEquals(testGame.getTime(), 0 ); //Exiting the game means setting time to zero and updating AS OF NOW
+		MouseEvent e3 = new MouseEvent(null, 0, 0, 0, 99, 99, 1, false);
+		testGame.onClick(e3) ;
+		assertTrue( testGame.getGameEnded() ); //Exiting the game means setting time to zero and updating AS OF NOW
 	}
 
 	@Test

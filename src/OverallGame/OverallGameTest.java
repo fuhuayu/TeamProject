@@ -14,7 +14,7 @@ public class OverallGameTest {
 		assertEquals(testGame.getOverallScore(), 0);
 		boolean [] testGamesComplete = {false, false, false};
 		assertEquals(testGame.getGamesComplete(), testGamesComplete);
-		assertEquals(testGame.getTimeInIdle(), 0);
+		assertEquals(testGame.getTimeInIdle(), 0); //OK Because set at 0 initially
 	}
 
 	@Test

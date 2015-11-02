@@ -1,4 +1,5 @@
 package Game3;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import OverallGame.OverallGame;
@@ -55,11 +56,12 @@ public class Game3 {
 	public void update() {} ;
 	
 	/**
-	 * If the player clicks the menu icon, the game stops updating
-	 * and the player is given time to exit the game or buy a plant
-	 * If the player chooses to buy a plant they will choose a plant type and location and call addPlant
+	 * If the player clicks on a plant to buy, this will prompt the player to place the plant
+	 * If the player clicks on a Mussel, the mussel is harvested for money and a new mussel appears
+	 * If the player clicks on the exit button, the game will pause and prompt them to exit
+	 * WITHOUT sending the score or setting the game complete boolean to true
 	 */
-	public void useMenu() {} ;
+	public void onClick(MouseEvent e) {} ;
 	
 	/**
 	 * Adds a plant to the current game from a player choice in a menu screen
