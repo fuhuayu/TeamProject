@@ -21,6 +21,8 @@ public class Crab extends MovingObject {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	
+	public void update(){
+		
+	}
 
 }
