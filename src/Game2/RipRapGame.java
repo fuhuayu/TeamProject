@@ -1,8 +1,11 @@
 package Game2;
 
+import OverallGame.OverallGame;
+
 public class RipRapGame {
 	int score;
 	int time;
+	private OverallGame bigGame;
 	
 	public RipRapGame(int score, int time) {
 		this.score = score;
