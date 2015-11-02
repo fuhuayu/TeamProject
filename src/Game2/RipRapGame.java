@@ -10,6 +10,7 @@ public class RipRapGame {
 	public RipRapGame(int score, int time) {
 		this.score = score;
 		this.time = time;
+		initGame();
 	}
 	public void addScore(int s){
 		score+=s;
