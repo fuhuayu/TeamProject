@@ -6,15 +6,21 @@ import java.awt.Point;
 
 import org.junit.Test;
 
+import Game2.Crab;
 import Game2.MovingObject;
 
 public class TestMovingObject {
 
 	@Test
-	public void test() {
+	public void testMovingObject() {
 		MovingObject m=new MovingObject(0, 0, 0);
 		assertEquals(new Point(0,0),m.getPosition());
 		assertEquals(0,m.getSize());
 	}
-
+	@Test
+	public void testCrab(){
+		Crab c=new Crab(0, 0, 0);
+		c.update();
+		assertEquals(new Point(1,1),c.getPosition());
+	}
 }
