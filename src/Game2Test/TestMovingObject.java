@@ -12,12 +12,9 @@ public class TestMovingObject {
 
 	@Test
 	public void test() {
-		//test constructor
 		MovingObject m=new MovingObject(0, 0, 0);
 		assertEquals(new Point(0,0),m.getPosition());
-
 		assertEquals(0,m.getSize());
-
 	}
 
 }
