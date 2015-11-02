@@ -5,11 +5,14 @@ import java.awt.event.MouseEvent;
 
 import org.junit.Test;
 
+import OverallGame.OverallGame;
+
 
 public class CrabCatcherGameTest {	
 	@Test
 	public void tickTest(){
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5);
+		OverallGame bigGame = new OverallGame();
+		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, bigGame);
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
 		game.addAnimal(crab);
 		
@@ -43,7 +46,7 @@ public class CrabCatcherGameTest {
 	@Test
 	public void setupAndEndTest(){
 		Animal[] animals = new Animal[3];
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3);
+		CrabCatcherGame game = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, new OverallGame());
 		
 		//check if we make all the animals on start
 		game.startGame();
@@ -54,7 +57,7 @@ public class CrabCatcherGameTest {
 	
 	@Test
 	public void mouseInputTest(){
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5);
+		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, new OverallGame());
 		Animal crab = new Animal(1, 1, "crab", -5, 3, true);
 		Animal fish = new Animal(2, 2, "fish", -3, 3, true);
 		Animal mittencrab = new Animal(3, 3, "mittencrab", 5, 3, true);

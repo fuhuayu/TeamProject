@@ -2,6 +2,8 @@ package Game1;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import OverallGame.OverallGame;
+
 
 public class CrabCatcherGame {
 	//FIELDS
@@ -14,11 +16,12 @@ public class CrabCatcherGame {
 	private MouseListener mouseListener;
 	private int maxAnimalsOnScreen; 
 	private boolean gameOver = false;
+	private OverallGame bigGame;
 
 	//CONSTRUCTOR
 	public CrabCatcherGame(double time, double speed, Animal[] animals,
 			int score, int lives, double gameLength,
-			MouseListener mouseListener, int maxAnimals) {
+			MouseListener mouseListener, int maxAnimals, OverallGame bigGame){
 	}
 	
 	
@@ -128,6 +131,15 @@ public class CrabCatcherGame {
 
 		public void setGameOver(boolean gameOver) {
 			this.gameOver = gameOver;
+		}
+
+
+		public OverallGame getBigGame() {
+			return null;
+		}
+
+
+		public void setBigGame(OverallGame bigGame) {
 		}
 	
 
