@@ -1,33 +1,50 @@
 package Game3;
 import java.util.ArrayList;
 
+import OverallGame.OverallGame;
+
 public class Game3 {
-	double 	time 	;
-	int 	score	;
-	int 	money   ;
-	ArrayList<Plant> plants ;
-	ArrayList<Runoff> enemies ;
-	ArrayList<Mussel> mussels ;
-	boolean gameRunning ;
-	boolean gameOver   ;
+	private double 	time 	;
+	private int 	score	;
+	private int 	money   ;
+	private ArrayList<Plant> plants ;
+	private ArrayList<Runoff> enemies ;
+	private ArrayList<Mussel> mussels ;
+	private boolean gameRunning ;
+	private boolean gameOver   ;
+	private OverallGame bigGame; 
 	
 	/**
 	 * Game Constructor
 	 * Produces the initial game state 
 	 * (time = 300.0, score = 0, money = 100, no plants or runoff, 5 Mussels in pseudorandom positions)
 	 */
-	public Game3() {} ;
+	public Game3(OverallGame bigGame) {} ;
 	
 	/**
 	 * Getters for all properties
 	 */
-	public double 	getTime() {} ;
-	public int 		getScore() {} ;
-	public int 		getMoney() {} ;
-	public boolean  getGameRunning() {} ;
-	public boolean  getGameEnded() {} ;
-	public ArrayList<Plant> getPlants() {} ;
-	public ArrayList<Runoff> getRunoff(){} ;
+	public double 	getTime() {
+		return 0;
+	}
+	public int 		getScore() {
+		return 0;
+	}
+	public int 		getMoney() {
+		return 0;
+	}
+	public boolean  getGameRunning() {
+		return false;
+	}
+	public boolean  getGameEnded() {
+		return false;
+	}
+	public ArrayList<Plant> getPlants() {
+		return null;
+	}
+	public ArrayList<Runoff> getRunoff(){
+		return null;
+	}
 	public void setTime(double time) {};
 	public void addScore(int score)  {};
 	

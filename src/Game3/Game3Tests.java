@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import OverallGame.OverallGame;
+
 public class Game3Tests {
 
 	/**
@@ -12,7 +14,8 @@ public class Game3Tests {
 	 */
 	@Test
 	public void testGame3() {
-		Game3 testGame = new Game3() ;
+		OverallGame testBigGame = new OverallGame();
+		Game3 testGame = new Game3(testBigGame) ;
 		ArrayList<Plant> testPlants = new ArrayList<Plant>(0);
 		ArrayList<Runoff> testRunoff = new ArrayList<Runoff>(0);
 		assertEquals(testGame.getTime(), 300.0); //Okay because the time will be set to this by default
@@ -23,7 +26,8 @@ public class Game3Tests {
 
 	@Test
 	public void testUpdate() {
-		Game3 testGame = new Game3();
+		OverallGame testBigGame = new OverallGame();
+		Game3 testGame = new Game3(testBigGame) ;
 		testGame.addPlant(1, 1, "Grass");
 		testGame.addRunoff(1, 3);
 		testGame.update(); //runoff will move next to plant
@@ -43,7 +47,8 @@ public class Game3Tests {
 
 	@Test
 	public void testUseMenu() {
-		Game3 testGame = new Game3() ;
+		OverallGame testBigGame = new OverallGame();
+		Game3 testGame = new Game3(testBigGame) ;
 		testGame.useMenu() ; //Simulate player input of placing grass at 1,1
 		Plant testPlant = new Plant(1,1,"Grass")  ; 
 		assertEquals(testGame.getPlants().get(0), testPlant);
@@ -60,7 +65,8 @@ public class Game3Tests {
 
 	@Test
 	public void testAddPlant() {
-		Game3 testGame = new Game3() ;
+		OverallGame testBigGame = new OverallGame();
+		Game3 testGame = new Game3(testBigGame) ;
 		testGame.addPlant(1,1,"Grass") ;
 		ArrayList<Plant> testPlants = new ArrayList<Plant>(1);
 		testPlants.add(new Plant(1,1,"Grass"));
@@ -69,7 +75,8 @@ public class Game3Tests {
 
 	@Test
 	public void testAddRunoff() {
-		Game3 testGame = new Game3() ;
+		OverallGame testBigGame = new OverallGame();
+		Game3 testGame = new Game3(testBigGame) ;
 		testGame.addRunoff(1,1) ;
 		ArrayList<Runoff> testRunoff = new ArrayList<Runoff>(1);
 		testRunoff.add(new Runoff(1,1));
@@ -78,7 +85,8 @@ public class Game3Tests {
 
 	@Test
 	public void testBattle() {
-		Game3 testGame = new Game3() ;
+		OverallGame testBigGame = new OverallGame();
+		Game3 testGame = new Game3(testBigGame) ;
 		testGame.addPlant(1,1,"Grass") ;
 		testGame.addRunoff(1, 2);
 		testGame.battle(testGame.getPlants().get(0), testGame.getRunoff().get(0));
@@ -100,7 +108,8 @@ public class Game3Tests {
 	
 	@Test
 	public void testAddMoney() {
-		Game3 testGame = new Game3() ;
+		OverallGame testBigGame = new OverallGame();
+		Game3 testGame = new Game3(testBigGame) ;
 		testGame.addMoney(100);
 		assertEquals(testGame.getMoney(),100) ;
 	}

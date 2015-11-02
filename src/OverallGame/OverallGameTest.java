@@ -20,11 +20,10 @@ public class OverallGameTest {
 	@Test
 	public void testUpdate() {
 		OverallGame testOverallGame = new OverallGame() ;
-		Game3 testGame = new Game3() ;
+		Game3 testGame = new Game3(testOverallGame) ;
 		testGame.setTime(0);
 		testGame.addScore(100);
 		testGame.update();
-		testOverallGame.update();
 		assertEquals(testOverallGame.getOverallScore(), 100) ;
 		boolean [] testGamesComplete = {false, false, true};
 		assertEquals(testOverallGame.getGamesComplete(), testGamesComplete);

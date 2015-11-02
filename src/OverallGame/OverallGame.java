@@ -27,6 +27,8 @@ public class OverallGame {
 	public int getOverallScore() {
 		return 0;
 	}
+	
+	public void addScore(int score) {}
 
 	public boolean[] getGamesComplete() {
 		return null;

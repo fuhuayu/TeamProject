@@ -16,14 +16,26 @@ public class Plant {
 	/**
 	 * Getters for all attributes
 	 */
-	public int getRow() {};
-	public int getCol() {};
-	public int getStrength() {};
-	public int getHealth()   {};
-	public String getType()  {};
+	public int getRow() {
+		return 0;
+	};
+	public int getCol() {
+		return 0;
+	};
+	public int getStrength() {
+		return 0;
+	};
+	public int getHealth()   {
+		return 0;
+	};
+	public String getType()  {
+		return null;
+	};
 	
 	/**
 	 * Plants are equal if they are the same type of plant and are in the same row and column
 	 */
-	public boolean equals(Plant other)  {};
+	public boolean equals(Plant other)  {
+		return false;
+	};
 }
