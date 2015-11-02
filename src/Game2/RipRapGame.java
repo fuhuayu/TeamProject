@@ -1,10 +1,10 @@
 package Game2;
 
-public class GameController {
+public class RipRapGame {
 	int score;
 	int time;
 	
-	public GameController(int score, int time) {
+	public RipRapGame(int score, int time) {
 		this.score = score;
 		this.time = time;
 	}
