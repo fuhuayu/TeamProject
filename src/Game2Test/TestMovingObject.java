@@ -17,6 +17,7 @@ public class TestMovingObject {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		assertEquals(0,m.getSize());
 =======
 <<<<<<< HEAD
@@ -35,6 +36,9 @@ public class TestMovingObject {
 		assertEquals(0,m.getSize());//hh
 >>>>>>> parent of f14858a... yo
 >>>>>>> parent of 5cd7977... Update TestMovingObject.java
+=======
+		assertEquals(0,m.getSize());//hh
+>>>>>>> parent of f14858a... yo
 =======
 		assertEquals(0,m.getSize());//hh
 >>>>>>> parent of f14858a... yo
