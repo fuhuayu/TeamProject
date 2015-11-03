@@ -1,4 +1,4 @@
-package Game2Test;
+package Game2;
 
 import static org.junit.Assert.*;
 
@@ -6,10 +6,7 @@ import java.awt.Point;
 
 import org.junit.Test;
 
-import Game2.Crab;
-import Game2.MovingObject;
-
-public class TestMovingObject {
+public class MovingObjectTest {
 
 	@Test
 	public void testMovingObject() {

@@ -1,12 +1,14 @@
-package Game2Test;
+package Game2;
 
 import static org.junit.Assert.assertEquals;
-import Game2.JumpingBar;
 
-public class TestJumpingBar {
+import org.junit.Test;
+
+public class JumpingBarTest {
 	/**Create a jumpingBar with both stop1 and stop2 0
 	 * 
 	 */
+	@Test
 	public void TestJumpingBar1(){
 		JumpingBar testJumpingBar1 = new JumpingBar(0,0);
 		assertEquals(testJumpingBar1.getCurrentValue(),0);// Inital currentValue should be 0
@@ -24,6 +26,7 @@ public class TestJumpingBar {
 	/**create a JumpingBar with stop1 be 8 and stop2 be 5
 	 * 
 	 */
+	@Test
 	public void TestJumpingBar2(){
 		JumpingBar testJumpingBar2 = new JumpingBar(8,5);
 		assertEquals(testJumpingBar2.getCurrentValue(),0);// Inital currentValue should be 0
