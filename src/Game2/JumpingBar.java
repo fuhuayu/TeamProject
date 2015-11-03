@@ -4,10 +4,13 @@ public class JumpingBar {
 	int currentValue,stop1,stop2;
 	int speed;
 	
+	
 	/**
 	 * Constructor for jumpingBar
 	 * if value increases above stop2 but not yet stop1, crab climb over obstacle
 	 * if over stop1, fail to climb over obstacle
+	 * @param stop1 value between first part of bar and second part
+	 * @param stop2 value between second part and third part 
 	 */
 	public JumpingBar(int stop1, int stop2) {
 		this.stop1 = stop1;
