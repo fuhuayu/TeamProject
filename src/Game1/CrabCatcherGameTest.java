@@ -8,7 +8,16 @@ import org.junit.Test;
 import OverallGame.OverallGame;
 
 
+/**
+ * @author Dwegrzyn
+ *
+ */
 public class CrabCatcherGameTest {	
+	/**
+	 * tests if tick-dependent conditions are updated in onTick()
+	 */
+	
+	
 	@Test
 	public void tickTest(){
 		OverallGame bigGame = new OverallGame();
@@ -16,8 +25,8 @@ public class CrabCatcherGameTest {
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
 		game.addAnimal(crab);
 		
+		//check if game timer increases
 		//check if gameOver is triggered by lives = 0
-		//check if crab timer increases
 		//check if crab time remaining decreases
 		game.setLives(0);
 		game.tickGame();
@@ -37,24 +46,35 @@ public class CrabCatcherGameTest {
 		game.setGameOver(false);
 		game.setTime(0);
 		crab.setTimeLeftOnScreen(1);
+		
+		int x = crab.getXloc();
+		int y = crab.getYloc();
 		game.tickGame();
 		assertEquals("on tick: expired crab time remaining should reset to 3", 3, crab.getTimeLeftOnScreen());
 		assertTrue("on tick: regenerated crab visibility should reset to false", !crab.isVisible());
-		//change x y location
+		assertTrue("crab location should change", (crab.getXloc() != x || crab.getYloc() != y));
 	}
 	
+	/**
+	 * tests if game is created correctly
+	 */
 	@Test
-	public void setupAndEndTest(){
+	public void setupTest(){
 		Animal[] animals = new Animal[3];
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, new OverallGame());
+		CrabCatcherGame game1 = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, new OverallGame());
+		CrabCatcherGame game2 = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, new OverallGame());
 		
-		//check if we make all the animals on start
-		game.startGame();
-		assertEquals("start game: number animals should be max animals (3)", 3, game.getAnimals().length);
+		//check if generate animals generates 3 animals
+		game1.generateAnimals();
+		for (int i=0; i < game1.getAnimals().length; i++){
+			assertTrue("generateAnimals: 3 animals should exist", game1.getAnimals()[i] != null);
+		}
 		
-		//check if score sends on end game			
 	}
 	
+	/**
+	 * tests if mouse handler detects animal clicks and adjusts score accordingly
+	 */
 	@Test
 	public void mouseInputTest(){
 		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, new OverallGame());
