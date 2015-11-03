@@ -4,13 +4,13 @@ import OverallGame.OverallGame;
 
 public class RipRapGame {
 	int score;
-	int time
+	int time,currtime;
 	long starttime;
 	private OverallGame bigGame;
 	
-	public RipRapGame(int score) {
+	public RipRapGame(int score,int time) {
 		this.score = score;
-		this.time = 90;
+		this.time = time;
 		this.starttime=System.currentTimeMillis();
 		initGame();
 	}
@@ -21,7 +21,7 @@ public class RipRapGame {
 		return score;
 	}
 	public int getTime() {
-		return time;
+		return currtime;
 	}
 	public void setTime(int time) {
 		this.time = time;
@@ -34,8 +34,7 @@ public class RipRapGame {
 	}
 	public void updateTime(){
 		long t=System.currentTimeMillis();
-		this.time-=(this.starttime-t)/1000;
-		this.starttime=t;
+		this.currtime=(int) (this.time+(this.starttime-t)/1000);
 	}
 	public int handler(){
 		return score;
