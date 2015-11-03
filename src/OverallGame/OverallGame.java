@@ -1,11 +1,26 @@
 package OverallGame;
 
-public class OverallGame {
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import Game1.CrabCatcherGame;
+import Game2.RipRapGame;
+import Game3.Game3;
+
+public class OverallGame implements Serializable{
 	private int overallScore ;
 	private boolean[] gamesComplete ;
 	private boolean   gameRunning   ;
 	private int[] highscores 		;
-	private double timeInIdle		;
+	transient private double timeInIdle;
+	private static final long serialVersionUID = 0;
+	private CrabCatcherGame game1;
+	private RipRapGame game2;
+	private Game3 game3;
 	
 	/**
 	 * Overall score = 0
@@ -56,4 +71,20 @@ public class OverallGame {
 	 * @param args
 	 */
 	public static void main(String [] args) {} ;
+	
+	public static void serialize(Object obj, String fileName) throws IOException {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	 
+	        fos.close();
+	}
+	
+	public static Object deserialize(String fileName) throws IOException, ClassNotFoundException {
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Object obj = ois.readObject();
+			ois.close();
+			return obj;
+			}
 }
