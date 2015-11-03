@@ -9,27 +9,18 @@ import OverallGame.OverallGame;
 
 public class RipRapGame {
 	int score;
-<<<<<<< HEAD
 	int time,currtime;
 	long starttime;
 	private OverallGame bigGame;
 	
-	public RipRapGame(int score,int time) {
-=======
-	int time;
-	long starttime;
-	private OverallGame bigGame;
-	
-	
-	
+
 	/**
 	 * @param score
 	 * Constructor
 	 * Initialized game2
 	 * (time = 90s)
 	 */
-	public RipRapGame(int score) {
->>>>>>> origin/master
+	public RipRapGame(int score,int time) {
 		this.score = score;
 		this.time = time;
 		this.starttime=System.currentTimeMillis();
@@ -56,12 +47,7 @@ public class RipRapGame {
 	}
 	
 	
-	/**
-	 * Setters for time
-	 */
-	public void setTime(int time) {
-		this.time = time;
-	}
+	
 	/**
 	 * initialize the game with RipRap wall and obstacles randomly displaced
 	 */
