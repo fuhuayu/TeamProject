@@ -65,9 +65,11 @@ public class CrabCatcherGame {
 	 * Ends mini game and saves score to big game. Cues mini game closing scene.
 	 */
 	public void endGame(){
-		//save score to send to big game
+		////play closing scene
+		//send score to send to big game
 		//set big game running to true
-		//play closing scene
+		//call big game update
+		
 	}
 	
 	/**
