@@ -20,6 +20,9 @@ public class RipRapGame {
 	
 	
 	
+	/**
+	 * Getters for properties
+	 */
 	
 	public Crab getCrab() {
 		return crab;
@@ -61,34 +64,6 @@ public class RipRapGame {
 		this.clouds = clouds;
 	}
 
-
-
-
-	/**
-	 * @param score
-	 * Constructor
-	 * Initialized game2
-	 * (time = 90s)
-	 */
-	public RipRapGame(int score,int time) {
-		this.score = score;
-		this.time = time;
-		this.starttime=System.currentTimeMillis();
-		initGame();
-	}
-	
-	/**
-	 * Add points while game goes on
-	 * lose points if fail to climb over a obstacle
-	 */
-	public void addScore(int s){
-		score+=s;
-	}
-	
-	
-	/**
-	 * Getters for properties
-	 */
 	public int getScore(){
 		return score;
 	}
@@ -97,10 +72,51 @@ public class RipRapGame {
 	}
 	
 	public OverallGame getBigGame() {
-		return null;
+		return bigGame;
 	}
 	
 	public void setBigGame(OverallGame bigGame) {
+		this.bigGame= bigGame;
+	}
+
+
+
+
+	//Constructor
+	/**
+	 * @param score score that player gets
+	 * @param time time limitation
+	 * @param currtime real time
+	 * @param crab crab which the player controls
+	 * @param jumpingBar Jumping indicator that displays each time when crab encounter a obstacle
+	 * @param stones RipRap wall made of
+	 * @param sun another moving object
+	 * @param clouds a list of clouds
+	 * @param bigGame the overal lGame that consist of this game
+	 */
+	public RipRapGame(int score, int time, int currtime,
+			Crab crab, JumpingBar jumpingBar, Stone[] stones, Sun sun,
+			Cloud[] clouds, OverallGame bigGame) {
+		this.score = score;
+		this.time = time;
+		this.currtime = currtime;
+		this.crab = crab;
+		this.jumpingBar = jumpingBar;
+		this.stones = stones;
+		this.sun = sun;
+		this.clouds = clouds;
+		this.bigGame = bigGame;
+		this.starttime=System.currentTimeMillis();
+		initGame();
+	}
+
+	/**
+	 * Add points while game goes on
+	 * lose points if fail to climb over a obstacle
+	 * @param s score that is added to the score
+	 */
+	public void addScore(int s){
+		score+=s;
 	}
 
 
