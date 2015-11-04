@@ -14,7 +14,7 @@ import Game3.PlantTests;
 import Game3.RunoffTests;
 
 /**
- * @author Brendan, David, Danielle, Huayu and Zhanglong
+ * @author Brendan, Danielle, David, Huayu and Zhanglong
  * @version 0.1
  * @since   2015-11-02
  * Test all tests at once

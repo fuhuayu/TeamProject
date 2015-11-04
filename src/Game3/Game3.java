@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import OverallGame.OverallGame;
 
 /**
- * @author Brendan, David, Danielle, Huayu and Zhanglong
+ * @author Brendan, Danielle, David, Huayu and Zhanglong
  * @version 0.1
  * @since   2015-11-02
  * The Game Handler for the final game

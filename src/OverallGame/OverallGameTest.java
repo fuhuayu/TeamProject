@@ -10,7 +10,7 @@ import Game1.CrabCatcherGame;
 import Game3.Game3;
 
 /**
- * @author Brendan, David, Danielle, Huayu and Zhanglong
+ * @author Brendan, Danielle, David, Huayu and Zhanglong
  * @version 0.1
  * @since   2015-11-02
  * A Class for testing the Overall Game Tests
