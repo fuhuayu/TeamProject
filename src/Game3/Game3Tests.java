@@ -8,44 +8,64 @@ import org.junit.Test;
 
 import OverallGame.OverallGame;
 
+/**
+ * @author Brendan, David, Danielle, Zhanglong and Huayu
+ * @version 0.1
+ * @since   2015-11-02
+ * Handles the tests for game 3
+ */
 public class Game3Tests {
 
 	/**
-	 * Checks to see if the game time, score, plants and runoff are correct upon creation
+	 * Tests that the game properly causes the runoff to move and the score and money to update
 	 */
-	@Test
-	public void testGame3() {
-		OverallGame testBigGame = new OverallGame();
-		Game3 testGame = new Game3(testBigGame) ;
-		ArrayList<Plant> testPlants = new ArrayList<Plant>(0);
-		ArrayList<Runoff> testRunoff = new ArrayList<Runoff>(0);
-		assertEquals(testGame.getTime(), 300.0); //Okay because the time will be set to this by default
-		assertEquals(testGame.getScore(), 0)   ;
-		assertEquals(testGame.getPlants(), testPlants);
-		assertEquals(testGame.getRunoff(), testRunoff);
-	}
-
 	@Test
 	public void testUpdate() {
 		OverallGame testBigGame = new OverallGame();
 		Game3 testGame = new Game3(testBigGame) ;
 		testGame.addPlant(1, 1, "Grass");
 		testGame.addRunoff(1, 3);
+		testGame.setTime(5);
 		testGame.update(); //runoff will move next to plant
-		//Score will go up by 1, money will go up by 1
-		assertEquals(testGame.getScore(), 1);
-		assertEquals(testGame.getMoney(), 101);
+		testGame.setGameRunning(true);
+		testGame.setGameOver(true);
+		//Score and Money will Go up by 5 every 5 seconds
+		assertEquals(testGame.getScore(), 5);
+		assertEquals(testGame.getMoney(), 105);
 		assertEquals(testGame.getRunoff().get(0).getCol(), 2);
-		testGame.update(); 
-		//Plant and Runoff should fight now and stay in the same position
-		assertEquals(testGame.getScore(), 2);
-		assertEquals(testGame.getMoney(), 102);
+		testGame.setTime(5);
+		testGame.update(); //runoff will fight the plant
+		testGame.setGameRunning(true);
+		testGame.setGameOver(true);
+		assertEquals(testGame.getScore(), 10);
+		assertEquals(testGame.getMoney(), 110);
 		assertEquals(testGame.getRunoff().get(0).getHealth(), 7);
 		assertEquals(testGame.getPlants().get(0).getHealth(), 8);
 		assertEquals(testGame.getRunoff().get(0).getCol(), 2);
 	}
 
 	@Test
+	public void testOnClick() {
+		OverallGame testBigGame = new OverallGame();
+		Game3 testGame = new Game3(testBigGame) ;
+		MouseEvent e = new MouseEvent(null, 1, 0, 0, 1, 1, 0, false);
+		testGame.onClick(e) ;
+		Plant testPlant = new Plant(1,1,"Grass")  ; 
+		assertEquals(testGame.getPlants().get(0), testPlant);
+		//Simulate the addition of another plant
+		MouseEvent e2 = new MouseEvent(null, 1, 0, 0, 2, 1, 0, false);
+		Plant testPlant2 = new Plant(2,1,"Grass")  ; 
+		testGame.onClick(e2) ;
+		assertEquals(testGame.getPlants().get(1), testPlant2);
+	}
+	
+	/**
+	 * 4 main tests
+	 * Test 1: Tests to see that planting plants works
+	 * Test 2: Tests planting at another plant
+	 * Test 3: Tests the player clicking on a mussel for money
+	 * Test 4: Tests the plater exiting the game
+	 */
 	public void testonClick() {
 		OverallGame testBigGame = new OverallGame();
 		Game3 testGame = new Game3(testBigGame) ;
@@ -60,12 +80,23 @@ public class Game3Tests {
 		ArrayList<Plant> testPlants = new ArrayList<Plant>() ;
 		testPlants.add(testPlant) ; testPlants.add(testPlant2);
 		assertEquals(testGame.getPlants(),testPlants);
-		//Simulate the player exiting the game
-		MouseEvent e3 = new MouseEvent(null, 0, 0, 0, 99, 99, 1, false);
+		//Simulate the player clicking on a mussel for 50 money
+		MouseEvent e3 = new MouseEvent(null, 1, 0, 0, 10, 10, 0, false);
+		testGame.getMussels().get(0).setXLoc(10);
+		testGame.getMussels().get(0).setYLoc(10);
+		testGame.getMussels().get(0).setStage(3);
 		testGame.onClick(e3) ;
-		assertTrue( testGame.getGameEnded() ); //Exiting the game means setting time to zero and updating AS OF NOW
+		assertEquals(testGame.getScore(), 150 );
+		//Test Exiting the game
+		MouseEvent e4 = new MouseEvent(null, 0, 0, 0, 99, 99, 1, false);
+		testGame.onClick(e4) ;
+		assertTrue( testGame.getGameEnded() );
 	}
 
+	/**
+	 * Test 1: Tests the addition of a plant to a row and column
+	 * Test 2: Tests the addition of a plant to a different row and column
+	 */
 	@Test
 	public void testAddPlant() {
 		OverallGame testBigGame = new OverallGame();
@@ -74,8 +105,15 @@ public class Game3Tests {
 		ArrayList<Plant> testPlants = new ArrayList<Plant>(1);
 		testPlants.add(new Plant(1,1,"Grass"));
 		assertEquals(testGame.getPlants().get(0), testPlants);
+		testGame.addPlant(1,2,"Grass") ;
+		testPlants.add(new Plant(1,2,"Grass"));
+		assertEquals(testGame.getPlants(), testPlants);
 	}
 
+	/**
+	 * Test 1: Tests the addition of runoff to a row and column
+	 * Test 2: Tests the addition of runoff to a different row and column
+	 */
 	@Test
 	public void testAddRunoff() {
 		OverallGame testBigGame = new OverallGame();
@@ -84,8 +122,17 @@ public class Game3Tests {
 		ArrayList<Runoff> testRunoff = new ArrayList<Runoff>(1);
 		testRunoff.add(new Runoff(1,1));
 		assertEquals(testGame.getRunoff().get(0), testRunoff);
+		testGame.addRunoff(1,1) ;
+		testRunoff.add(new Runoff(2,1));
+		assertEquals(testGame.getRunoff(), testRunoff);
 	}
 
+	/**
+	 * Tests the fighting of plants and runoff 3 times
+	 * First time tests the result of one fight
+	 * Second time tests the death of the runoff
+	 * Third time tests the death of the plant
+	 */
 	@Test
 	public void testBattle() {
 		OverallGame testBigGame = new OverallGame();
@@ -109,11 +156,19 @@ public class Game3Tests {
 		assertEquals(testGame.getRunoff().get(0).getHealth(), 7)	;
 	}
 	
+	/**
+	 * Tests the passing of the score to the overall game
+	 * Tests that the function alerts the big game that this game was completed
+	 * Tests that the function makes the big game start running
+	 */
 	@Test
-	public void testAddMoney() {
+	public void testEndGame() {
 		OverallGame testBigGame = new OverallGame();
 		Game3 testGame = new Game3(testBigGame) ;
-		testGame.addMoney(100);
-		assertEquals(testGame.getMoney(),100) ;
+		testGame.addScore(100);
+		testGame.endGame();
+		assertEquals(testBigGame.getGamesComplete()[2],  true);
+		assertEquals(testBigGame.getOverallScore(), 100);
+		assertEquals(testBigGame.getGameRunning(), true);
 	}
 }
