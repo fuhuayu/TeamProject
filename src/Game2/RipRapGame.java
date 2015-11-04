@@ -11,8 +11,58 @@ public class RipRapGame {
 	int score;
 	int time,currtime;
 	long starttime;
+	Crab crab;
+	JumpingBar jumpingBar;
+	Stone[] stones;
+	Sun sun;
+	Cloud[] clouds;
 	private OverallGame bigGame;
 	
+	
+	
+	
+	public Crab getCrab() {
+		return crab;
+	}
+
+	public void setCrab(Crab crab) {
+		this.crab = crab;
+	}
+
+	public JumpingBar getJumpingBar() {
+		return jumpingBar;
+	}
+
+	public void setJumpingBar(JumpingBar jumpingBar) {
+		this.jumpingBar = jumpingBar;
+	}
+
+	public Stone[] getStones() {
+		return stones;
+	}
+
+	public void setStones(Stone[] stones) {
+		this.stones = stones;
+	}
+
+	public Sun getSun() {
+		return sun;
+	}
+
+	public void setSun(Sun sun) {
+		this.sun = sun;
+	}
+
+	public Cloud[] getClouds() {
+		return clouds;
+	}
+
+	public void setClouds(Cloud[] clouds) {
+		this.clouds = clouds;
+	}
+
+
+
 
 	/**
 	 * @param score
@@ -46,6 +96,14 @@ public class RipRapGame {
 		return currtime;
 	}
 	
+	public OverallGame getBigGame() {
+		return null;
+	}
+	
+	public void setBigGame(OverallGame bigGame) {
+	}
+
+
 	
 	
 	/**
@@ -72,6 +130,14 @@ public class RipRapGame {
 	public int handler(){
 		return score;
 	}
+	
+	
+	/**
+	 * Ends game and sends score to big game.
+	 */
+	public void endGame(){
+	}
+
 	
 
 }
