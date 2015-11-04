@@ -104,7 +104,7 @@ public class Game2Test {
 		testGame2.onClick();
 		assertEquals(testGame2.getCrab().getPosition(), "next Position");//climb over stone
 		
-		// condition 3Í
+		// condition 3
 		testGame2.getJumpingBar().update();
 		assertEquals(testGame2.getJumpingBar().getCurrentValue(),2);// the currentValue is at stop1
 		testGame2.onClick();
