@@ -1,24 +1,26 @@
 package OverallGame;
 import static org.junit.Assert.*;
 
+import java.awt.event.MouseEvent;
+
 import org.junit.Test;
 
 import Game1.Animal;
 import Game1.CrabCatcherGame;
 import Game3.Game3;
 
-
+/**
+ * @author Brendan, David, Danielle, Zhanglong and Huayu
+ * @version 0.1
+ * @since   2015-11-02
+ * A Class for testing the Overall Game Tests
+ */
 public class OverallGameTest {
 
-	@Test
-	public void testOverallGame() {
-		OverallGame testGame = new OverallGame() ;
-		assertEquals(testGame.getOverallScore(), 0);
-		boolean [] testGamesComplete = {false, false, false};
-		assertEquals(testGame.getGamesComplete(), testGamesComplete);
-		assertEquals(testGame.getTimeInIdle(), 0); //OK Because set at 0 initially
-	}
-
+	/**
+	 * Tests that the game can properly update to run games and exit them to add
+	 * scores and return to the main screen
+	 */
 	@Test
 	public void testUpdate() {
 		OverallGame testOverallGame = new OverallGame() ;
@@ -30,7 +32,7 @@ public class OverallGameTest {
 		boolean [] testGamesComplete = {false, false, true};
 		assertEquals(testOverallGame.getGamesComplete(), testGamesComplete);
 		testOverallGame.setTimeInIdle(180);
-		testOverallGame.setIsGameRunning(false);
+		testOverallGame.setGameRunning(false);
 		testOverallGame.update();
 		testGamesComplete[2] = false ;
 		assertEquals(testOverallGame.getGamesComplete(), testGamesComplete);
@@ -42,9 +44,24 @@ public class OverallGameTest {
 		crabGame.endGame();
 		assertEquals(testOverallGame.getOverallScore(), 250);
 		boolean [] test2GamesComplete = {false, true, true};
-		assertEquals(testOverallGame.getGamesComplete(), testGamesComplete);
+		assertEquals(testOverallGame.getGamesComplete(), test2GamesComplete);
 		
 		
 	}
+	/**
+	 * Test 1: Tests if the game starts another game if pressed on the game 1 icon
+	 * Test 2: Tests if the game stops when the exit button is pressed
+	 */
+	public void testOnClick() {
+		OverallGame testOverallGame = new OverallGame() ;
+		MouseEvent e = new MouseEvent(null, 0, 0, 0, 1, 1, 1, false); //location of click is temporary
+		testOverallGame.onClick(e);
+		assertEquals(testOverallGame.getGameRunning(), false);
+		assertFalse(testOverallGame.getGame1() == null);
+		MouseEvent e2 = new MouseEvent(null, 0, 0, 0, 1, 2, 1, false); //location of click is temporary
+		testOverallGame.onClick(e2);
+		assertEquals(testOverallGame.getGameRunning(), false);
+	}
+	
 
 }
