@@ -1,8 +1,4 @@
 package Game3;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 
 
 /**
