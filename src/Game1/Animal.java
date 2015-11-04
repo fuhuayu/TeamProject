@@ -9,7 +9,7 @@ public class Animal {
 	private double displayDuration; //length of time the crab should stay on screen (constant)
 	private double timeRemainingOnScreen; //how long the crab has left on screen (decreases with time)
 	private boolean visible;
-	
+	//
 	//CONSTRUCTOR
 	public Animal(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
 			double displayDuration, boolean visible) {
