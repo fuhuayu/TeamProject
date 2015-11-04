@@ -1,7 +1,12 @@
 package Game2;
 import java.awt.Point;
 
-
+/**
+ * @author Brendan, David, Danielle, Huayu and Zhanglong
+ * @version 0.1
+ * @since   2015-11-02
+ * Class of all moving object;
+ */
 public class MovingObject {
 Point position;
 int size;
@@ -15,7 +20,7 @@ public MovingObject(int x,int y, int size) {
 	this.size = size;
 }
 /**
- * update the position
+ * update the position based on the attributes.
  * 
  */
 public void update(){

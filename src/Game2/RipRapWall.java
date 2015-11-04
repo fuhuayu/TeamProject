@@ -1,5 +1,10 @@
 package Game2;
-
+/**
+ * @author Brendan, David, Danielle, Huayu and Zhanglong
+ * @version 0.1
+ * @since   2015-11-02
+ * The place to block the crab;
+ */
 public class RipRapWall {
 	int x;
 	int y;

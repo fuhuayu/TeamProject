@@ -9,7 +9,7 @@ import org.junit.Test;
 import OverallGame.OverallGame;
 
 /**
- * @author Brendan, David, Danielle, Zhanglong and Huayu
+ * @author Brendan, David, Danielle, Huayu and Zhanglong
  * @version 0.1
  * @since   2015-11-02
  * Handles the tests for game 3
