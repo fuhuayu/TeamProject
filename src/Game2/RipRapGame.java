@@ -1,5 +1,7 @@
 package Game2;
 
+import java.util.ArrayList;
+
 import OverallGame.OverallGame;
 
 /**
@@ -13,16 +15,24 @@ public class RipRapGame {
 	long starttime;
 	Crab crab;
 	JumpingBar jumpingBar;
-	Stone[] stones;
+	ArrayList<Stone> stones;
 	Sun sun;
-	Cloud[] clouds;
+	ArrayList<Cloud> clouds;
 	private OverallGame bigGame;
+	ArrayList<RipRapWall> wall;
 	
 	
-	
+
 	/**
 	 * Getters for properties
 	 */
+	public ArrayList<RipRapWall> getWall() {
+		return wall;
+	}
+
+	public void setWall(ArrayList<RipRapWall> wall) {
+		this.wall = wall;
+	}
 	
 	public Crab getCrab() {
 		return crab;
@@ -40,11 +50,11 @@ public class RipRapGame {
 		this.jumpingBar = jumpingBar;
 	}
 
-	public Stone[] getStones() {
+	public ArrayList<Stone> getStones() {
 		return stones;
 	}
 
-	public void setStones(Stone[] stones) {
+	public void setStones(ArrayList<Stone> stones) {
 		this.stones = stones;
 	}
 
@@ -56,11 +66,11 @@ public class RipRapGame {
 		this.sun = sun;
 	}
 
-	public Cloud[] getClouds() {
+	public ArrayList<Cloud> getClouds() {
 		return clouds;
 	}
 
-	public void setClouds(Cloud[] clouds) {
+	public void setClouds(ArrayList<Cloud> clouds) {
 		this.clouds = clouds;
 	}
 
@@ -92,11 +102,11 @@ public class RipRapGame {
 	 * @param stones RipRap wall made of
 	 * @param sun another moving object
 	 * @param clouds a list of clouds
-	 * @param bigGame the overal lGame that consist of this game
+	 * @param bigGame the overall lGame that consist of this game
 	 */
 	public RipRapGame(int score, int time, int currtime,
-			Crab crab, JumpingBar jumpingBar, Stone[] stones, Sun sun,
-			Cloud[] clouds, OverallGame bigGame) {
+			Crab crab, JumpingBar jumpingBar, ArrayList<Stone> stones, Sun sun,
+			ArrayList<Cloud> clouds, OverallGame bigGame, ArrayList<RipRapWall> wall) {
 		this.score = score;
 		this.time = time;
 		this.currtime = currtime;
@@ -106,6 +116,7 @@ public class RipRapGame {
 		this.sun = sun;
 		this.clouds = clouds;
 		this.bigGame = bigGame;
+		this.wall = wall;
 		this.starttime=System.currentTimeMillis();
 		initGame();
 	}
@@ -152,6 +163,13 @@ public class RipRapGame {
 	 * Ends game and sends score to big game.
 	 */
 	public void endGame(){
+	}
+	
+	/**click the button at a proper time to make crab jump over the obstacle
+	 * 
+	 */
+	public void onClick(){
+		
 	}
 
 	
