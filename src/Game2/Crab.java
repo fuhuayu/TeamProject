@@ -1,5 +1,10 @@
 package Game2;
-
+/**
+ * @author Brendan, Danielle, David, Huayu and Zhanglong
+ * @version 0.1
+ * @since   2015-11-02
+ * Subclass of MovingObect, Crab in the game
+ */
 public class Crab extends MovingObject {
 	int mode;
 	int speed;
@@ -33,6 +38,9 @@ public class Crab extends MovingObject {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
+	/* (non-Javadoc)
+	 * @see Game2.MovingObject#update()
+	 */
 	public void update(){
 		
 	}

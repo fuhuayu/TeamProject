@@ -12,7 +12,7 @@ import Game2.RipRapGame;
 import Game3.Game3;
 
 /**
- * @author Brendan, David, Danielle, Zhanglong and Huayu
+ * @author Brendan, Danielle, David, Huayu and Zhanglong
  * @version 0.1
  * @since   2015-11-02
  * Handles the screen for all of the games

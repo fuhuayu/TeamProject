@@ -1,8 +1,11 @@
 package Game3;
 import static org.junit.Assert.*;
 
+import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import javax.swing.JTree;
 
 import org.junit.Test;
 
@@ -48,15 +51,19 @@ public class Game3Tests {
 	public void testOnClick() {
 		OverallGame testBigGame = new OverallGame();
 		Game3 testGame = new Game3(testBigGame) ;
-		MouseEvent e = new MouseEvent(null, 1, 0, 0, 1, 1, 0, false);
+		JTree source = new JTree();
+		MouseEvent e = new MouseEvent(source, 1, 0, 0, 1, 1, 0, false);
 		testGame.onClick(e) ;
 		Plant testPlant = new Plant(1,1,"Grass")  ; 
-		assertEquals(testGame.getPlants().get(0), testPlant);
+		ArrayList<Plant> testPlants = new ArrayList<Plant>();
+		testPlants.add(testPlant);
+		assertEquals(testGame.getPlants(), testPlants);
 		//Simulate the addition of another plant
-		MouseEvent e2 = new MouseEvent(null, 1, 0, 0, 2, 1, 0, false);
+		MouseEvent e2 = new MouseEvent(source, 1, 0, 0, 2, 1, 0, false);
 		Plant testPlant2 = new Plant(2,1,"Grass")  ; 
+		testPlants.add(testPlant2);
 		testGame.onClick(e2) ;
-		assertEquals(testGame.getPlants().get(1), testPlant2);
+		assertEquals(testGame.getPlants(), testPlants);
 	}
 	
 	/**
@@ -104,7 +111,7 @@ public class Game3Tests {
 		testGame.addPlant(1,1,"Grass") ;
 		ArrayList<Plant> testPlants = new ArrayList<Plant>(1);
 		testPlants.add(new Plant(1,1,"Grass"));
-		assertEquals(testGame.getPlants().get(0), testPlants);
+		assertEquals(testGame.getPlants(), testPlants);
 		testGame.addPlant(1,2,"Grass") ;
 		testPlants.add(new Plant(1,2,"Grass"));
 		assertEquals(testGame.getPlants(), testPlants);
@@ -121,7 +128,7 @@ public class Game3Tests {
 		testGame.addRunoff(1,1) ;
 		ArrayList<Runoff> testRunoff = new ArrayList<Runoff>(1);
 		testRunoff.add(new Runoff(1,1));
-		assertEquals(testGame.getRunoff().get(0), testRunoff);
+		assertEquals(testGame.getRunoff(), testRunoff);
 		testGame.addRunoff(1,1) ;
 		testRunoff.add(new Runoff(2,1));
 		assertEquals(testGame.getRunoff(), testRunoff);
@@ -137,16 +144,16 @@ public class Game3Tests {
 	public void testBattle() {
 		OverallGame testBigGame = new OverallGame();
 		Game3 testGame = new Game3(testBigGame) ;
-		testGame.addPlant(1,1,"Grass") ;
-		testGame.addRunoff(1, 2);
-		testGame.battle(testGame.getPlants().get(0), testGame.getRunoff().get(0));
+		Plant testPlant = new Plant(1,1,"Grass") ;
+		Runoff testRunoff = new Runoff(1, 2);
+		testGame.battle(testPlant, testRunoff);
 		//We will check the health of both afterwards
-		assertEquals(testGame.getPlants().get(0).getHealth(), 8) ;
-		assertEquals(testGame.getRunoff().get(0).getHealth(), 7) ;
+		assertEquals(testPlant.getHealth(), 8) ;
+		assertEquals(testRunoff.getHealth(), 7) ;
 		//Now we will kill the runoff
-		testGame.battle(testGame.getPlants().get(0), testGame.getRunoff().get(0));
-		testGame.battle(testGame.getPlants().get(0), testGame.getRunoff().get(0));
-		testGame.battle(testGame.getPlants().get(0), testGame.getRunoff().get(0));
+		testGame.battle(testPlant, testRunoff);
+		testGame.battle(testPlant, testRunoff);
+		testGame.battle(testPlant, testRunoff);
 		assertEquals(testGame.getPlants().get(0).getHealth(), 2) ;
 		assertEquals(testGame.getRunoff(), new ArrayList<Runoff>(0)) ;
 		//Now we will kill the plant
@@ -167,7 +174,8 @@ public class Game3Tests {
 		Game3 testGame = new Game3(testBigGame) ;
 		testGame.addScore(100);
 		testGame.endGame();
-		assertEquals(testBigGame.getGamesComplete()[2],  true);
+		boolean [] winLastGame = {false, false, true};
+		assertEquals(testBigGame.getGamesComplete(),  winLastGame);
 		assertEquals(testBigGame.getOverallScore(), 100);
 		assertEquals(testBigGame.getGameRunning(), true);
 	}

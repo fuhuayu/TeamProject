@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import OverallGame.OverallGame;
 
 /**
- * game2
- *
+ * @author Brendan, Danielle, David, Huayu and Zhanglong
+ * @version 0.1
+ * @since   2015-11-02
+ * Main class of game2
  */
 
 public class RipRapGame {
-	int score;
-	int time,currtime;
-	long starttime;
+	int score;//current game score
+	int time,currtime;//total time and current time
+	long starttime;//time when game start
 	Crab crab;
 	JumpingBar jumpingBar;
 	ArrayList<Stone> stones;

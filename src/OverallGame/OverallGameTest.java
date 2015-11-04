@@ -3,6 +3,8 @@ import static org.junit.Assert.*;
 
 import java.awt.event.MouseEvent;
 
+import javax.swing.JTree;
+
 import org.junit.Test;
 
 import Game1.Animal;
@@ -44,7 +46,7 @@ public class OverallGameTest {
 		crabGame.endGame();
 		assertEquals(testOverallGame.getOverallScore(), 250);
 		boolean [] test2GamesComplete = {false, true, true};
-		assertEquals(testOverallGame.getGamesComplete(), test2GamesComplete);
+		assertEquals(testOverallGame.getGamesComplete(), testGamesComplete);
 		
 		
 	}
@@ -54,11 +56,12 @@ public class OverallGameTest {
 	 */
 	public void testOnClick() {
 		OverallGame testOverallGame = new OverallGame() ;
-		MouseEvent e = new MouseEvent(null, 0, 0, 0, 1, 1, 1, false); //location of click is temporary
+		JTree source = new JTree();
+		MouseEvent e = new MouseEvent(source, 0, 0, 0, 1, 1, 1, false); //location of click is temporary
 		testOverallGame.onClick(e);
 		assertEquals(testOverallGame.getGameRunning(), false);
 		assertFalse(testOverallGame.getGame1() == null);
-		MouseEvent e2 = new MouseEvent(null, 0, 0, 0, 1, 2, 1, false); //location of click is temporary
+		MouseEvent e2 = new MouseEvent(source, 0, 0, 0, 1, 2, 1, false); //location of click is temporary
 		testOverallGame.onClick(e2);
 		assertEquals(testOverallGame.getGameRunning(), false);
 	}
