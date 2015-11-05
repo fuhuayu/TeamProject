@@ -1,4 +1,4 @@
-package Game2;
+package Game1;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package Game2;
+package Game1;
 
 import static org.junit.Assert.*;
 
@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
 import OverallGame.OverallGame;
-import Game2.RipRapGame;
+import Game1.RipRapGame;
 
-public class Game2Test {
+public class Game1Test {
 
 	/**
 	 * @throws InterruptedException

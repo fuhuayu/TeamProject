@@ -1,4 +1,4 @@
-package Game1;
+package Game2;
 import static org.junit.Assert.*;
 
 import java.awt.event.MouseEvent;

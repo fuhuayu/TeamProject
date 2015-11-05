@@ -1,4 +1,4 @@
-package Game1;
+package Game2;
 
 /**
  * @author Dwegrzyn
