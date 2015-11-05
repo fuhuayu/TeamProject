@@ -41,7 +41,7 @@ public class OverallGameTest {
 		
 		//Test crab game: does end game update score?
 		Animal[] animals = new Animal[3];
-		CrabCatcherGame crabGame = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, new OverallGame());
+		CrabCatcherGame crabGame = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, false, new OverallGame(), null);
 		crabGame.setScore(150);
 		crabGame.endGame();
 		assertEquals(testOverallGame.getOverallScore(), 250);
