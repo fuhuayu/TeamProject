@@ -46,6 +46,7 @@ public class CrabCatcherGame {
 	 */
 	public void tickGame(){
 		//increases timer
+		time ++;
 		//updates game's timed aspects - call animal.onTick() for all animals
 		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
 		//check if lives == 0, or time = gameLength, which cause gameOver
