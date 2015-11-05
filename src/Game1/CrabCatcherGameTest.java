@@ -21,7 +21,7 @@ public class CrabCatcherGameTest {
 	@Test
 	public void tickTest(){
 		OverallGame bigGame = new OverallGame();
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, bigGame);
+		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, false, bigGame, null);
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
 		game.addAnimal(crab);
 		
@@ -61,8 +61,8 @@ public class CrabCatcherGameTest {
 	@Test
 	public void setupTest(){
 		Animal[] animals = new Animal[3];
-		CrabCatcherGame game1 = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, new OverallGame());
-		CrabCatcherGame game2 = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, new OverallGame());
+		CrabCatcherGame game1 = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, false,  new OverallGame(), null);
+		CrabCatcherGame game2 = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, false, new OverallGame(), null);
 		
 		//check if generate animals generates 3 animals
 		game1.generateAnimals();
@@ -77,7 +77,7 @@ public class CrabCatcherGameTest {
 	 */
 	@Test
 	public void mouseInputTest(){
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, new OverallGame());
+		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, false, new OverallGame(), null);
 		Animal crab = new Animal(1, 1, "crab", -5, 3, true);
 		Animal fish = new Animal(2, 2, "fish", -3, 3, true);
 		Animal mittencrab = new Animal(3, 3, "mittencrab", 5, 3, true);

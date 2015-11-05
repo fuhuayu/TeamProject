@@ -2,6 +2,8 @@ package Game1;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JFrame;
+
 import OverallGame.OverallGame;
 
 
@@ -21,8 +23,9 @@ public class CrabCatcherGame {
 	private int maxAnimalsOnScreen; 
 	private boolean gameOver = false;
 	private OverallGame bigGame;
+	private JFrame frame;
 
-	//CONSTRUCTOR
+	//CONSTRUCTOR	
 	/**
 	 * @param time - how long the game has been running
 	 * @param speed - rate of gameplay
@@ -33,11 +36,27 @@ public class CrabCatcherGame {
 	 * @param mouseListener - handles mouse clicks, checks if user clicked animal
 	 * @param maxAnimalsOnScreen - the maximum number of animals that can appear onscreen
 	 * @param bigGame - the overall game that this mini game is a part of
+	 * @param frame - the frame the game is drawn in
 	 */
+	
 	public CrabCatcherGame(double time, double speed, Animal[] animals,
 			int score, int lives, double gameLength,
-			MouseListener mouseListener, int maxAnimalsOnScreen, OverallGame bigGame){
+			MouseListener mouseListener, int maxAnimalsOnScreen,
+			boolean gameOver, OverallGame bigGame, JFrame frame) {
+		super();
+		this.time = time;
+		this.speed = speed;
+		this.animals = animals;
+		this.score = score;
+		this.lives = lives;
+		this.gameLength = gameLength;
+		this.mouseListener = mouseListener;
+		this.maxAnimalsOnScreen = maxAnimalsOnScreen;
+		this.gameOver = gameOver;
+		this.bigGame = bigGame;
+		this.frame = frame;
 	}
+
 	
 	
 	//METHODS
@@ -48,6 +67,9 @@ public class CrabCatcherGame {
 		//increases timer
 		time ++;
 		//updates game's timed aspects - call animal.onTick() for all animals
+		for (Animal each : animals) {
+			
+		}
 		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
 		//check if lives == 0, or time = gameLength, which cause gameOver
 	}
@@ -217,6 +239,18 @@ public class CrabCatcherGame {
 
 	public void setBigGame(OverallGame bigGame) {
 		this.bigGame = bigGame;
+	}
+
+
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 	
 
