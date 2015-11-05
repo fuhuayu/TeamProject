@@ -115,80 +115,108 @@ public class CrabCatcherGame {
 		//return the animal if user clicked animal (mouseXY == animalXY), else return null;
 		return null;
 	}
-	
-	
 
+	
 	
 	//GETTERS & SETTERS
-		public double getTime() {
-			return 0.0;
-		}
-		
-		public void setTime(double time) {
-		}
-		
-		public double getSpeed() {
-			return 0.0;
-		}
-		
-		public void setSpeed(double speed) {
-		}
-		public Animal[] getAnimals() {
-			return new Animal[0];
-		}
-		public void setAnimals(Animal[] animals) {
-		}
-		
-		public int getScore() {
-			return 0;
-		}
-		
-		public void setScore(int score) {
-		}
-		public int getLives() {
-			return 0;
-		}
-		public void setLives(int lives) {
-		}
-		
-		public double getGameLength() {
-			return 0;
-		}
-		public void setGameLength(double gameLength) {
-		}
-		
-		public MouseListener getMouseListener() {
-			return null;
-		}
-		public void setCrabMouseListener(MouseListener mouseListener) {
-		}
-		
-		public int getMaxAnimalsOnScreen() {
-			return 0;
-		}
-
-		public void setMaxAnimalsOnScreen(int maxAnimalsOnScreen) {
-		}
+	public double getTime() {
+		return time;
+	}
 
 
-		public boolean getGameOver() {
-			return gameOver;
-		}
+	public void setTime(double time) {
+		this.time = time;
+	}
 
 
-		public void setGameOver(boolean gameOver) {
-			this.gameOver = gameOver;
-		}
+	public double getSpeed() {
+		return speed;
+	}
 
 
-		public OverallGame getBigGame() {
-			return null;
-		}
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
 
 
-		public void setBigGame(OverallGame bigGame) {
-		}
+	public Animal[] getAnimals() {
+		return animals;
+	}
+
+
+	public void setAnimals(Animal[] animals) {
+		this.animals = animals;
+	}
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+
+	public int getLives() {
+		return lives;
+	}
+
+
+	public void setLives(int lives) {
+		this.lives = lives;
+	}
+
+
+	public double getGameLength() {
+		return gameLength;
+	}
+
+
+	public void setGameLength(double gameLength) {
+		this.gameLength = gameLength;
+	}
+
+
+	public MouseListener getMouseListener() {
+		return mouseListener;
+	}
+
+
+	public void setMouseListener(MouseListener mouseListener) {
+		this.mouseListener = mouseListener;
+	}
+
+
+	public int getMaxAnimalsOnScreen() {
+		return maxAnimalsOnScreen;
+	}
+
+
+	public void setMaxAnimalsOnScreen(int maxAnimalsOnScreen) {
+		this.maxAnimalsOnScreen = maxAnimalsOnScreen;
+	}
+
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+
+	public OverallGame getBigGame() {
+		return bigGame;
+	}
+
+
+	public void setBigGame(OverallGame bigGame) {
+		this.bigGame = bigGame;
+	}
 	
-
 
 }

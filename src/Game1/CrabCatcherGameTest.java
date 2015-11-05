@@ -32,7 +32,7 @@ public class CrabCatcherGameTest {
 		game.tickGame();
 		
 		assertEquals("on tick: game time should increase from 0 to 1", 1, game.getTime());
-		assertTrue("on tick: lives = 0 should trigger gameOver", game.getGameOver());
+		assertTrue("on tick: lives = 0 should trigger gameOver", game.isGameOver());
 		assertEquals("on tick: crab time remaining should decrease from 3 to 2", 1, crab.getTimeLeftOnScreen());
 		
 		//check if gameOver is triggered by time = end time
@@ -40,7 +40,7 @@ public class CrabCatcherGameTest {
 		game.setLives(3);
 		game.setTime(9);
 		game.tickGame();
-		assertTrue("on tick: time = gameLength should trigger gameOver", game.getGameOver());
+		assertTrue("on tick: time = gameLength should trigger gameOver", game.isGameOver());
 		
 		//check if expired crab is regenerated
 		game.setGameOver(false);

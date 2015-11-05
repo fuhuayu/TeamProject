@@ -11,7 +11,7 @@ public class Animal {
 	private String typeOfAnimal; //for now, "crab", "mittencrab", or "fish"
 	public int scoreEffect;
 	private double displayDuration; //length of time the animal should stay on screen (constant)
-	private double onscreenCountdown; //how long the animal has left on screen (decreases with time); default is displayDuration
+	private double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
 	private boolean visible;
 	//
 	//CONSTRUCTOR
@@ -25,76 +25,96 @@ public class Animal {
 	 */
 	public Animal(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
 			double displayDuration, boolean visible) {
+		this.xloc = xloc;
+		this.yloc = yloc;
+		this.typeOfAnimal = typeOfAnimal;
+		this.scoreEffect = scoreEffect;
+		this.displayDuration = displayDuration;
+		this.timeLeftOnScreen = displayDuration;
+		this.visible = visible;
 	}
 	
 	//METHODS
 	/**
 	 * Call this method to regenerate animal after it is caught or time on screen expires
-	 * makes the animal invisible, resets its onscreenCountdown to display duration, and sets location randomly
+	 * makes the animal invisible, resets its timeLeftOnScreen to display duration, and sets location randomly
 	 */
 	public void regenerateAnimal(){
-		//sets animal visibility to 0 (could use an animation here)
+		//sets animal visibility to false (could use an animation here)
+		visible = false;
 		//gives animal a random location
-		//reset onscreenCountdown to display duration
+		//reset timeLeftOnScreen to display duration
+		timeLeftOnScreen = displayDuration;
 	}
 	
 	/**
-	 * updates animal's timed elements - decreases onscreenCountdown
+	 * updates animal's timed elements - decreases timeLeftOnScreen
 	 */
 	public void onTick(){
-		//decrease animal's timer
+		//decrease animal's timer; if timer is 0, regenerate animal
+		if (timeLeftOnScreen - 1 <= 0){
+			regenerateAnimal();
+		}
+		else {timeLeftOnScreen--;}
 	}
-	
+
 	
 	//GETTERS & SETTERS
 	public int getXloc() {
-		return 0;
+		return xloc;
 	}
 
 	public void setXloc(int xloc) {
+		this.xloc = xloc;
 	}
 
 	public int getYloc() {
-		return 0;
+		return yloc;
 	}
 
 	public void setYloc(int yloc) {
+		this.yloc = yloc;
 	}
 
 	public String getTypeOfAnimal() {
-		return "";
+		return typeOfAnimal;
 	}
 
 	public void setTypeOfAnimal(String typeOfAnimal) {
+		this.typeOfAnimal = typeOfAnimal;
 	}
 
 	public int getScoreEffect() {
-		return 0;
+		return scoreEffect;
 	}
 
 	public void setScoreEffect(int scoreEffect) {
+		this.scoreEffect = scoreEffect;
 	}
 
-	public double getTimeLeftOnScreen() {
-		return 0;
-	}
-
-	public void setTimeLeftOnScreen(double timeLeftOnScreen) {
-	}
-
-	public boolean isVisible() {
-		return false;
-	}
-
-	public void setVisible(boolean visible) {
-	}
-	
 	public double getDisplayDuration() {
-		return 0;
+		return displayDuration;
 	}
 
 	public void setDisplayDuration(double displayDuration) {
+		this.displayDuration = displayDuration;
 	}
 
+	public double getTimeLeftOnScreen() {
+		return timeLeftOnScreen;
+	}
+
+	public void setTimeLeftOnScreen(double timeLeftOnScreen) {
+		this.timeLeftOnScreen = timeLeftOnScreen;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+	
 
 }
