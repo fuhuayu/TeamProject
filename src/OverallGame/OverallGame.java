@@ -46,7 +46,17 @@ public class OverallGame implements Serializable{
 	 * game2 = null
 	 * game3 = null
 	 */
-	public OverallGame() {} ;
+	public OverallGame() {
+		this.overallScore = 0;
+		this.gamesComplete = new boolean[3]; this.gamesComplete[0] = false ;
+		this.gamesComplete[1] = false ; this.gamesComplete[2] = false ;
+		this.gameRunning = true ;
+		this.highscores = null;
+		this.timeInIdle = 0;
+		this.game1 = null;
+		this.game2 = null;
+		this.game3 = null;
+	} ;
 	
 	
 	/**
