@@ -27,27 +27,44 @@ public class Runoff {
 	 * @param other - the runoff to be compared to
 	 */
 	public boolean equals (Runoff other) {
-		return false;
-	} 
+		return (row == other.getRow() && col == other.getCol());
+	}
+
+	
 	
 	/**
 	 * Getters and Setters
 	 */
 	public int getRow() {
-		return 0;
-	} 
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
 	public int getCol() {
-		return 0;
-	} 
+		return col;
+	}
+
+	public void setCol(int col) {
+		this.col = col;
+	}
+
 	public int getStrength() {
-		return 0;
-	} 
+		return strength;
+	}
+
+	public void setStrength(int strength) {
+		this.strength = strength;
+	}
+
 	public int getHealth() {
-		return 0;
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
 	} 
 	
-	public void setRow(int row) {}
-	public void setCol(int col) {}
-	public void setStrength(int strength) {}
-	public void setHealth(int health) {}
 }

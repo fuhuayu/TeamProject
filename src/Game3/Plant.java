@@ -28,32 +28,52 @@ public class Plant {
 	 * @param other - The plant to be compared to
 	 */
 	public boolean equals(Plant other)  {
-		return false;
+		return (row == other.getRow() && col == other.getCol() && type == other.getType());
 	}
+
+	
 	
 	/**
 	 * Getters for all attributes
 	 */
 	public int getRow() {
-		return 0;
+		return row;
 	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
 	public int getCol() {
-		return 0;
+		return col;
 	}
+
+	public void setCol(int col) {
+		this.col = col;
+	}
+
 	public int getStrength() {
-		return 0;
+		return strength;
 	}
-	public int getHealth()   {
-		return 0;
+
+	public void setStrength(int strength) {
+		this.strength = strength;
 	}
-	public String getType()  {
-		return null;
+
+	public int getHealth() {
+		return health;
 	}
-	
-	public void setRow(int row) {}
-	public void setCol(int col) {}
-	public void setStrength(int strength) {}
-	public void setHealth(int health) {}
-	public void setType(String type) {}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 }

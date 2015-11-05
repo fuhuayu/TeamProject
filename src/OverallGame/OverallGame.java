@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+
+import javax.swing.JFrame;
+
 import Game1.CrabCatcherGame;
 import Game2.RipRapGame;
 import Game3.Game3;
@@ -28,6 +31,7 @@ public class OverallGame implements Serializable{
 	private CrabCatcherGame game1;
 	private RipRapGame game2;
 	private Game3 game3;
+	private JFrame frame;
 	
 	/**
 	 * Constructor
@@ -100,70 +104,92 @@ public class OverallGame implements Serializable{
 	 * Getters and Setters for the necessary parameters
 	 */
 	public int getOverallScore() {
-		return 0;
+		return overallScore;
 	}
 
 
-	public void setOverallScore(int overallScore) {}
+	public void setOverallScore(int overallScore) {
+		this.overallScore = overallScore;
+	}
 
 
 	public boolean[] getGamesComplete() {
-		return null;
+		return gamesComplete;
 	}
 
 
-	public void setGamesComplete(boolean[] gamesComplete) {}
+	public void setGamesComplete(boolean[] gamesComplete) {
+		this.gamesComplete = gamesComplete;
+	}
 
 
 	public boolean getGameRunning() {
-		return false;
+		return gameRunning;
 	}
 
-	public void setGameRunning(boolean gameRunning) {}
+	public void setGameRunning(boolean gameRunning) {
+		this.gameRunning = gameRunning;
+	}
 
 	public int[] getHighscores() {
-		return null;
+		return highscores;
 	}
 
-	public void setHighscores(int[] highscores) {}
+	public void setHighscores(int[] highscores) {
+		this.highscores = highscores;
+	}
 
 
 	public double getTimeInIdle() {
-		return 0;
+		return timeInIdle;
 	}
 
 
-	public void setTimeInIdle(double timeInIdle) {}
+	public void setTimeInIdle(double timeInIdle) {
+		this.timeInIdle = timeInIdle;
+	}
 
 
 	public CrabCatcherGame getGame1() {
-		return null;
+		return game1;
 	}
 
 
-	public void setGame1(CrabCatcherGame game1) {}
+	public void setGame1(CrabCatcherGame game1) {
+		this.game1 = game1;
+	}
 
 
 	public RipRapGame getGame2() {
-		return null;
+		return game2;
 	}
 
 
-	public void setGame2(RipRapGame game2) {}
+	public void setGame2(RipRapGame game2) {
+		this.game2 = game2;
+	}
 
 
 	public Game3 getGame3() {
-		return null;
+		return game3;
 	}
 
 
-	public void setGame3(Game3 game3) {}
+	public void setGame3(Game3 game3) {
+		this.game3 = game3;
+	}
 
 
 	public static long getSerialversionuid() {
-		return 0;
+		return serialVersionUID;
 	} ;
 	
+	public JFrame getFrame() {
+		return frame;
+	}
 	
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
 	
 }

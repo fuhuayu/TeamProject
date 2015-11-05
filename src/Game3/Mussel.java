@@ -30,20 +30,28 @@ public class Mussel {
 	 * @return
 	 */
 	public int getStage() {
-		return 0;
+		return stage;
 	}
 	public int getXLoc() {
-		return 0;
+		return xloc;
 	}
 	public int getYLoc() {
-		return 0;
+		return yloc;
 	}
 	public double getTimeSinceGrowth() {
-		return 0;
+		return timeSinceGrowth;
 	}
 
-	public void setStage(int stage) {}
-	public void setXLoc(int xLoc) {}
-	public void setYLoc(int yLoc) {}
-	public void setTimeSinceGrowth(double timeSinceGrowth) {}
+	public void setStage(int stage) {
+		this.stage = stage;
+	}
+	public void setXLoc(int xLoc) {
+		this.xloc = xLoc;
+	}
+	public void setYLoc(int yLoc) {
+		this.yloc = yLoc;
+	}
+	public void setTimeSinceGrowth(double timeSinceGrowth) {
+		this.timeSinceGrowth = timeSinceGrowth;
+	}
 }

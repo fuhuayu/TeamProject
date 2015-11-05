@@ -98,39 +98,60 @@ public class Game3 {
 	 * Getters And Setters 
 	 */
 	public double 	getTime() {
-		return 0;
+		return time;
 	}
 	public int 		getScore() {
-		return 0;
+		return score;
 	}
 	public int 		getMoney() {
-		return 0;
+		return money;
 	}
 	public boolean  getGameRunning() {
-		return false;
+		return gameRunning;
 	}
-	public boolean  getGameEnded() {
-		return false;
+	public boolean  getGameOver() {
+		return gameOver;
 	}
 	public ArrayList<Plant> getPlants() {
-		return null;
+		return plants;
 	}
-	public ArrayList<Runoff> getRunoff(){
-		return null;
+	public ArrayList<Runoff> getEnemies(){
+		return enemies;
 	}
 	public ArrayList<Mussel> getMussels(){
-		return null;
+		return mussels;
+	}
+	public OverallGame getBigGame() {
+		return bigGame;
 	}
 
-	public void setTime(double time) {}
-	public void setScore(int score) {}
-	public void setMoney(int money) {}
-	public void setPlants(ArrayList<Plant> plants) {}
-	public void setEnemies(ArrayList<Runoff> enemies) {}
-	public void setMussels(ArrayList<Mussel> mussels) {}
-	public void setGameRunning(boolean gameRunning) {}
-	public void setGameOver(boolean gameOver) {}
-	public void setBigGame(OverallGame bigGame) {	}
+	public void setTime(double time) {
+		this.time = time;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	public void setPlants(ArrayList<Plant> plants) {
+		this.plants = plants;
+	}
+	public void setEnemies(ArrayList<Runoff> enemies) {
+		this.enemies = enemies;
+	}
+	public void setMussels(ArrayList<Mussel> mussels) {
+		this.mussels = mussels;
+	}
+	public void setGameRunning(boolean gameRunning) {
+		this.gameRunning = gameRunning;
+	}
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+	public void setBigGame(OverallGame bigGame) {	
+		this.bigGame = bigGame;
+	}
 
 	
 }
