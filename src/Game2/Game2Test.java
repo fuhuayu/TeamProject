@@ -2,6 +2,7 @@ package Game2;
 
 import static org.junit.Assert.*;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -78,16 +79,16 @@ public class Game2Test {
 		
 		// test if the map is properly udate while the time goes on
 		testGame2.updateMap();
-		assertEquals(testGame2.getCrab().getPosition(), "new Position");
+		assertEquals(testGame2.getCrab().getPosition(), (new Point(0,0)));
 		//assertEquals(testGame2.getSun().getPosition(), "new Position");
 //		for(int i =0; i< testGame2.getClouds().size();i++){
 //			assertEquals(testGame2.getClouds().get(i).getPosition(), "new Position");
 //		}
 		for(int i =0; i< testGame2.getStones().size();i++){
-			assertEquals(testGame2.getStones().get(i).getPosition(), "new Position");
+			assertEquals(testGame2.getStones().get(i).getPosition(), (new Point(0,0)));
 		}
 		for(int i =0; i< testGame2.getWall().size();i++){
-			assertEquals(testGame2.getWall().get(i), "new Position");
+			assertEquals(testGame2.getWall().get(i), (new Point(0,0)));
 		}
 		
 		
@@ -96,19 +97,19 @@ public class Game2Test {
 		testGame2.setJumpingBar(new JumpingBar(2,1));
 		assertEquals(testGame2.getJumpingBar().getCurrentValue(),0);// when current value is below stop2
 		testGame2.onClick();
-		assertEquals(testGame2.getCrab().getPosition(), "same Position");// back to the same place
+		assertEquals(testGame2.getCrab().getPosition(), (new Point(0,0)));// back to the same place
 		
 		//condition 2
 		testGame2.getJumpingBar().update();
 		assertEquals(testGame2.getJumpingBar().getCurrentValue(),1);// the currentValue is at Stop2
 		testGame2.onClick();
-		assertEquals(testGame2.getCrab().getPosition(), "next Position");//climb over stone
+		assertEquals(testGame2.getCrab().getPosition(), (new Point(0,0)));//climb over stone
 		
 		// condition 3
 		testGame2.getJumpingBar().update();
 		assertEquals(testGame2.getJumpingBar().getCurrentValue(),2);// the currentValue is at stop1
 		testGame2.onClick();
-		assertEquals(testGame2.getCrab().getPosition(), "original Position");//back to the original position
+		assertEquals(testGame2.getCrab().getPosition(), (new Point(0,0)));//back to the original position
 		
 
 		

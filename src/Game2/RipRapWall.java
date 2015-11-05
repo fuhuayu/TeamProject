@@ -5,16 +5,13 @@ package Game2;
  * @since   2015-11-02
  * The place to block the crab;
  */
-public class RipRapWall {
-	int x;
-	int y;
+public class RipRapWall extends MovingObject{
 	/**
 	 * @param x x position of a piece of wall
 	 * @param y y position of a piece of wall
 	 */
 	public RipRapWall(int x, int y) {
-		this.x = x;
-		this.y = y;
+	    super(x,y,1);
 	}
 	
 }
