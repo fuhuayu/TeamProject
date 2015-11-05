@@ -10,8 +10,8 @@ import java.io.Serializable;
 
 import javax.swing.JFrame;
 
-import Game1.CrabCatcherGame;
-import Game2.RipRapGame;
+import Game2.CrabCatcherGame;
+import Game1.RipRapGame;
 import Game3.Game3;
 
 /**
