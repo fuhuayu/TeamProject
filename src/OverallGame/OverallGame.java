@@ -60,10 +60,7 @@ public class OverallGame implements Serializable{
 		this.game1 = null;
 		this.game2 = null;
 		this.game3 = null;
-		this.frame = new JFrame() ;
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.addMouseListener(new MouseListener());
-		frame.setBounds(0, 0, frameWidth, frameHeight);
+		this.frame = new gameWindow() ;
 	} ;
 	
 	/**
