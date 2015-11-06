@@ -2,8 +2,6 @@ package Game1;
 
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
 import OverallGame.OverallGame;
 
 /**
@@ -149,14 +147,6 @@ public class RipRapGame {
 	 * Will also affect the size of Obstacles and quantity.
 	 */
 	public void updateMap(){
-		
-	}
-	
-	/**
-	 * draw some MLG game stuff
-	 * @param frame
-	 */
-	public void update(JFrame frame) {
 		
 	}
 	/**

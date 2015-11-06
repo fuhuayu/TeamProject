@@ -32,7 +32,7 @@ public class gameWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					gameWindow window = new gameWindow();
+					gameWindow window = new gameWindow(bigGame);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
