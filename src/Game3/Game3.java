@@ -36,7 +36,7 @@ public class Game3 {
 	 * Updates the game state and checks for player input
 	 * This includes the time remaining, character actions and movement, and updating the score and money
 	 */
-	public void update(JFrame frame) {} ;
+	public void update() {} ;
 	
 	/**
 	 * The player can click on the button to exit the game OR
