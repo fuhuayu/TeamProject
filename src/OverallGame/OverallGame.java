@@ -24,7 +24,7 @@ import Game3.Game3;
 public class OverallGame implements Serializable{
 	private int overallScore ;
 	private boolean[] gamesComplete ;
-	private boolean   gameRunning   ;
+	private int   gamesRunning   ;
 	private int[] highscores 		;
 	transient private double timeInIdle;
 	private static final long serialVersionUID = 0;
@@ -47,12 +47,13 @@ public class OverallGame implements Serializable{
 	 * game1 = null
 	 * game2 = null
 	 * game3 = null
+	 * gamesRunning (0 if overall, 1 if game1, 2 if game2, 3 if game3)
 	 */
 	public OverallGame() {
 		this.overallScore = 0;
 		this.gamesComplete = new boolean[3]; this.gamesComplete[0] = false ;
 		this.gamesComplete[1] = false ; this.gamesComplete[2] = false ;
-		this.gameRunning = true ;
+		this.gamesRunning = 0 ;
 		this.highscores = null;
 		this.timeInIdle = 0;
 		this.game1 = null;
