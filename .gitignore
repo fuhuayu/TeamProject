@@ -1,6 +1,2 @@
 *.class
-bin/OverallGame/OverallGame.class
-
-src/Game2/CrabCatcherGame.java
-
-src/OverallGame/OverallGame.java
+*.class

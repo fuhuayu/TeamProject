@@ -32,7 +32,7 @@ public class OverallGame implements Serializable{
 	private CrabCatcherGame game1;
 	private RipRapGame game2;
 	private Game3 game3;
-	private JFrame frame;
+	private gameWindow frame;
 	private int frameWidth = 500;
 	private int frameHeight = 500; 
 	
@@ -60,7 +60,7 @@ public class OverallGame implements Serializable{
 		this.game1 = null;
 		this.game2 = null;
 		this.game3 = null;
-		this.frame = new gameWindow() ;
+		this.frame = new gameWindow(this) ;
 	} ;
 	
 	/**
@@ -115,7 +115,6 @@ public class OverallGame implements Serializable{
 	 */
 	public static void main(String [] args) {
 		OverallGame testGame = new OverallGame() ;
-		testGame.getFrame().setVisible(true);
 	}
 
 
@@ -169,22 +168,22 @@ public class OverallGame implements Serializable{
 	}
 
 
-	public CrabCatcherGame getGame1() {
+	public CrabCatcherGame getGame2() {
 		return game1;
 	}
 
 
-	public void setGame1(CrabCatcherGame game1) {
+	public void setGame2(CrabCatcherGame game1) {
 		this.game1 = game1;
 	}
 
 
-	public RipRapGame getGame2() {
+	public RipRapGame getGame1() {
 		return game2;
 	}
 
 
-	public void setGame2(RipRapGame game2) {
+	public void setGame1(RipRapGame game2) {
 		this.game2 = game2;
 	}
 
@@ -203,11 +202,11 @@ public class OverallGame implements Serializable{
 		return serialVersionUID;
 	} ;
 	
-	public JFrame getFrame() {
+	public gameWindow getGameWindow() {
 		return frame;
 	}
 	
-	public void setFrame(JFrame frame) {
+	public void setGameWindow(gameWindow frame) {
 		this.frame = frame;
 	}
 	
