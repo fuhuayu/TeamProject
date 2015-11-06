@@ -1,4 +1,5 @@
 package Game2;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -19,7 +20,7 @@ public class CrabCatcherGame {
 	private int score;
 	private int lives;
 	private double gameLength; //how long is this game?
-	private MouseListener mouseListener;
+	private MouseAdapter mouseListener;
 	private int maxAnimalsOnScreen; 
 	private boolean gameOver = false;
 	private OverallGame bigGame;
@@ -41,7 +42,7 @@ public class CrabCatcherGame {
 	
 	public CrabCatcherGame(double time, double speed, Animal[] animals,
 			int score, int lives, double gameLength,
-			MouseListener mouseListener, int maxAnimalsOnScreen,
+			MouseAdapter mouseListener, int maxAnimalsOnScreen,
 			boolean gameOver, OverallGame bigGame, JFrame frame) {
 		super();
 		this.time = time;
@@ -207,7 +208,7 @@ public class CrabCatcherGame {
 	}
 
 
-	public void setMouseListener(MouseListener mouseListener) {
+	public void setMouseListener(MouseAdapter mouseListener) {
 		this.mouseListener = mouseListener;
 	}
 

@@ -7,8 +7,8 @@ import javax.swing.JTree;
 
 import org.junit.Test;
 
-import Game1.Animal;
-import Game1.CrabCatcherGame;
+import Game2.Animal;
+import Game2.CrabCatcherGame;
 import Game3.Game3;
 
 /**

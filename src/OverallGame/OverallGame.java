@@ -1,6 +1,7 @@
 package OverallGame;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -64,7 +65,6 @@ public class OverallGame implements Serializable{
 		frame.addMouseListener(new MouseListener());
 		frame.setBounds(0, 0, frameWidth, frameHeight);
 	} ;
-	
 	
 	/**
 	 * Animates the map containing the game locations
