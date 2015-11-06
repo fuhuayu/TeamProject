@@ -142,12 +142,12 @@ public class OverallGame implements Serializable{
 	}
 
 
-	public boolean getGameRunning() {
-		return gameRunning;
+	public int getGamesRunning() {
+		return gamesRunning;
 	}
 
-	public void setGameRunning(boolean gameRunning) {
-		this.gameRunning = gameRunning;
+	public void setGameRunning(int gameRunning) {
+		this.gamesRunning = gameRunning;
 	}
 
 	public int[] getHighscores() {
