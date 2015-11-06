@@ -57,6 +57,11 @@ public class CrabCatcherGame {
 		this.bigGame = bigGame;
 		this.frame = frame;
 	}
+	
+	//simple constructor to set defaults
+	public CrabCatcherGame(OverallGame bigGame){
+		this.bigGame = bigGame;
+	}
 
 	
 	
