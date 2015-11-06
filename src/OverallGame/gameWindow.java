@@ -6,6 +6,10 @@ import javax.swing.JFrame;
 
 
 public class gameWindow extends JFrame implements MouseListener{
+	
+	public gameWindow() {
+		addMouseListener(this);
+	}
 
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
