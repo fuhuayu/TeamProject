@@ -35,16 +35,16 @@ public class Game3Tests {
 		//Score and Money will Go up by 5 every 5 seconds
 		assertEquals(testGame.getScore(), 5);
 		assertEquals(testGame.getMoney(), 105);
-		assertEquals(testGame.getEnemies().get(0).getCol(), 2);
+		assertEquals(testGame.getRunoff().get(0).getCol(), 2);
 		testGame.setTime(5);
 		testGame.update(); //runoff will fight the plant
 		testGame.setGameRunning(true);
 		testGame.setGameOver(true);
 		assertEquals(testGame.getScore(), 10);
 		assertEquals(testGame.getMoney(), 110);
-		assertEquals(testGame.getEnemies().get(0).getHealth(), 7);
+		assertEquals(testGame.getRunoff().get(0).getHealth(), 7);
 		assertEquals(testGame.getPlants().get(0).getHealth(), 8);
-		assertEquals(testGame.getEnemies().get(0).getCol(), 2);
+		assertEquals(testGame.getRunoff().get(0).getCol(), 2);
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class Game3Tests {
 		//Test Exiting the game
 		MouseEvent e4 = new MouseEvent(null, 0, 0, 0, 99, 99, 1, false);
 		testGame.onClick(e4) ;
-		assertTrue( testGame.getGameOver() );
+		assertTrue( testGame.getGameEnded() );
 	}
 
 	/**
@@ -128,10 +128,10 @@ public class Game3Tests {
 		testGame.addRunoff(1,1) ;
 		ArrayList<Runoff> testRunoff = new ArrayList<Runoff>(1);
 		testRunoff.add(new Runoff(1,1));
-		assertEquals(testGame.getEnemies(), testRunoff);
+		assertEquals(testGame.getRunoff(), testRunoff);
 		testGame.addRunoff(1,1) ;
 		testRunoff.add(new Runoff(2,1));
-		assertEquals(testGame.getEnemies(), testRunoff);
+		assertEquals(testGame.getRunoff(), testRunoff);
 	}
 
 	/**
@@ -155,12 +155,12 @@ public class Game3Tests {
 		testGame.battle(testPlant, testRunoff);
 		testGame.battle(testPlant, testRunoff);
 		assertEquals(testGame.getPlants().get(0).getHealth(), 2) ;
-		assertEquals(testGame.getEnemies(), new ArrayList<Runoff>(0)) ;
+		assertEquals(testGame.getRunoff(), new ArrayList<Runoff>(0)) ;
 		//Now we will kill the plant
 		testGame.addRunoff(1, 2);
-		testGame.battle(testGame.getPlants().get(0), testGame.getEnemies().get(0));
+		testGame.battle(testGame.getPlants().get(0), testGame.getRunoff().get(0));
 		assertEquals(testGame.getPlants(), new ArrayList<Plant>(0)) ;
-		assertEquals(testGame.getEnemies().get(0).getHealth(), 7)	;
+		assertEquals(testGame.getRunoff().get(0).getHealth(), 7)	;
 	}
 	
 	/**
