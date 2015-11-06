@@ -32,6 +32,8 @@ public class OverallGame implements Serializable{
 	private RipRapGame game2;
 	private Game3 game3;
 	private JFrame frame;
+	private int frameWidth = 500;
+	private int frameHeight = 500; 
 	
 	/**
 	 * Constructor
@@ -56,6 +58,10 @@ public class OverallGame implements Serializable{
 		this.game1 = null;
 		this.game2 = null;
 		this.game3 = null;
+		this.frame = new JFrame() ;
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addMouseListener(new MouseListener());
+		frame.setBounds(0, 0, frameWidth, frameHeight);
 	} ;
 	
 	
@@ -65,7 +71,9 @@ public class OverallGame implements Serializable{
 	 * Players can view the high scores and exit the game
 	 * If the player sits idle for too long, the game will restart
 	 */
-	public void update() {} ;
+	public void update() {
+		
+	}
 	
 	/**
 	 * This method will start the game that the player picks
@@ -107,7 +115,10 @@ public class OverallGame implements Serializable{
 	 * main function to begin the games with
 	 * @param args
 	 */
-	public static void main(String [] args) {}
+	public static void main(String [] args) {
+		OverallGame testGame = new OverallGame() ;
+		testGame.getFrame().setVisible(true);
+	}
 
 
 	/**
