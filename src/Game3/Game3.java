@@ -2,6 +2,8 @@ package Game3;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import OverallGame.OverallGame;
 
 /**
