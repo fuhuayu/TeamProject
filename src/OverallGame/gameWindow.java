@@ -1,30 +1,17 @@
 package OverallGame;
-
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JButton;
+import javax.swing.JFrame;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-import javax.swing.JPanel;
+public class gameWindow extends JFrame implements MouseListener{
+	
+	public gameWindow() {
+		addMouseListener(this);
+	}
 
-import Game1.RipRapGame;
-import Game2.CrabCatcherGame;
-import Game3.Game3;
-
-public class gameWindow {
-	private OverallGame bigGame;
-
-	private JFrame frame;
-
+<<<<<<< HEAD
 	/**
 	 * Launch the application.
 	 */
@@ -39,59 +26,31 @@ public class gameWindow {
 				}
 			}
 		});
+=======
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+>>>>>>> origin/master
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public gameWindow(OverallGame bigGame) {
-		this.bigGame = bigGame;
-		initialize();
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
-		JButton btnStartGame = new JButton("Start Game 1");
-		btnStartGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(1);
-				bigGame.setGame1(new RipRapGame(0, 0, 0, null, null, null, null, null, bigGame, null));
-				bigGame.getGame1().update(frame);
-			}
-		});
-		frame.getContentPane().add(btnStartGame, BorderLayout.WEST);
+	}
+
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
-		JButton btnStartGame_1 = new JButton("Start Game 2");
-		frame.getContentPane().add(btnStartGame_1, BorderLayout.CENTER);
-		btnStartGame_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(1);
-				bigGame.setGame2(new CrabCatcherGame(0, 0, null, 0, 0, 0, null, 0, false, bigGame, frame));
-				bigGame.getGame2().update(frame);
-			}
-		});
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
-		JButton btnStartGame_2 = new JButton("Start Game 3");
-		frame.getContentPane().add(btnStartGame_2, BorderLayout.EAST);
-		btnStartGame_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(3);
-				bigGame.setGame3(new Game3(bigGame));
-				bigGame.getGame3().update(frame);
-			}
-		});
-		frame.setVisible(true);
 	}
 
 }
