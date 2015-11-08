@@ -2,6 +2,8 @@ package Game3;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import OverallGame.OverallGame;
 
 /**
@@ -28,7 +30,17 @@ public class Game3 {
 	 * (time = 300.0, score = 0, money = 100, no plants or runoff, 5 Mussels in pseudorandom positions)
 	 * @param bigGame - The handler for the entire game
 	 */
-	public Game3(OverallGame bigGame) {} ;
+	public Game3(OverallGame bigGame) {
+		this.time	=	300.0	;
+		this.score	=	0	;
+		this.money	=	100	;
+		this.plants	=	new ArrayList<Plant>();
+		this.enemies	=	new ArrayList<Runoff>();
+		this.mussels	=	new ArrayList<Mussel>();
+		this.gameRunning	=	true;
+		this.gameOver	=	false;
+		this.bigGame	=	bigGame;
+	}
 	
 	/**
 	 * Updates the game state and checks for player input
@@ -55,7 +67,9 @@ public class Game3 {
 	 * @param col - the col of the plant to be made
 	 * @param type - the type of plant to be placed
 	 */
-	public void addPlant(int row, int col, String type) {} ;
+	public void addPlant(int row, int col, String type) {
+		getPlants().add(new Plant(row, col, type));
+	}
 	
 	/**
 	 *  Adds some runoff to the game at a random point
@@ -64,7 +78,9 @@ public class Game3 {
 	 *  @param row - the row of the runoff to be made
 	 *  @param col - the column of the runoff to be made
 	 */
-	public void addRunoff(int row, int col) {};
+	public void addRunoff(int row, int col) {
+		getEnemies().add(new Runoff(row, col));
+	}
 
 	/**
 	 * Computes a fight between a plant and some runoff (Health - Strength)
@@ -73,26 +89,42 @@ public class Game3 {
 	 * @param plant - the plant object that the runoff ran into
 	 * @param runoff- the runoff object that ran into the plant
 	 */
-	public void battle(Plant plant, Runoff runoff) {} ;
+	public void battle(Plant plant, Runoff runoff) {
+		plant.setHealth(plant.getHealth() - runoff.getStrength());
+		if (plant.getHealth() <= 0) {
+			getPlants().remove(plant);
+		}
+		runoff.setHealth(runoff.getHealth() - plant.getStrength());
+		if (runoff.getHealth() <= 0) {
+			getEnemies().remove(runoff) ;
+		}
+	}
 	
 	/**
 	 * Adds the given amount to the player's money
 	 * Used for testing and for mussel collection
 	 * @param amount - the amount of money to be added
 	 */
-	public void addMoney(int amount) {} ;
+	public void addMoney(int amount) {
+		this.money += amount;
+	}
 	
 	/**
 	 * If the game ends, passes the score to the overall score
 	 * And sets the overall shell to the running state and calls the update method on the overall shell
 	 */
-	public void endGame() {} ;
+	public void endGame() {
+		getBigGame().setOverallScore(getBigGame().getOverallScore() + getScore());
+		//Implement the latter part
+	}
 	
 	/**
 	 * Adds a score to the player's score
 	 * @param score - the score to be added
 	 */
-	public void addScore(int score) {}
+	public void addScore(int score) {
+		this.score += score;
+	}
 	
 	/**
 	 * Getters And Setters 

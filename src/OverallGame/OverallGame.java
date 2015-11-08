@@ -32,9 +32,9 @@ public class OverallGame implements Serializable{
 	private CrabCatcherGame game1;
 	private RipRapGame game2;
 	private Game3 game3;
-	private gameWindow frame;
+	private gameWindow window;
 	private int frameWidth = 500;
-	private int frameHeight = 500; 
+	private int frameHeight = 500;
 	
 	/**
 	 * Constructor
@@ -60,8 +60,8 @@ public class OverallGame implements Serializable{
 		this.game1 = null;
 		this.game2 = null;
 		this.game3 = null;
-		this.frame = new gameWindow(this) ;
-	} ;
+		this.window	 = new gameWindow(this) ; 
+	}
 	
 	/**
 	 * Animates the map containing the game locations
@@ -70,7 +70,26 @@ public class OverallGame implements Serializable{
 	 * If the player sits idle for too long, the game will restart
 	 */
 	public void update() {
-		
+		long previousTime = System.nanoTime();
+		long currentTime;
+		double passedTime = 0.0;
+		double timeBetween = 0.0;
+		int	ticks = 0;
+		while(gamesRunning == 0) {
+			
+			currentTime	=	System.nanoTime();
+			passedTime	+=	currentTime - previousTime ;
+			previousTime	=	currentTime ;
+			timeBetween	+=	passedTime / 1000000000.0;
+			while (timeBetween > (1/60.0)) {
+				timeBetween -= 1/60.0;
+				//Game Logic Updates Running at 60FPS
+				ticks++;
+				if (ticks % 60 == 0) {
+					ticks = 0;
+				}
+			}
+		}
 	}
 	
 	/**
@@ -78,7 +97,9 @@ public class OverallGame implements Serializable{
 	 * or will exit the game if they click the exit button
 	 * @param e - a Mouse Event (click) from the user that will determine their action
 	 */
-	public void onClick(MouseEvent e) {} ;
+	public void onClick(MouseEvent e) {
+		//This Function may be Taken Care of already in the gameWindow Class
+	} ;
 	
 	/**
 	 * Method to serialize OverallGame, which contains the other games as params
@@ -115,38 +136,35 @@ public class OverallGame implements Serializable{
 	 */
 	public static void main(String [] args) {
 		OverallGame testGame = new OverallGame() ;
+		testGame.update();
 	}
-
 
 	/**
 	 * Getters and Setters for the necessary parameters
 	 */
+
 	public int getOverallScore() {
 		return overallScore;
 	}
-
 
 	public void setOverallScore(int overallScore) {
 		this.overallScore = overallScore;
 	}
 
-
 	public boolean[] getGamesComplete() {
 		return gamesComplete;
 	}
-
 
 	public void setGamesComplete(boolean[] gamesComplete) {
 		this.gamesComplete = gamesComplete;
 	}
 
-
 	public int getGamesRunning() {
 		return gamesRunning;
 	}
 
-	public void setGameRunning(int gameRunning) {
-		this.gamesRunning = gameRunning;
+	public void setGamesRunning(int gamesRunning) {
+		this.gamesRunning = gamesRunning;
 	}
 
 	public int[] getHighscores() {
@@ -157,57 +175,65 @@ public class OverallGame implements Serializable{
 		this.highscores = highscores;
 	}
 
-
 	public double getTimeInIdle() {
 		return timeInIdle;
 	}
-
 
 	public void setTimeInIdle(double timeInIdle) {
 		this.timeInIdle = timeInIdle;
 	}
 
-
-	public CrabCatcherGame getGame2() {
+	public CrabCatcherGame getGame1() {
 		return game1;
 	}
 
-
-	public void setGame2(CrabCatcherGame game1) {
+	public void setGame1(CrabCatcherGame game1) {
 		this.game1 = game1;
 	}
 
-
-	public RipRapGame getGame1() {
+	public RipRapGame getGame2() {
 		return game2;
 	}
 
-
-	public void setGame1(RipRapGame game2) {
+	public void setGame2(RipRapGame game2) {
 		this.game2 = game2;
 	}
-
 
 	public Game3 getGame3() {
 		return game3;
 	}
 
-
 	public void setGame3(Game3 game3) {
 		this.game3 = game3;
 	}
 
+	public gameWindow getWindow() {
+		return window;
+	}
+
+	public void setWindow(gameWindow window) {
+		this.window = window;
+	}
+
+	public int getFrameWidth() {
+		return frameWidth;
+	}
+
+	public void setFrameWidth(int frameWidth) {
+		this.frameWidth = frameWidth;
+	}
+
+	public int getFrameHeight() {
+		return frameHeight;
+	}
+
+	public void setFrameHeight(int frameHeight) {
+		this.frameHeight = frameHeight;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	} ;
-	
-	public gameWindow getGameWindow() {
-		return frame;
 	}
-	
-	public void setGameWindow(gameWindow frame) {
-		this.frame = frame;
-	}
-	
+
+
 }

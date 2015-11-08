@@ -20,7 +20,12 @@ public class Runoff {
 	 * @param row - the row to place the runoff in
 	 * @param col - the column to place the runoff in
 	 */
-	public Runoff(int row, int col) {} ;
+	public Runoff(int row, int col) {
+		this.row	=	row	;
+		this.col	=	col	;
+		this.strength	=	2	;
+		this.health		=	10	;
+	} ;
 	
 	/**
 	 * Runoff are equal if they are in the same row and column

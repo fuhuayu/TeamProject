@@ -32,7 +32,8 @@ public class gameWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					gameWindow window = new gameWindow();
+					OverallGame bigGame = new OverallGame();
+					gameWindow window = new gameWindow(bigGame);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,14 +60,14 @@ public class gameWindow {
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 950, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnStartGame = new JButton("Start Game 1");
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(1);
-				bigGame.setGame1(new RipRapGame(0, 0, 0, null, null, null, null, null, bigGame, null));
+				bigGame.setGamesRunning(1);
+				bigGame.setGame2(new RipRapGame(0, 0, 0, null, null, null, null, null, bigGame, null));
 				bigGame.getGame1().update(frame);
 			}
 		});
@@ -76,8 +77,8 @@ public class gameWindow {
 		frame.getContentPane().add(btnStartGame_1, BorderLayout.CENTER);
 		btnStartGame_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(1);
-				bigGame.setGame2(new CrabCatcherGame(0, 0, null, 0, 0, 0, null, 0, false, bigGame, frame));
+				bigGame.setGamesRunning(1);
+				bigGame.setGame1(new CrabCatcherGame(0, 0, null, 0, 0, 0, null, 0, false, bigGame, frame));
 				bigGame.getGame2().update(frame);
 			}
 		});
@@ -86,7 +87,7 @@ public class gameWindow {
 		frame.getContentPane().add(btnStartGame_2, BorderLayout.EAST);
 		btnStartGame_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(3);
+				bigGame.setGamesRunning(3);
 				bigGame.setGame3(new Game3(bigGame));
 				bigGame.getGame3().update(frame);
 			}
@@ -94,4 +95,7 @@ public class gameWindow {
 		frame.setVisible(true);
 	}
 
+	public JFrame getFrame() {
+		return frame;
+	}
 }

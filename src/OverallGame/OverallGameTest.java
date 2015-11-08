@@ -59,11 +59,11 @@ public class OverallGameTest {
 		JTree source = new JTree();
 		MouseEvent e = new MouseEvent(source, 0, 0, 0, 1, 1, 1, false); //location of click is temporary
 		testOverallGame.onClick(e);
-		assertEquals(testOverallGame.getGameRunning(), false);
+		assertFalse(testOverallGame.getGamesRunning() == 0);
 		assertFalse(testOverallGame.getGame1() == null);
 		MouseEvent e2 = new MouseEvent(source, 0, 0, 0, 1, 2, 1, false); //location of click is temporary
 		testOverallGame.onClick(e2);
-		assertEquals(testOverallGame.getGameRunning(), false);
+		assertFalse(testOverallGame.getGamesRunning() == 0);
 	}
 	
 

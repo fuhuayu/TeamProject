@@ -21,7 +21,13 @@ public class Plant {
 	 * @param col - column to place the plant in
 	 * @param type - type of plant to be placed
 	 */
-	public Plant(int row, int col, String type) {} ;
+	public Plant(int row, int col, String type) {
+		this.row 	=	row	;
+		this.col	=	col	;
+		this.type	=	type	;
+		this.strength	=	(type.equals("Grass"))	?	3	:	4	;
+		this.health		=	(type.equals("Grass"))	?	10	:	15	;
+	}
 	
 	/**
 	 * Plants are equal if they are the same type of plant and are in the same row and column
