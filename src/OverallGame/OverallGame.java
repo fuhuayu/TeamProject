@@ -76,7 +76,6 @@ public class OverallGame implements Serializable{
 		double timeBetween = 0.0;
 		int	ticks = 0;
 		while(gamesRunning == 0) {
-			
 			currentTime	=	System.nanoTime();
 			passedTime	+=	currentTime - previousTime ;
 			previousTime	=	currentTime ;
