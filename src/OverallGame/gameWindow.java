@@ -3,6 +3,7 @@ package OverallGame;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -24,7 +25,6 @@ public class gameWindow {
 	private OverallGame bigGame;
 
 	private JFrame frame;
-
 	/**
 	 * Launch the application.
 	 */
@@ -60,10 +60,12 @@ public class gameWindow {
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
-		frame.setBounds(100, 100, this.bigGame.frameWidth, this.bigGame.frameHeight);
+
+		frame.setBounds(100, 100, this.bigGame.getFrameWidth(), this.bigGame.getFrameHeight());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		JButton btnStartGame = new JButton("Start Game 1");
+		btnStartGame.setBounds(0, 0, frame.getWidth()/3, frame.getContentPane().getHeight());
+		frame.getContentPane().add(btnStartGame);
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bigGame.setGameRunning(1);
@@ -71,10 +73,10 @@ public class gameWindow {
 				bigGame.getGame1().run();
 			}
 		});
-		frame.getContentPane().add(btnStartGame, BorderLayout.WEST);
-		
+	
 		JButton btnStartGame_1 = new JButton("Start Game 2");
-		frame.getContentPane().add(btnStartGame_1, BorderLayout.CENTER);
+		btnStartGame_1.setBounds(frame.getWidth()/3, 0, frame.getWidth()/3, frame.getContentPane().getHeight());
+		frame.getContentPane().add(btnStartGame_1);
 		btnStartGame_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bigGame.setGameRunning(1);
@@ -84,7 +86,8 @@ public class gameWindow {
 		});
 		
 		JButton btnStartGame_2 = new JButton("Start Game 3");
-		frame.getContentPane().add(btnStartGame_2, BorderLayout.EAST);
+		btnStartGame_2.setBounds(2*1280/3, 0, frame.getWidth()/3, frame.getContentPane().getHeight());
+		frame.getContentPane().add(btnStartGame_2);
 		btnStartGame_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bigGame.setGameRunning(3);

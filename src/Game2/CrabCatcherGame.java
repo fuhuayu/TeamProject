@@ -65,7 +65,7 @@ public class CrabCatcherGame {
 	/**
 	 * Updates the game's timed elements
 	 */
-	public void tickGame(){
+	public void update(JFrame){
 		//check if lives == 0, or time = gameLength, which cause gameOver
 		if (lives == 0 || time == gameLength){
 			gameOver = true;

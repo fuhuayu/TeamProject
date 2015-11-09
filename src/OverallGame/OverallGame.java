@@ -117,6 +117,8 @@ public class OverallGame implements Serializable{
 		OverallGame testGame = new OverallGame() ;
 	}
 
+	
+
 
 	/**
 	 * Getters and Setters for the necessary parameters
@@ -125,28 +127,24 @@ public class OverallGame implements Serializable{
 		return overallScore;
 	}
 
-
 	public void setOverallScore(int overallScore) {
 		this.overallScore = overallScore;
 	}
-
 
 	public boolean[] getGamesComplete() {
 		return gamesComplete;
 	}
 
-
 	public void setGamesComplete(boolean[] gamesComplete) {
 		this.gamesComplete = gamesComplete;
 	}
-
 
 	public int getGamesRunning() {
 		return gamesRunning;
 	}
 
-	public void setGameRunning(int gameRunning) {
-		this.gamesRunning = gameRunning;
+	public void setGamesRunning(int gamesRunning) {
+		this.gamesRunning = gamesRunning;
 	}
 
 	public int[] getHighscores() {
@@ -157,57 +155,57 @@ public class OverallGame implements Serializable{
 		this.highscores = highscores;
 	}
 
-
 	public double getTimeInIdle() {
 		return timeInIdle;
 	}
-
 
 	public void setTimeInIdle(double timeInIdle) {
 		this.timeInIdle = timeInIdle;
 	}
 
-
-	public CrabCatcherGame getGame2() {
+	public CrabCatcherGame getGame1() {
 		return game1;
 	}
 
-
-	public void setGame2(CrabCatcherGame game1) {
+	public void setGame1(CrabCatcherGame game1) {
 		this.game1 = game1;
 	}
 
-
-	public RipRapGame getGame1() {
+	public RipRapGame getGame2() {
 		return game2;
 	}
 
-
-	public void setGame1(RipRapGame game2) {
+	public void setGame2(RipRapGame game2) {
 		this.game2 = game2;
 	}
-
 
 	public Game3 getGame3() {
 		return game3;
 	}
 
-
 	public void setGame3(Game3 game3) {
 		this.game3 = game3;
 	}
 
+	public gameWindow getFrame() {
+		return frame;
+	}
+
+	public void setFrame(gameWindow frame) {
+		this.frame = frame;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	} ;
-	
-	public gameWindow getGameWindow() {
-		return frame;
+	}
+
+	public int getFrameWidth() {
+		return frameWidth;
+	}
+
+	public int getFrameHeight() {
+		return frameHeight;
 	}
 	
-	public void setGameWindow(gameWindow frame) {
-		this.frame = frame;
-	}
 	
 }
