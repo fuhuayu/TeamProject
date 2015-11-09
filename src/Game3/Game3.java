@@ -43,7 +43,7 @@ public class Game3 {
 	 * @param bigGame - The handler for the entire game
 	 */
 	public Game3(OverallGame bigGame) {
-		this.time	=	300.0	;
+		this.time	=	180.0	;
 		this.score	=	0	;
 		this.money	=	100	;
 		this.plants	=	new ArrayList<Plant>();
@@ -66,10 +66,14 @@ public class Game3 {
 		gamePanel.add(timeAndScore);
 		frame.setContentPane(gamePanel);
 		frame.setVisible(true);
-		int timerInterval = 100;
+		final int timerInterval = 1000;
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
-	    		update();
+	    		setTime(getTime() - (double)(timerInterval)/1000);
+	    		if (getTime() % 10 == 0) {
+	    			addScore(10);
+	    		}
+	    		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
 	    		System.out.println(getTime());
 	    		if(getTime()<=0){
 	    			endGame();
@@ -85,8 +89,7 @@ public class Game3 {
 	public void update() {
 		initPanel(gameFrame);
 		timer.start();
-		setTime(getTime() - (double)((getStartTime() - System.currentTimeMillis())/1000));
-		timeAndScore.setText("Time:"+getTime()+"    Score:"+getScore());
+		
 	    
 		
 	}
@@ -158,7 +161,10 @@ public class Game3 {
 	 */
 	public void endGame() {
 		getBigGame().setOverallScore(getBigGame().getOverallScore() + getScore());
-		//Implement the latter part
+		setGameRunning(false);
+		timer.stop();
+		gameFrame.setContentPane(bigGamePanel);
+		gameFrame.setVisible(true);
 	}
 	
 	/**
