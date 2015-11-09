@@ -2,6 +2,7 @@ package Game2;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -65,14 +66,18 @@ public class CrabCatcherGame {
 	 * Updates the game's timed elements
 	 */
 	public void tickGame(){
+		//check if lives == 0, or time = gameLength, which cause gameOver
+		if (lives == 0 || time == gameLength){
+			gameOver = true;
+		}
 		//increases timer
 		time ++;
 		//updates game's timed aspects - call animal.onTick() for all animals
 		for (Animal each : animals) {
-			
+			each.onTick();
 		}
 		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
-		//check if lives == 0, or time = gameLength, which cause gameOver
+	
 	}
 	
 	/**
@@ -82,18 +87,27 @@ public class CrabCatcherGame {
 		//on start button pressed
 		//plays intro with instructions
 		//sets variables to defaults, generates animals 
-		//begins the timer loop by calling onTick() while time != gameLength
+		generateAnimals();
+		//begins the timer loop by calling onTick() while time game is not over
+		while (!gameOver){
+			tickGame();
+		}
+		
+		endGame();
+			
 	}
 	
 	/**
 	 * Ends mini game and saves score to big game. Cues mini game closing scene.
 	 */
 	public void endGame(){
-		////play closing scene
+		//play closing scene
 		//send score to send to big game
+		bigGame.setOverallScore(bigGame.getOverallScore() + score);
 		//set big game running to true
+		bigGame.setGameRunning(0);
 		//call big game update
-		
+		bigGame.update();		
 	}
 	
 	/**
@@ -102,7 +116,11 @@ public class CrabCatcherGame {
 	 */
 	public void generateAnimals(){
 		//constructs the max number of animals to place on screen
-		//sets properties randomly for each animal
+		for (int i=0; i < maxAnimalsOnScreen; i++){
+			//sets properties randomly for each animal
+			//makeRandomAnimal();
+		}
+		
 	}
 	
 	/**
@@ -118,8 +136,14 @@ public class CrabCatcherGame {
 	 */
 	public void onClick(MouseEvent event){
 		//see if user clicked an animal and update accordingly
-		//if getAnimalClicked() returns an Animal, 
-		//call regenerateAnimal() and add animal's scoreEffect to game score (not going below 0)
+		//if getAnimalClicked() returns an Animal,
+		Animal animal = getAnimalClicked(event.getX(), event.getY());
+		if (animal != null){
+			//call regenerateAnimal() and add animal's scoreEffect to game score (not going below 0)
+			animal.regenerateAnimal();
+			updateScore(animal.getScoreEffect());
+		}
+		
 	}
 	
 	/**Method for testing click events
@@ -140,6 +164,18 @@ public class CrabCatcherGame {
 		return null;
 	}
 
+	
+	/**
+	 * updates score with given positive/negative effect, making sure score does not go below zero
+	 */
+	public void updateScore(int effect){
+		if (score + effect >= 0){
+			score += effect;
+		}
+		else{
+			setScore(0);
+		}
+	}
 	
 	
 	//GETTERS & SETTERS
@@ -181,7 +217,6 @@ public class CrabCatcherGame {
 	public void setScore(int score) {
 		this.score = score;
 	}
-
 
 	public int getLives() {
 		return lives;

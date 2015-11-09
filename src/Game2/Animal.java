@@ -52,7 +52,7 @@ public class Animal {
 	 */
 	public void onTick(){
 		//decrease animal's timer; if timer is 0, regenerate animal
-		if (timeLeftOnScreen - 1 <= 0){
+		if (timeLeftOnScreen <= 0){
 			regenerateAnimal();
 		}
 		else {timeLeftOnScreen--;}
