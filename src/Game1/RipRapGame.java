@@ -128,7 +128,7 @@ public class RipRapGame {
 		this.starttime=System.currentTimeMillis();
 		this.frame=frame;
 		this.jumpingBar=new JumpingBar(20, 30, this);
-		this.sun=new Sun(time, time, time);
+		this.sun=new Sun(10);
 		initGame();
 		initPanel();
 	}
@@ -163,6 +163,7 @@ public class RipRapGame {
 	    		updateTime();
 	    		updatePanel();
 	    		jumpingBar.update(panel);
+	    		sun.update();
 	    		if(getTime()<=0){
 	    			endGame();
 	    		}
@@ -179,7 +180,7 @@ public class RipRapGame {
 		System.out.println(getTime());
 		System.out.println(panel.getSize());
 		jumpingBar.makeLabels(panel);
-		
+		this.sun.addSun(panel);
 		return true;
 	}
 	public boolean updatePanel(){
