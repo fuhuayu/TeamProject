@@ -1,8 +1,14 @@
 package Game3;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import OverallGame.OverallGame;
 
@@ -22,7 +28,13 @@ public class Game3 {
 	private ArrayList<Mussel> mussels ;
 	private boolean gameRunning ;
 	private boolean gameOver   ;
-	private OverallGame bigGame; 
+	private OverallGame bigGame;
+	private JPanel gamePanel ;
+	private JPanel bigGamePanel;
+	private JFrame gameFrame;
+	private JLabel timeAndScore;
+	private long startTime ;
+	private Timer timer;
 	
 	/**
 	 * Game Constructor
@@ -40,13 +52,44 @@ public class Game3 {
 		this.gameRunning	=	true;
 		this.gameOver	=	false;
 		this.bigGame	=	bigGame;
+		this.gameFrame 		=	bigGame.getFrame().getFrame();
+		this.startTime 	= System.currentTimeMillis();
+	}
+	
+	public void initPanel(JFrame frame) {
+		this.bigGamePanel	= (JPanel)frame.getContentPane();
+		this.gamePanel		= new JPanel() ;
+		gamePanel.setLayout(null);
+		timeAndScore = new JLabel("Time:"+getTime()+"    Score:"+getScore());
+		timeAndScore.setBounds(0,0,frame.getWidth(),30);
+		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
+		gamePanel.add(timeAndScore);
+		frame.setContentPane(gamePanel);
+		frame.setVisible(true);
+		int timerInterval = 100;
+		timer = new Timer(timerInterval, new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		update();
+	    		System.out.println(getTime());
+	    		if(getTime()<=0){
+	    			endGame();
+	    		}
+			}
+	    });
 	}
 	
 	/**
 	 * Updates the game state and checks for player input
 	 * This includes the time remaining, character actions and movement, and updating the score and money
 	 */
-	public void update(JFrame frame) {} ;
+	public void update() {
+		initPanel(gameFrame);
+		timer.start();
+		setTime(getTime() - (double)((getStartTime() - System.currentTimeMillis())/1000));
+		timeAndScore.setText("Time:"+getTime()+"    Score:"+getScore());
+	    
+		
+	}
 	
 	/**
 	 * The player can click on the button to exit the game OR
@@ -155,6 +198,9 @@ public class Game3 {
 	}
 	public OverallGame getBigGame() {
 		return bigGame;
+	}
+	public long getStartTime() {
+		return startTime;
 	}
 
 	public void setTime(double time) {
