@@ -32,7 +32,7 @@ public class JumpingBar {
 		this.stop1 = stop1;
 		this.stop2 = stop2;
 		currentValue=0;
-		speed=-1;
+		speed=-2;
 		barloc=100;
 		this.game=game;
 	}
@@ -60,7 +60,7 @@ public class JumpingBar {
 		p.add(whitebox);
 		p.add(greenbox);
 		
-		JButton jumpButton = new JButton("JUMP");
+		JButton jumpButton = new JButton("MOVE");
 		jumpButton.setBounds((int) (w*0.5), h+h*(100)/12, w*2, h*2);
 		jumpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,11 +97,12 @@ public class JumpingBar {
 	 */
 	public void clicked(){
 		if(this.barloc<this.stop1){
-			this.game.score-=100;
+			this.game.score-=200;
 		}
 		else if(this.barloc<(this.stop1+this.stop2)){
 			this.game.score+=100;
 		}
+		this.barloc=100;
 	}
 	/**
 	 * CurrentValue should increase based on real time
@@ -112,7 +113,7 @@ public class JumpingBar {
 		int w=(int)(0.5*p.getWidth()/16);
 		int h=(int)(0.5*p.getHeight()/9);
 		if((this.barloc+speed)<=0||(this.barloc+speed)>=100){
-			speed*=-1;
+			this.barloc=100;
 		}
 		this.barloc+=speed;
 		bar.setBounds(w,h+h*this.barloc/12-2,w,3);
