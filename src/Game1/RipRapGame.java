@@ -127,6 +127,7 @@ public class RipRapGame {
 		this.bigGame = bigGame;
 		this.starttime=System.currentTimeMillis();
 		this.frame=frame;
+		this.jumpingBar=new JumpingBar(20, 30, this);
 		initGame();
 		initPanel();
 	}
@@ -152,45 +153,31 @@ public class RipRapGame {
 	public boolean initPanel(){
 		panel=new JPanel();
 		panel.setLayout(null);
-		TS = new JLabel("Time:"+this.currtime+"    Score:"+this.score);
-		TS.setBounds(0,0,frame.getWidth(),30);
-		TS.setFont(new Font("Serif", Font.PLAIN, 30));
-		panel.add(TS);
-		System.out.println(frame.getWidth());
-		System.out.println(frame.getHeight());
-		JLabel redbox = new JLabel("bad");
-		redbox.setBackground(Color.RED);
-		redbox.setOpaque(true);
-		redbox.setBounds((int)(0.5*frame.getWidth()/16), (int)(0.5*frame.getHeight()/9), 30, 50);
-		JLabel greenbox = new JLabel("good");
-		greenbox.setBackground(Color.GREEN);
-		greenbox.setOpaque(true);
-		greenbox.setBounds((int)(0.5*frame.getWidth()/16), (int)(0.5*frame.getHeight()/9)+50, 30, 100);
-		JLabel whitebox = new JLabel("none");
-		whitebox.setBackground(Color.WHITE);
-		whitebox.setOpaque(true);
-		whitebox.setBounds((int)(0.5*frame.getWidth()/16), (int)(0.5*frame.getHeight()/9)+150, 30, 150);
-		panel.add(redbox);
-		panel.add(whitebox);
-		panel.add(greenbox);
 		
-		JButton jumpButton = new JButton("JUMP");
-		jumpButton.setBounds((int)(0.5*frame.getWidth()/16)-20, (int)(0.5*frame.getHeight()/9)+300, 70, 70);
-		panel.add(jumpButton);
 		
-		int timerTimeInMilliSeconds = 100;
+		
+		int timerTimeInMilliSeconds = 20;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		updateTime();
 	    		updatePanel();
-	    		System.out.println(getTime());
-	    		System.out.println(panel.getSize());
+	    		jumpingBar.update(panel);
 	    		if(getTime()<=0){
 	    			endGame();
 	    		}
 	    		
 			}
 	    });
+		return true;
+	}
+	public boolean firstRunPanel(){
+		TS = new JLabel("Time:"+this.currtime+"    Score:"+this.score);
+		TS.setBounds(0,0,frame.getWidth(),30);
+		TS.setFont(new Font("Serif", Font.PLAIN, 30));
+		panel.add(TS);
+		System.out.println(getTime());
+		System.out.println(panel.getSize());
+		jumpingBar.makeLabels(panel);
 		return true;
 	}
 	public boolean updatePanel(){
@@ -214,8 +201,9 @@ public class RipRapGame {
 	public void run() {
 		
 		bigpan=(JPanel) frame.getContentPane();
+		this.panel.setSize(frame.getContentPane().getSize());
 		frame.setContentPane(this.panel);
-		frame.setVisible(true);
+		firstRunPanel();
 		timer.start();
 		
 	}

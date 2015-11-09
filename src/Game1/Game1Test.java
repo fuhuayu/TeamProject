@@ -26,7 +26,7 @@ public class Game1Test {
 		OverallGame bigGame = new OverallGame();
 		ArrayList<Cloud> clouds = new ArrayList<Cloud>();
 		ArrayList<RipRapWall> wall = new ArrayList<RipRapWall>();
-		RipRapGame testGame2= new RipRapGame(0, 0, 0, crab, jBar, stones, sun, clouds, bigGame, wall);
+		RipRapGame testGame2= new RipRapGame(0, bigGame, null);
 		TimeUnit.SECONDS.sleep(1);
 		testGame2.updateTime();
 		assertEquals(89,testGame2.getTime());
@@ -75,7 +75,7 @@ public class Game1Test {
 		OverallGame bigGame = new OverallGame();
 		ArrayList<Cloud> clouds = new ArrayList<Cloud>();
 		ArrayList<RipRapWall> wall = new ArrayList<RipRapWall>();
-		RipRapGame testGame2= new RipRapGame(0, 0, 0, crab, jBar, stones, sun, clouds, bigGame, wall);
+		RipRapGame testGame2= new RipRapGame(0, bigGame, null);
 		
 		// test if the map is properly udate while the time goes on
 		testGame2.updateMap();
