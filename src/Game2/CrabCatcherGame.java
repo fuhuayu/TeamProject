@@ -1,11 +1,16 @@
 package Game2;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import OverallGame.OverallGame;
 
@@ -28,6 +33,9 @@ public class CrabCatcherGame {
 	private OverallGame bigGame;
 	private JFrame frame;
 	private JPanel panel;
+	private Timer timer;
+	private JPanel bigpan;
+	private JLabel TS;
 
 	//CONSTRUCTOR	
 	/**
@@ -67,19 +75,19 @@ public class CrabCatcherGame {
 	/**
 	 * Updates the game's timed elements
 	 */
-	public void update(JFrame){
+	public void updateGame(){
 		//check if lives == 0, or time = gameLength, which cause gameOver
 		if (lives == 0 || time == gameLength){
 			gameOver = true;
 		}
-		//increases timer
-		time ++;
+		int x = 0;
+		//increases timer -- don't have to do this anymore with Swing Timer
+		//time ++;
 		//updates game's timed aspects - call animal.onTick() for all animals
 		for (Animal each : animals) {
 			each.onTick();
 		}
 		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
-	
 	}
 	
 	/**
@@ -87,28 +95,87 @@ public class CrabCatcherGame {
 	 */
 	public void startGame(){
 		//on start button pressed
-		//plays intro with instructions
-		//sets variables to defaults, generates animals 
+		//plays intro with instructions?
+		//initialize game - sets variables to defaults, generates animals 
 		generateAnimals();
-		//begins the timer loop by calling onTick() while time game is not over
-		while (!gameOver){
-			tickGame();
-		}
+		//initialize panel
+		initPanel();
 		
-		endGame();
-			
+		//sets content to this game's panel
+		bigpan=(JPanel) frame.getContentPane();
+		frame.setContentPane(this.panel);
+		frame.setVisible(true);
+		timer.start();		
 	}
+	
+	public boolean initPanel(){
+		//layout and draw things
+		panel=new JPanel();
+		panel.setLayout(null);
+		TS = new JLabel("Time:" + this.time + "Score:"+this.score);
+		TS.setBounds(0,0,frame.getWidth(),30);
+		TS.setFont(new Font("Serif", Font.PLAIN, 30));
+		panel.add(TS);		
+		
+		//declare timer
+		int timerTimeInMilliSeconds = 1000;
+	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		//updateTime();
+	    		updateGame();
+	    		updatePanel();
+	    		
+	    		
+			}
+	    });
+		
+		return true;
+	}
+	
+	public boolean updatePanel(){
+		//visual updates
+		return true;
+		
+	}
+	
+	/**
+	 * Time updates based on real time spending
+	 */
+	/*public void updateTime(){
+		long t=System.currentTimeMillis();
+		this.currtime=(int) (this.time+(this.starttime-t)/1000);
+	}*/
+	
+	/*	public void run() {	
+		bigpan=(JPanel) frame.getContentPane();
+		frame.setContentPane(this.panel);
+		frame.setVisible(true);
+		timer.start();
+		
+	}*/
+	
+	/*
+	 * 	public boolean updatePanel(){
+		TS.setText("Time:"+this.currtime+"    Score:"+this.score);
+		return true;
+		
+	}
+	 */
 	
 	/**
 	 * Ends mini game and saves score to big game. Cues mini game closing scene.
 	 */
 	public void endGame(){
 		//play closing scene
+		//.....
 		//send score to send to big game
 		bigGame.setOverallScore(bigGame.getOverallScore() + score);
+		//stop timer
+		timer.stop();
 		//set big game running to true
-		bigGame.setGameRunning(0);
+		//bigGame.setGamesRunning(0);
 		//call big game update
+		frame.setContentPane(bigpan);
 		bigGame.update();		
 	}
 	
