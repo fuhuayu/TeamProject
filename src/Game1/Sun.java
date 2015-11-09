@@ -23,7 +23,7 @@ public class Sun extends MovingObject {
 		// TODO Auto-generated constructor stub
 	}
 	public void update(){
-		if(angle<180-storeangle){
+		if(sun.getBounds().x<point.x*5/3){
 			angle+=0.1;
 		}
 		else{angle=storeangle;}
@@ -39,10 +39,10 @@ public class Sun extends MovingObject {
 		sun.setBackground(Color.YELLOW);
 		sun.setOpaque(true);
 		sun.setBounds(0-w/32, h/2-h/18, w/16,h/9);
-		point=new Point(w/2,(int) (1.5*h));
+		point=new Point(w/5*3,(int) (1.5*h));
 		r=(int) point.distance(new Point(0, h/2));
 		final double deltaY = (h);
-	    final double deltaX = (w/2);
+	    final double deltaX = (w/5*3);
 	    final double result = Math.toDegrees(Math.atan2(deltaY, deltaX));
 	    storeangle=result;
 	    angle=storeangle;
