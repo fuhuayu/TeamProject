@@ -105,7 +105,7 @@ public class CrabCatcherGame {
 		//send score to send to big game
 		bigGame.setOverallScore(bigGame.getOverallScore() + score);
 		//set big game running to true
-		bigGame.setGameRunning(0);
+		//bigGame.setGameRunning(0);
 		//call big game update
 		bigGame.update();		
 	}
