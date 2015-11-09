@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import OverallGame.OverallGame;
 
@@ -26,6 +27,7 @@ public class CrabCatcherGame {
 	private boolean gameOver = false;
 	private OverallGame bigGame;
 	private JFrame frame;
+	private JPanel panel;
 
 	//CONSTRUCTOR	
 	/**
@@ -287,6 +289,18 @@ public class CrabCatcherGame {
 
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
+	}
+
+
+
+	public JPanel getPanel() {
+		return panel;
+	}
+
+
+
+	public void setPanel(JPanel panel) {
+		this.panel = panel;
 	}
 	
 
