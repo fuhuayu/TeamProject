@@ -52,7 +52,7 @@ public class Game3 {
 		this.gameRunning	=	true;
 		this.gameOver	=	false;
 		this.bigGame	=	bigGame;
-		this.gameFrame 		=	bigGame.getFrame().getFrame();
+		this.gameFrame 		=	bigGame.getGameWindow().getFrame();
 		this.startTime 	= System.currentTimeMillis();
 	}
 	

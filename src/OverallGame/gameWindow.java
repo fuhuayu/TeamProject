@@ -98,10 +98,14 @@ public class gameWindow {
 			public void actionPerformed(ActionEvent e) {
 				bigGame.setGameRunning(3);
 				bigGame.setGame3(new Game3(bigGame));
-				bigGame.getGame3().update(frame);
+				bigGame.getGame3().update();
 			}
 		});
 		
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 
 }
