@@ -86,7 +86,7 @@ public class gameWindow {
 			public void actionPerformed(ActionEvent e) {
 				bigGame.setGameRunning(1);
 				bigGame.setGame2(new CrabCatcherGame(0, 0, null, 0, 0, 0, null, 0, false, bigGame, frame));
-				bigGame.getGame2().update(frame);
+				bigGame.getGame2().startGame();
 			}
 		});
 		
