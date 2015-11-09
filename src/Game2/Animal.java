@@ -2,6 +2,8 @@ package Game2;
 
 import java.util.Random;
 
+import javax.swing.JLabel;
+
 /**
  * @author Dwegrzyn
  * A class representing the animals that appear in the Crab Catcher game
@@ -15,6 +17,7 @@ public class Animal {
 	private double displayDuration; //length of time the animal should stay on screen (constant)
 	private double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
 	private boolean visible;
+	private JLabel label; //temporary probably
 	//
 	//CONSTRUCTOR
 	/**
@@ -46,8 +49,8 @@ public class Animal {
 		//visible = false;
 		//gives animal a random location
 		Random r = new Random();
-		xloc = r.nextInt();
-		yloc = r.nextInt();
+		xloc = r.nextInt(800);
+		yloc = r.nextInt(800);
 		//reset timeLeftOnScreen to display duration
 		timeLeftOnScreen = displayDuration;
 	}
@@ -123,6 +126,14 @@ public class Animal {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+
+	public JLabel getLabel() {
+		return label;
+	}
+
+	public void setLabel(JLabel label) {
+		this.label = label;
 	}
 	
 

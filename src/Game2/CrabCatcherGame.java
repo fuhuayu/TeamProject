@@ -1,4 +1,5 @@
 package Game2;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +27,7 @@ public class CrabCatcherGame {
 	private Animal[] animals; 
 	private int score;
 	private int lives = 3;
-	private double gameLength = 20; //how long is this game?
+	private double gameLength = 22; //how long is this game?
 	private MouseAdapter mouseListener;
 	private int maxAnimalsOnScreen = 3; 
 	private boolean gameOver = false;
@@ -113,7 +114,23 @@ public class CrabCatcherGame {
 		TS = new JLabel("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
 		TS.setBounds(0,0,frame.getWidth(),30);
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
-		panel.add(TS);		
+		panel.add(TS);
+		
+		
+		for (int i=0; i < animals.length; i++){
+			JLabel label = new JLabel(animals[i].toString());
+			label.setBackground(Color.YELLOW);
+			label.setOpaque(true);
+			label.setBounds(animals[i].getXloc(), animals[i].getYloc(), 200, 50);
+			label.setVisible(true);
+			panel.add(label);
+			animals[i].setLabel(label);
+		}
+		
+		
+		
+		
+		
 		
 		//declare timer
 		int timerTimeInMilliSeconds = 1000;
@@ -134,6 +151,12 @@ public class CrabCatcherGame {
 	public boolean updatePanel(){
 		//visual updates
 		TS.setText("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
+		for (int i=0; i< animals.length; i++){
+			Animal a = animals[i];
+			a.getLabel().setText(a.toString());
+			a.getLabel().setLocation(a.getXloc(), a.getYloc());
+		}
+		
 		return true;
 		
 	}
@@ -165,16 +188,14 @@ public class CrabCatcherGame {
 		for (int i=0; i < maxAnimalsOnScreen; i++){
 			//sets properties randomly for each animal
 			//makeRandomAnimal();
-			
-			//TEMPORARY LIST
-			Animal crab = new Animal(1, 1, "crab", -5, 4, true);
-			Animal fish = new Animal(2, 2, "fish", -3, 5, true);
-			Animal mittencrab = new Animal(3, 3, "mittencrab", 5, 3, true);
-			this.addAnimal(crab);
-			this.addAnimal(fish);
-			this.addAnimal(mittencrab);
 		}
-		
+		//TEMPORARY LIST
+		Animal crab = new Animal(10, 100, "crab", -5, 4, true);
+		Animal fish = new Animal(frame.getWidth()-200, frame.getHeight()-250, "fish", -3, 5, true);
+		Animal mittencrab = new Animal(frame.getWidth()/2, 500, "mittencrab", 5, 3, true);
+		animals[0] = crab;
+		animals[1] = fish;
+		animals[2] = mittencrab;
 	}
 	
 	
@@ -216,6 +237,7 @@ public class CrabCatcherGame {
 	 */
 	public Animal getAnimalClicked(int x, int y){
 		//return the animal if user clicked animal (mouseXY == animalXY), else return null;
+		//ad some kind of tolerance
 		return null;
 	}
 
