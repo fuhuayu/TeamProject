@@ -28,12 +28,12 @@ public class gameWindow {
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OverallGame bigGame = new OverallGame();
-					gameWindow window = new gameWindow(bigGame);
+					gameWindow window = new gameWindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +41,7 @@ public class gameWindow {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the application.
 	 */
@@ -60,15 +60,15 @@ public class gameWindow {
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
-		frame.setBounds(100, 100, 950, 600);
+		frame.setBounds(100, 100, this.bigGame.frameWidth, this.bigGame.frameHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnStartGame = new JButton("Start Game 1");
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGamesRunning(1);
-				bigGame.setGame2(new RipRapGame(0, 0, 0, null, null, null, null, null, bigGame, null));
-				bigGame.getGame1().update(frame);
+				bigGame.setGameRunning(1);
+				bigGame.setGame1(new RipRapGame(90, bigGame, frame));
+				bigGame.getGame1().run();
 			}
 		});
 		frame.getContentPane().add(btnStartGame, BorderLayout.WEST);
@@ -77,8 +77,8 @@ public class gameWindow {
 		frame.getContentPane().add(btnStartGame_1, BorderLayout.CENTER);
 		btnStartGame_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGamesRunning(1);
-				bigGame.setGame1(new CrabCatcherGame(0, 0, null, 0, 0, 0, null, 0, false, bigGame, frame));
+				bigGame.setGameRunning(1);
+				bigGame.setGame2(new CrabCatcherGame(0, 0, null, 0, 0, 0, null, 0, false, bigGame, frame));
 				bigGame.getGame2().update(frame);
 			}
 		});
@@ -87,7 +87,7 @@ public class gameWindow {
 		frame.getContentPane().add(btnStartGame_2, BorderLayout.EAST);
 		btnStartGame_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGamesRunning(3);
+				bigGame.setGameRunning(3);
 				bigGame.setGame3(new Game3(bigGame));
 				bigGame.getGame3().update(frame);
 			}
@@ -95,7 +95,4 @@ public class gameWindow {
 		frame.setVisible(true);
 	}
 
-	public JFrame getFrame() {
-		return frame;
-	}
 }

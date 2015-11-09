@@ -1,9 +1,19 @@
 package Game1;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
+import Game2.CrabCatcherGame;
 import OverallGame.OverallGame;
 
 /**
@@ -24,9 +34,13 @@ public class RipRapGame {
 	ArrayList<Cloud> clouds;
 	private OverallGame bigGame;
 	ArrayList<RipRapWall> wall;
-	
-	
-
+	JPanel panel;
+	boolean ends;
+	long fps=30;
+	javax.swing.Timer timer;
+	JPanel bigpan;
+	JFrame frame;
+	JLabel TS;//time&score
 	/**
 	 * Getters for properties
 	 */
@@ -108,21 +122,13 @@ public class RipRapGame {
 	 * @param clouds a list of clouds
 	 * @param bigGame the overall lGame that consist of this game
 	 */
-	public RipRapGame(int score, int time, int currtime,
-			Crab crab, JumpingBar jumpingBar, ArrayList<Stone> stones, Sun sun,
-			ArrayList<Cloud> clouds, OverallGame bigGame, ArrayList<RipRapWall> wall) {
-		this.score = score;
+	public RipRapGame(int time,OverallGame bigGame,JFrame frame) {
 		this.time = time;
-		this.currtime = currtime;
-		this.crab = crab;
-		this.jumpingBar = jumpingBar;
-		this.stones = stones;
-		this.sun = sun;
-		this.clouds = clouds;
 		this.bigGame = bigGame;
-		this.wall = wall;
 		this.starttime=System.currentTimeMillis();
+		this.frame=frame;
 		initGame();
+		initPanel();
 	}
 
 	/**
@@ -143,6 +149,55 @@ public class RipRapGame {
 	public boolean initGame(){
 		return true;
 	}
+	public boolean initPanel(){
+		panel=new JPanel();
+		panel.setLayout(null);
+		TS = new JLabel("Time:"+this.currtime+"    Score:"+this.score);
+		TS.setBounds(0,0,frame.getWidth(),30);
+		TS.setFont(new Font("Serif", Font.PLAIN, 30));
+		panel.add(TS);
+		System.out.println(frame.getWidth());
+		System.out.println(frame.getHeight());
+		JLabel redbox = new JLabel("bad");
+		redbox.setBackground(Color.RED);
+		redbox.setOpaque(true);
+		redbox.setBounds((int)(0.5*frame.getWidth()/16), (int)(0.5*frame.getHeight()/9), 30, 50);
+		JLabel greenbox = new JLabel("good");
+		greenbox.setBackground(Color.GREEN);
+		greenbox.setOpaque(true);
+		greenbox.setBounds((int)(0.5*frame.getWidth()/16), (int)(0.5*frame.getHeight()/9)+50, 30, 100);
+		JLabel whitebox = new JLabel("none");
+		whitebox.setBackground(Color.WHITE);
+		whitebox.setOpaque(true);
+		whitebox.setBounds((int)(0.5*frame.getWidth()/16), (int)(0.5*frame.getHeight()/9)+150, 30, 150);
+		panel.add(redbox);
+		panel.add(whitebox);
+		panel.add(greenbox);
+		
+		JButton jumpButton = new JButton("JUMP");
+		jumpButton.setBounds((int)(0.5*frame.getWidth()/16)-20, (int)(0.5*frame.getHeight()/9)+300, 70, 70);
+		panel.add(jumpButton);
+		
+		int timerTimeInMilliSeconds = 100;
+	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		updateTime();
+	    		updatePanel();
+	    		System.out.println(getTime());
+	    		System.out.println(panel.getSize());
+	    		if(getTime()<=0){
+	    			endGame();
+	    		}
+	    		
+			}
+	    });
+		return true;
+	}
+	public boolean updatePanel(){
+		TS.setText("Time:"+this.currtime+"    Score:"+this.score);
+		return true;
+		
+	}
 	/**
 	 * Map updates while playing
 	 * Time period of calling this function will vary based on difficulty
@@ -156,7 +211,12 @@ public class RipRapGame {
 	 * draw some MLG game stuff
 	 * @param frame
 	 */
-	public void update(JFrame frame) {
+	public void run() {
+		
+		bigpan=(JPanel) frame.getContentPane();
+		frame.setContentPane(this.panel);
+		frame.setVisible(true);
+		timer.start();
 		
 	}
 	/**
@@ -166,15 +226,16 @@ public class RipRapGame {
 		long t=System.currentTimeMillis();
 		this.currtime=(int) (this.time+(this.starttime-t)/1000);
 	}
-	public int handler(){
-		return score;
-	}
+	
 	
 	
 	/**
 	 * Ends game and sends score to big game.
 	 */
 	public void endGame(){
+		timer.stop();
+		frame.setContentPane(bigpan);
+		
 	}
 	
 	/**click the button at a proper time to make crab jump over the obstacle
