@@ -31,7 +31,7 @@ public class Mussel {
 	 * If it's at the final growth stage, does nothing
 	 */
 	public void grow() {
-		if (getStage() < 4) {
+		if (getStage() < 3) {
 			setStage(getStage() + 1);
 		}
 	} ;

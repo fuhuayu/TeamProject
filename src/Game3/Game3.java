@@ -50,8 +50,8 @@ public class Game3 {
 		this.plants	=	new ArrayList<Plant>();
 		this.enemies	=	new ArrayList<Runoff>();
 		this.mussels	=	new ArrayList<Mussel>();
-		this.mussels.add(new Mussel(200, 500));
-		this.mussels.add(new Mussel(200, 200));
+		this.mussels.add(new Mussel(170, 500));
+		this.mussels.add(new Mussel(180, 200));
 		this.mussels.add(new Mussel(100, 350));
 		this.mussels.add(new Mussel(20, 100));
 		this.gameRunning	=	true;
@@ -69,6 +69,26 @@ public class Game3 {
 		timeAndScore.setBounds(0,0,frame.getWidth(),30);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
 		gamePanel.add(timeAndScore);
+		for (int i = 0 ; i < 32 ; i++) {
+			JLabel plantSpot = new JLabel("Place Plant Here!");
+			plantSpot.setBackground(Color.GREEN);
+			plantSpot.setOpaque(true);
+			plantSpot.setBounds(300 + (i%8)*(gameFrame.getWidth()-350)/8, 50 + (i/8)*(gameFrame.getHeight()-75)/4, (gameFrame.getWidth() - 375)/8, (gameFrame.getHeight() - 100)/4);
+			System.out.println(50 + (i/8)*(gameFrame.getHeight())/4);
+			System.out.println(150 + (i%8)*(gameFrame.getWidth())/8);
+			gamePanel.add(plantSpot);
+		}
+		for (int i = 0 ; i < getMussels().size() ; i++) {
+			Mussel currMussel = getMussels().get(i);
+			gamePanel.remove(currMussel.getMusselDrawing());
+			JLabel tempMussel = new JLabel("Mussel!");
+			tempMussel.setBounds(0,0,gameFrame.getWidth(),30);
+			tempMussel.setBackground(Color.CYAN);
+			tempMussel.setOpaque(true);
+			tempMussel.setBounds(currMussel.getXLoc(), currMussel.getYLoc(), 50 + 20*currMussel.getStage(), 50 + 20*currMussel.getStage());
+			currMussel.setMusselDrawing(tempMussel);
+			gamePanel.add(tempMussel);
+		}
 		final int timerInterval = 1000;
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -77,7 +97,6 @@ public class Game3 {
 	    			addScore(10);
 	    		}
 	    		if (getTime() % 5 == 0) {
-	    		
 		    		for (int i = 0 ; i < getMussels().size() ; i++) {
 		    			Mussel currMussel = getMussels().get(i);
 		    			gamePanel.remove(currMussel.getMusselDrawing());
