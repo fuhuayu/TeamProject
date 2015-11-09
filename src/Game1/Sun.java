@@ -1,5 +1,8 @@
 package Game1;
 
+import java.awt.Color;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -18,8 +21,13 @@ public class Sun extends MovingObject {
 		
 	};
 	public void addSun(JPanel p){
-		int w=(int)(0.5*p.getWidth()/16);
-		int h=(int)(0.5*p.getHeight()/9);
+		int w=p.getWidth();
+		int h=p.getHeight();
+		JLabel sun = new JLabel("sun");
+		sun.setBackground(Color.YELLOW);
+		sun.setOpaque(true);
+		sun.setBounds(0, h/2, w/16,h/9);
+		p.add(sun);
 	}
 
 }

@@ -101,7 +101,7 @@ public class gameWindow {
 				bigGame.getGame3().update();
 			}
 		});
-		
+		frame.repaint();
 	}
 	
 	public JFrame getFrame() {
