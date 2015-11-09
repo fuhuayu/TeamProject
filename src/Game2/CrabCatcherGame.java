@@ -124,6 +124,7 @@ public class CrabCatcherGame {
 	    		//updateTime();
 	    		updateGame();
 	    		updatePanel();
+	    		System.out.println("YOU'RE PLAYING CRAB CATCHER!!!");
 	    		
 	    		
 			}
@@ -185,6 +186,7 @@ public class CrabCatcherGame {
 	 */
 	public void generateAnimals(){
 		//constructs the max number of animals to place on screen
+		animals = new Animal[maxAnimalsOnScreen];
 		for (int i=0; i < maxAnimalsOnScreen; i++){
 			//sets properties randomly for each animal
 			//makeRandomAnimal();
