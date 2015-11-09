@@ -22,7 +22,7 @@ public class CrabCatcherGameTest {
 	@Test
 	public void tickTest(){
 		OverallGame bigGame = new OverallGame();
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, false, bigGame, null);
+		CrabCatcherGame game = new CrabCatcherGame(0, null, 0, 3, 10, null, 5, false, bigGame, null);
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
 		game.addAnimal(crab);
 		
@@ -30,7 +30,7 @@ public class CrabCatcherGameTest {
 		//check if gameOver is triggered by lives = 0
 		//check if crab time remaining decreases
 		game.setLives(0);
-		game.tickGame();
+		game.updateGame();
 		
 		assertEquals("on tick: game time should increase from 0 to 1", 1, game.getTime());
 		assertTrue("on tick: lives = 0 should trigger gameOver", game.isGameOver());
@@ -40,7 +40,7 @@ public class CrabCatcherGameTest {
 		game.setGameOver(false);
 		game.setLives(3);
 		game.setTime(9);
-		game.tickGame();
+		game.updateGame();
 		assertTrue("on tick: time = gameLength should trigger gameOver", game.isGameOver());
 		
 		//check if expired crab is regenerated
@@ -50,7 +50,7 @@ public class CrabCatcherGameTest {
 		
 		int x = crab.getXloc();
 		int y = crab.getYloc();
-		game.tickGame();
+		game.updateGame();
 		assertEquals("on tick: expired crab time remaining should reset to 3", 3, crab.getTimeLeftOnScreen());
 		assertTrue("on tick: regenerated crab visibility should reset to false", !crab.isVisible());
 		assertTrue("crab location should change", (crab.getXloc() != x || crab.getYloc() != y));
@@ -62,8 +62,8 @@ public class CrabCatcherGameTest {
 	@Test
 	public void setupTest(){
 		Animal[] animals = new Animal[3];
-		CrabCatcherGame game1 = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, false,  new OverallGame(), null);
-		CrabCatcherGame game2 = new CrabCatcherGame(0, 0, animals, 0, 3, 10, null, 3, false, new OverallGame(), null);
+		CrabCatcherGame game1 = new CrabCatcherGame(0, animals, 0, 3, 10, null, 3, false,  new OverallGame(), null);
+		CrabCatcherGame game2 = new CrabCatcherGame(0, animals, 0, 3, 10, null, 3, false, new OverallGame(), null);
 		
 		//check if generate animals generates 3 animals
 		game1.generateAnimals();
@@ -78,7 +78,7 @@ public class CrabCatcherGameTest {
 	 */
 	@Test
 	public void mouseInputTest(){
-		CrabCatcherGame game = new CrabCatcherGame(0, 0, null, 0, 3, 10, null, 5, false, new OverallGame(), null);
+		CrabCatcherGame game = new CrabCatcherGame(0, null, 0, 3, 10, null, 5, false, new OverallGame(), null);
 		Animal crab = new Animal(1, 1, "crab", -5, 3, true);
 		Animal fish = new Animal(2, 2, "fish", -3, 3, true);
 		Animal mittencrab = new Animal(3, 3, "mittencrab", 5, 3, true);

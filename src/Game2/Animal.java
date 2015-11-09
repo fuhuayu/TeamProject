@@ -1,5 +1,7 @@
 package Game2;
 
+import java.util.Random;
+
 /**
  * @author Dwegrzyn
  * A class representing the animals that appear in the Crab Catcher game
@@ -41,8 +43,11 @@ public class Animal {
 	 */
 	public void regenerateAnimal(){
 		//sets animal visibility to false (could use an animation here)
-		visible = false;
+		//visible = false;
 		//gives animal a random location
+		Random r = new Random();
+		xloc = r.nextInt();
+		yloc = r.nextInt();
 		//reset timeLeftOnScreen to display duration
 		timeLeftOnScreen = displayDuration;
 	}
@@ -56,6 +61,10 @@ public class Animal {
 			regenerateAnimal();
 		}
 		else {timeLeftOnScreen--;}
+	}
+	
+	public String toString(){
+		return (typeOfAnimal + " " + timeLeftOnScreen);
 	}
 
 	

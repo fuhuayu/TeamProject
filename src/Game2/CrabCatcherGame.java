@@ -25,10 +25,10 @@ public class CrabCatcherGame {
 	private double speed;
 	private Animal[] animals; 
 	private int score;
-	private int lives;
-	private double gameLength; //how long is this game?
+	private int lives = 3;
+	private double gameLength = 20; //how long is this game?
 	private MouseAdapter mouseListener;
-	private int maxAnimalsOnScreen; 
+	private int maxAnimalsOnScreen = 3; 
 	private boolean gameOver = false;
 	private OverallGame bigGame;
 	private JFrame frame;
@@ -51,19 +51,19 @@ public class CrabCatcherGame {
 	 * @param frame - the frame the game is drawn in
 	 */
 	
-	public CrabCatcherGame(double time, double speed, Animal[] animals,
+	public CrabCatcherGame(double speed, Animal[] animals,
 			int score, int lives, double gameLength,
 			MouseAdapter mouseListener, int maxAnimalsOnScreen,
 			boolean gameOver, OverallGame bigGame, JFrame frame) {
 		super();
-		this.time = time;
-		this.speed = speed;
+		this.time = 0;
+		//this.speed = speed;
 		this.animals = animals;
 		this.score = score;
-		this.lives = lives;
-		this.gameLength = gameLength;
+		//this.lives = lives;
+		//this.gameLength = gameLength;
 		this.mouseListener = mouseListener;
-		this.maxAnimalsOnScreen = maxAnimalsOnScreen;
+		//this.maxAnimalsOnScreen = maxAnimalsOnScreen;
 		this.gameOver = gameOver;
 		this.bigGame = bigGame;
 		this.frame = frame;
@@ -77,15 +77,13 @@ public class CrabCatcherGame {
 	 */
 	public void updateGame(){
 		//check if lives == 0, or time = gameLength, which cause gameOver
-		if (lives == 0 || time == gameLength){
-			gameOver = true;
+		if (lives == 0 || time >= gameLength){
+    		//System.out.println("time is " + time + ">= " + gameLength);
+			endGame();
 		}
-		int x = 0;
-		//increases timer -- don't have to do this anymore with Swing Timer
-		//time ++;
 		//updates game's timed aspects - call animal.onTick() for all animals
 		for (Animal each : animals) {
-			each.onTick();
+			if(each != null){each.onTick();}
 		}
 		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
 	}
@@ -112,7 +110,7 @@ public class CrabCatcherGame {
 		//layout and draw things
 		panel=new JPanel();
 		panel.setLayout(null);
-		TS = new JLabel("Time:" + this.time + "Score:"+this.score);
+		TS = new JLabel("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
 		TS.setBounds(0,0,frame.getWidth(),30);
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
 		panel.add(TS);		
@@ -121,10 +119,10 @@ public class CrabCatcherGame {
 		int timerTimeInMilliSeconds = 1000;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
-	    		//updateTime();
+	    		time++;
 	    		updateGame();
 	    		updatePanel();
-	    		System.out.println("YOU'RE PLAYING CRAB CATCHER!!!");
+	    		//System.out.println("YOU'RE PLAYING CRAB CATCHER!!!");
 	    		
 	    		
 			}
@@ -135,33 +133,10 @@ public class CrabCatcherGame {
 	
 	public boolean updatePanel(){
 		//visual updates
+		TS.setText("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
 		return true;
 		
 	}
-	
-	/**
-	 * Time updates based on real time spending
-	 */
-	/*public void updateTime(){
-		long t=System.currentTimeMillis();
-		this.currtime=(int) (this.time+(this.starttime-t)/1000);
-	}*/
-	
-	/*	public void run() {	
-		bigpan=(JPanel) frame.getContentPane();
-		frame.setContentPane(this.panel);
-		frame.setVisible(true);
-		timer.start();
-		
-	}*/
-	
-	/*
-	 * 	public boolean updatePanel(){
-		TS.setText("Time:"+this.currtime+"    Score:"+this.score);
-		return true;
-		
-	}
-	 */
 	
 	/**
 	 * Ends mini game and saves score to big game. Cues mini game closing scene.
@@ -190,9 +165,18 @@ public class CrabCatcherGame {
 		for (int i=0; i < maxAnimalsOnScreen; i++){
 			//sets properties randomly for each animal
 			//makeRandomAnimal();
+			
+			//TEMPORARY LIST
+			Animal crab = new Animal(1, 1, "crab", -5, 4, true);
+			Animal fish = new Animal(2, 2, "fish", -3, 5, true);
+			Animal mittencrab = new Animal(3, 3, "mittencrab", 5, 3, true);
+			this.addAnimal(crab);
+			this.addAnimal(fish);
+			this.addAnimal(mittencrab);
 		}
 		
 	}
+	
 	
 	/**
 	 * @param animal the animal to be added to the game's list
