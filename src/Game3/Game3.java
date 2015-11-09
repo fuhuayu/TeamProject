@@ -44,7 +44,7 @@ public class Game3 {
 	 * @param bigGame - The handler for the entire game
 	 */
 	public Game3(OverallGame bigGame) {
-		this.time	=	180.0	;
+		this.time	=	22.0	;
 		this.score	=	0	;
 		this.money	=	100	;
 		this.plants	=	new ArrayList<Plant>();
@@ -74,8 +74,6 @@ public class Game3 {
 			plantSpot.setBackground(Color.GREEN);
 			plantSpot.setOpaque(true);
 			plantSpot.setBounds(300 + (i%8)*(gameFrame.getWidth()-350)/8, 50 + (i/8)*(gameFrame.getHeight()-75)/4, (gameFrame.getWidth() - 375)/8, (gameFrame.getHeight() - 100)/4);
-			System.out.println(50 + (i/8)*(gameFrame.getHeight())/4);
-			System.out.println(150 + (i%8)*(gameFrame.getWidth())/8);
 			gamePanel.add(plantSpot);
 		}
 		for (int i = 0 ; i < getMussels().size() ; i++) {
