@@ -1,4 +1,5 @@
 package Game3;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,6 +50,10 @@ public class Game3 {
 		this.plants	=	new ArrayList<Plant>();
 		this.enemies	=	new ArrayList<Runoff>();
 		this.mussels	=	new ArrayList<Mussel>();
+		this.mussels.add(new Mussel(200, 500));
+		this.mussels.add(new Mussel(200, 200));
+		this.mussels.add(new Mussel(100, 350));
+		this.mussels.add(new Mussel(20, 100));
 		this.gameRunning	=	true;
 		this.gameOver	=	false;
 		this.bigGame	=	bigGame;
@@ -64,8 +69,6 @@ public class Game3 {
 		timeAndScore.setBounds(0,0,frame.getWidth(),30);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
 		gamePanel.add(timeAndScore);
-		frame.setContentPane(gamePanel);
-		frame.setVisible(true);
 		final int timerInterval = 1000;
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -73,8 +76,24 @@ public class Game3 {
 	    		if (getTime() % 10 == 0) {
 	    			addScore(10);
 	    		}
+	    		if (getTime() % 5 == 0) {
+	    		
+		    		for (int i = 0 ; i < getMussels().size() ; i++) {
+		    			Mussel currMussel = getMussels().get(i);
+		    			gamePanel.remove(currMussel.getMusselDrawing());
+		    			JLabel tempMussel = new JLabel("Mussel!");
+		    			tempMussel.setBounds(0,0,gameFrame.getWidth(),30);
+		    			tempMussel.setBackground(Color.CYAN);
+		    			tempMussel.setOpaque(true);
+		    			tempMussel.setBounds(currMussel.getXLoc(), currMussel.getYLoc(), 50 + 20*currMussel.getStage(), 50 + 20*currMussel.getStage());
+		    			currMussel.setMusselDrawing(tempMussel);
+		    			gamePanel.add(tempMussel);
+		    			currMussel.grow();
+		    		}
+	    		}
 	    		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
-	    		System.out.println(getTime());
+	    		gameFrame.setContentPane(gamePanel);
+	    		gameFrame.setVisible(true);
 	    		if(getTime()<=0){
 	    			endGame();
 	    		}
