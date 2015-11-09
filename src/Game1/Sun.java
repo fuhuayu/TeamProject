@@ -18,7 +18,8 @@ public class Sun extends MovingObject {
 		
 	};
 	public void addSun(JPanel p){
-		
+		int w=(int)(0.5*p.getWidth()/16);
+		int h=(int)(0.5*p.getHeight()/9);
 	}
 
 }

@@ -72,7 +72,7 @@ public class gameWindow {
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bigGame.setGameRunning(1);
-				bigGame.setGame1(new RipRapGame(90, bigGame, frame));
+				bigGame.setGame1(new RipRapGame(20, bigGame, frame));
 				bigGame.getGame1().run();
 			}
 		});
