@@ -31,6 +31,7 @@ public class RipRapGame {
 	JumpingBar jumpingBar;
 	ArrayList<Stone> stones;
 	Sun sun;
+	Cloud cloud;
 	ArrayList<Cloud> clouds;
 	private OverallGame bigGame;
 	ArrayList<RipRapWall> wall;
@@ -128,7 +129,8 @@ public class RipRapGame {
 		this.starttime=System.currentTimeMillis();
 		this.frame=frame;
 		this.jumpingBar=new JumpingBar(20, 30, this);
-		this.sun=new Sun(10);
+		this.sun=new Sun(150);
+		this.cloud=new Cloud(200,1000,200);
 		initGame();
 		initPanel();
 	}
@@ -164,6 +166,7 @@ public class RipRapGame {
 	    		updatePanel();
 	    		jumpingBar.update(panel);
 	    		sun.update();
+	    		cloud.update();
 	    		if(getTime()<=0){
 	    			endGame();
 	    		}
@@ -180,6 +183,7 @@ public class RipRapGame {
 		System.out.println(getTime());
 		System.out.println(panel.getSize());
 		jumpingBar.makeLabels(panel);
+		this.cloud.addItem(panel, "images/cloud1.png");
 		this.sun.addSun(panel);
 		return true;
 	}

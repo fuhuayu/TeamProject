@@ -1,4 +1,15 @@
 package Game1;
+
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
  * @version 0.1
@@ -6,10 +17,28 @@ package Game1;
  * Subclass of MovingObect, Cloud in the game
  */
 public class Cloud extends MovingObject {
-
-	public Cloud(int x, int y, int size) {
-		super(x, y, size);
+	int speed,bx,by;
+	public Cloud(int size, int bx,int by) {
+		super((int)(bx*Math.random()),(int)(by*Math.random()), size);
+		this.bx=bx;
+		this.by=by;
+		this.speed=(int) (Math.random()*6-3);
 		// TODO Auto-generated constructor stub
 	}
+	public void update(){
+		if(this.speed+this.getPosition().x<-this.getSize()/2){
+			this.getPosition().setLocation(bx+this.getSize()/2, this.getPosition().y);
+		}
+		else if(this.speed+this.getPosition().x>bx+this.getSize()/2){
+			this.getPosition().setLocation(0-this.getSize()/2, this.getPosition().y);
+		}
+		else{
+			this.getPosition().setLocation(this.getPosition().x+speed,this.getPosition().y);
+		}
+		this.getLabel().setBounds(this.getPosition().x, this.getPosition().y, 
+				this.getLabel().getWidth(), this.getLabel().getHeight());
+		
+	}
+	
 
 }

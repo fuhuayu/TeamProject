@@ -1,8 +1,11 @@
 package Game1;
 
-import java.awt.Color;
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,6 +23,7 @@ public class Sun extends MovingObject {
 	int r;
 	public Sun(int size) {
 		super(0, 0, size);
+		
 		// TODO Auto-generated constructor stub
 	}
 	public void update(){
@@ -35,10 +39,15 @@ public class Sun extends MovingObject {
 	public void addSun(JPanel p){
 		int w=p.getWidth();
 		int h=p.getHeight();
-		sun = new JLabel("sun");
-		sun.setBackground(Color.YELLOW);
-		sun.setOpaque(true);
-		sun.setBounds(0-w/32, h/2-h/18, w/16,h/9);
+		sun = new JLabel();
+		try {
+			ImageIcon icon = new ImageIcon(ImageIO.read(new File("images/happysun.png")).getScaledInstance(this.getSize(), this.getSize(), 1));
+			sun.setIcon(icon);
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		
+		sun.setBounds(0-this.getSize()/2, h/2-this.getSize()/2, this.getSize(),this.getSize());
 		point=new Point(w/5*3,(int) (1.5*h));
 		r=(int) point.distance(new Point(0, h/2));
 		final double deltaY = (h);

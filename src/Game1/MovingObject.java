@@ -1,5 +1,13 @@
 package Game1;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
@@ -8,8 +16,10 @@ import java.awt.Point;
  * Class of all moving object;
  */
 public class MovingObject {
-Point position;
-int size;
+private Point position;
+private int size,w,h;
+private JLabel label;
+
 /**Constructor
  * @param x Position in x
  * @param y Position in y
@@ -23,14 +33,37 @@ public MovingObject(int x,int y, int size) {
  * update the position based on the attributes.
  * 
  */
-public void update(){
+public JLabel getLabel() {
+	return label;
+}
+
+public void addItem(JPanel p,String filename){
+	w=p.getWidth();
+	h=p.getHeight();
+	label = new JLabel();
+	BufferedImage image;
+	ImageIcon icon=new ImageIcon();
+	try {
+		image = ImageIO.read(new File(filename));
+		icon = new ImageIcon(image.getScaledInstance(this.size, this.size*image.getHeight()/image.getWidth(), 1));
+		
+	} catch(IOException e) {
+		System.out.println("Read Error: " + e.getMessage());
+	}
+	label.setIcon(icon);
+	label.setBounds(position.x-this.size/2, position.y-icon.getIconHeight()/2, this.size,icon.getIconHeight());
 	
-};
+	p.add(label);
+}
 /** getter for position
  * @return return the position
  */
 public Point getPosition(){
 	return position;
+}
+
+public void setPosition(Point position) {
+	this.position = position;
 }
 /**
  * @return size of the object
