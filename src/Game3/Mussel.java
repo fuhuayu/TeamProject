@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 public class Mussel {
 	private int xloc ;
 	private int yloc ;
-	private int stage;
+private int stage;
 	private JLabel musselDrawing;
 	
 	/**
@@ -38,7 +38,7 @@ public class Mussel {
 	 * If it's at the final growth stage, does nothing
 	 */
 	public void grow() {
-		if (getStage() < 3) {
+		if (getStage() < 100) {
 			setStage(getStage() + 1);
 		}
 	} ;
@@ -67,7 +67,7 @@ public class Mussel {
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
-		return image.getScaledInstance(132*(getStage() + 1)/4, 80*(getStage() + 1)/4, 1);
+		return image.getScaledInstance(132*(getStage() + 1)/101, 80*(getStage() + 1)/101, 1);
 	}
 
 	public void setStage(int stage) {

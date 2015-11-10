@@ -59,6 +59,9 @@ public class gameWindow {
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (bigGame.getGamesRunning() == 3) {
+					bigGame.getGame3().onClick(e);
+				}
 			}
 		});
 		frame.setBounds(100, 100, this.bigGame.frameWidth, this.bigGame.frameHeight);

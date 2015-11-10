@@ -51,8 +51,8 @@ public class Game3 {
 		this.plants	=	new ArrayList<Plant>();
 		this.enemies	=	new ArrayList<Runoff>();
 		this.mussels	=	new ArrayList<Mussel>();
-		this.mussels.add(new Mussel(170, 500));
-		this.mussels.add(new Mussel(180, 200));
+		this.mussels.add(new Mussel(130, 500));
+		this.mussels.add(new Mussel(150, 200));
 		this.mussels.add(new Mussel(100, 350));
 		this.mussels.add(new Mussel(20, 100));
 		this.gameRunning	=	true;
@@ -85,18 +85,16 @@ public class Game3 {
 			plantSpot.setBounds(300 + (i%8)*(gameFrame.getWidth()-350)/8, 50 + (i/8)*(gameFrame.getHeight()-75)/4, (gameFrame.getWidth() - 375)/8, (gameFrame.getHeight() - 100)/4);
 			gamePanel.add(plantSpot);
 		}
-		final int timerInterval = 1000;
+		final int timerInterval = 100;
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		setTime(getTime() - (double)(timerInterval)/1000);
-	    		if (getTime() % 10 == 0) {
+	    		if (getTime() % 10 < 0.1) {
 	    			addScore(10);
 	    		}
-	    		if (getTime() % 5 == 0) {
-	    			for (Mussel current : getMussels()) {
-	    				current.grow();
-	    			}
-	    		}
+    			for (Mussel current : getMussels()) {
+    				current.grow();
+    			}
 	    		
 	    		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
 	    		gameFrame.setContentPane(gamePanel);
@@ -129,7 +127,19 @@ public class Game3 {
 	 * WITHOUT sending the score or setting the game complete boolean to true
 	 * @param e - The location and nature of the user's click
 	 */
-	public void onClick(MouseEvent e) {} ;
+	public void onClick(MouseEvent e) {
+		int xLoc = e.getX();
+		int yLoc = e.getY();
+		for (Mussel current : getMussels()) {
+			if (current.getStage() ==  100) {
+				if ((xLoc > current.getXLoc() && xLoc < current.getXLoc() + 132) &&
+					(yLoc > current.getYLoc() && yLoc < current.getYLoc() + 80)) {
+					addScore(50);
+					current.setStage(0);
+				}
+			}
+		}
+ 	}
 	
 	/**
 	 * Adds a plant to the current game from a player choice in a menu screen
