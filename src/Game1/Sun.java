@@ -36,7 +36,7 @@ public class Sun extends MovingObject {
 				sun.getBounds().width, sun.getBounds().height);
 		
 	};
-	public void addSun(JPanel p){
+	public void addItem(JPanel p){
 		int w=p.getWidth();
 		int h=p.getHeight();
 		sun = new JLabel();

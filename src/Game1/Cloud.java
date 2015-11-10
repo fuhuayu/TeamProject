@@ -22,7 +22,7 @@ public class Cloud extends MovingObject {
 		super((int)(bx*Math.random()),(int)(by*Math.random()), size);
 		this.bx=bx;
 		this.by=by;
-		this.speed=(int) (Math.random()*6-3);
+		this.speed=(int) (((Math.random()*3)+1)*Math.pow(-1, (int) (Math.random()*2)));
 		// TODO Auto-generated constructor stub
 	}
 	public void update(){

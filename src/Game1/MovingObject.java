@@ -36,6 +36,9 @@ public MovingObject(int x,int y, int size) {
 public JLabel getLabel() {
 	return label;
 }
+public void update(){
+	
+}
 
 public void addItem(JPanel p,String filename){
 	w=p.getWidth();
@@ -45,13 +48,13 @@ public void addItem(JPanel p,String filename){
 	ImageIcon icon=new ImageIcon();
 	try {
 		image = ImageIO.read(new File(filename));
-		icon = new ImageIcon(image.getScaledInstance(this.size, this.size*image.getHeight()/image.getWidth(), 1));
+		icon = new ImageIcon(image.getScaledInstance(size, size*image.getHeight()/image.getWidth(), 1));
 		
 	} catch(IOException e) {
 		System.out.println("Read Error: " + e.getMessage());
 	}
 	label.setIcon(icon);
-	label.setBounds(position.x-this.size/2, position.y-icon.getIconHeight()/2, this.size,icon.getIconHeight());
+	label.setBounds(position.x-size/2, position.y-icon.getIconHeight()/2, size,icon.getIconHeight());
 	
 	p.add(label);
 }

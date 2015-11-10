@@ -31,8 +31,7 @@ public class RipRapGame {
 	JumpingBar jumpingBar;
 	ArrayList<Stone> stones;
 	Sun sun;
-	Cloud cloud;
-	ArrayList<Cloud> clouds;
+	ArrayList<MovingObject> objects;
 	private OverallGame bigGame;
 	ArrayList<RipRapWall> wall;
 	JPanel panel;
@@ -85,13 +84,7 @@ public class RipRapGame {
 		this.sun = sun;
 	}
 
-	public ArrayList<Cloud> getClouds() {
-		return clouds;
-	}
-
-	public void setClouds(ArrayList<Cloud> clouds) {
-		this.clouds = clouds;
-	}
+	
 
 	public int getScore(){
 		return score;
@@ -129,9 +122,7 @@ public class RipRapGame {
 		this.starttime=System.currentTimeMillis();
 		this.frame=frame;
 		this.jumpingBar=new JumpingBar(20, 30, this);
-		this.sun=new Sun(150);
-		this.cloud=new Cloud(200,1000,200);
-		initGame();
+		this.objects=new ArrayList<MovingObject>();
 		initPanel();
 	}
 
@@ -151,12 +142,26 @@ public class RipRapGame {
 	 * initialize the game with RipRap wall and obstacles randomly displaced
 	 */
 	public boolean initGame(){
+		for(int i=1;i<5;i++){
+			Cloud cloud = new Cloud(200,1000,200);
+			cloud.addItem(panel, "images/cloud"+i+".png");
+			objects.add(cloud);
+		}
+		Sun sun=new Sun(150);
+		sun.addItem(panel);
+		objects.add(sun);
 		return true;
 	}
 	public boolean initPanel(){
 		panel=new JPanel();
 		panel.setLayout(null);
-		
+		JButton Button = new JButton("Return");
+		Button.setBounds(0, 600, 100, 50);
+		Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				endGame();
+			}});
+		panel.add(Button);
 		
 		
 		int timerTimeInMilliSeconds = 20;
@@ -165,8 +170,7 @@ public class RipRapGame {
 	    		updateTime();
 	    		updatePanel();
 	    		jumpingBar.update(panel);
-	    		sun.update();
-	    		cloud.update();
+	    		updateMap();
 	    		if(getTime()<=0){
 	    			endGame();
 	    		}
@@ -180,11 +184,10 @@ public class RipRapGame {
 		TS.setBounds(0,0,frame.getWidth(),30);
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
 		panel.add(TS);
-		System.out.println(getTime());
-		System.out.println(panel.getSize());
 		jumpingBar.makeLabels(panel);
-		this.cloud.addItem(panel, "images/cloud1.png");
-		this.sun.addSun(panel);
+		initGame();
+
+		
 		return true;
 	}
 	public boolean updatePanel(){
@@ -198,7 +201,9 @@ public class RipRapGame {
 	 * Will also affect the size of Obstacles and quantity.
 	 */
 	public void updateMap(){
-		
+		for(MovingObject m:objects){
+			m.update();
+		}
 	}
 	
 	/**
