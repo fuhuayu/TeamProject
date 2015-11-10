@@ -1,5 +1,12 @@
 package Game3;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
@@ -37,7 +44,20 @@ public class Plant {
 		return (row == other.getRow() && col == other.getCol() && type == other.getType());
 	}
 
-	
+	public Image draw() {
+		BufferedImage image = null;
+		try {
+			if (getType().equals(image)) {
+				image = ImageIO.read(new File("images/Grass.png"));
+			}
+			else {
+				image = ImageIO.read(new File("images/noPlant.png"));
+			}
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		return image.getScaledInstance(132, 50, 1);
+	}
 	
 	/**
 	 * Getters for all attributes

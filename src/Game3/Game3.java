@@ -49,6 +49,9 @@ public class Game3 {
 		this.score	=	0	;
 		this.money	=	100	;
 		this.plants	=	new ArrayList<Plant>();
+		for (int i = 0 ; i < 32 ; i++) {
+			this.plants.add(new Plant(i/8, i%8, ""));
+		}
 		this.enemies	=	new ArrayList<Runoff>();
 		this.mussels	=	new ArrayList<Mussel>();
 		this.mussels.add(new Mussel(130, 500));
@@ -71,20 +74,16 @@ public class Game3 {
 				for (Mussel current : getMussels()) {
 					g.drawImage(current.draw(), current.getXLoc(), current.getYLoc(), null);
 				}
+				for (Plant current : getPlants()) {
+					g.drawImage(current.draw(), current.getCol()*150 + 320, current.getRow()*150 + 70, null);
+				}
 			}
 		};
 		gamePanel.setLayout(null);
-		timeAndScore = new JLabel("Time:"+getTime()+"    Score:"+getScore());
+		timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
 		timeAndScore.setBounds(0,0,frame.getWidth(),30);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
 		gamePanel.add(timeAndScore);
-		for (int i = 0 ; i < 32 ; i++) {
-			JLabel plantSpot = new JLabel("Place Plant Here!");
-			plantSpot.setBackground(Color.GREEN);
-			plantSpot.setOpaque(true);
-			plantSpot.setBounds(300 + (i%8)*(gameFrame.getWidth()-350)/8, 50 + (i/8)*(gameFrame.getHeight()-75)/4, (gameFrame.getWidth() - 375)/8, (gameFrame.getHeight() - 100)/4);
-			gamePanel.add(plantSpot);
-		}
 		final int timerInterval = 100;
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -96,7 +95,7 @@ public class Game3 {
     				current.grow();
     			}
 	    		
-	    		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
+    			timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
 	    		gameFrame.setContentPane(gamePanel);
 	    		gameFrame.setVisible(true);
 	    		if(getTime()<=0){
