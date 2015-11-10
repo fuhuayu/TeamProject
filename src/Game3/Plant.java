@@ -56,7 +56,7 @@ public class Plant {
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
-		return image.getScaledInstance(132, 50, 1);
+		return image.getScaledInstance(150, 150, 1);
 	}
 	
 	/**

@@ -56,6 +56,9 @@ public class gameWindow {
 				if (bigGame.getGamesRunning() == 3) {
 					bigGame.getGame3().onClick(e);
 				}
+				else if (bigGame.getGamesRunning() == 2) {
+					bigGame.getGame2().onClick(e);
+				}
 			}
 		});
 		frame.setBounds(100, 100, this.bigGame.frameWidth, this.bigGame.frameHeight);
