@@ -1,6 +1,7 @@
 package Game2;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import Game3.Mussel;
 import OverallGame.OverallGame;
 
 
@@ -109,7 +111,17 @@ public class CrabCatcherGame {
 	
 	public boolean initPanel(){
 		//layout and draw things
-		panel=new JPanel();
+		panel = new JPanel(){
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				for (Animal animal : getAnimals()) {
+					if (animal.isVisible()){
+						g.drawImage(animal.getImage(), animal.getXloc(), animal.getYloc(), null);
+					}
+				}
+			}
+		};
 		panel.setLayout(null);
 		TS = new JLabel("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
 		TS.setBounds(0,0,frame.getWidth(),30);
@@ -117,7 +129,7 @@ public class CrabCatcherGame {
 		panel.add(TS);
 		
 		
-		for (int i=0; i < animals.length; i++){
+		/*for (int i=0; i < animals.length; i++){
 			JLabel label = new JLabel(animals[i].toString());
 			label.setBackground(Color.YELLOW);
 			label.setOpaque(true);
@@ -125,7 +137,7 @@ public class CrabCatcherGame {
 			label.setVisible(true);
 			panel.add(label);
 			animals[i].setLabel(label);
-		}
+		}*/
 		
 		
 		
@@ -151,11 +163,13 @@ public class CrabCatcherGame {
 	public boolean updatePanel(){
 		//visual updates
 		TS.setText("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
-		for (int i=0; i< animals.length; i++){
+		/*for (int i=0; i< animals.length; i++){
 			Animal a = animals[i];
 			a.getLabel().setText(a.toString());
 			a.getLabel().setLocation(a.getXloc(), a.getYloc());
-		}
+		}*/
+		
+		frame.repaint();
 		
 		return true;
 		

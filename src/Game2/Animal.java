@@ -1,7 +1,12 @@
 package Game2;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 /**
@@ -18,6 +23,10 @@ public class Animal {
 	private double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
 	private boolean visible;
 	private JLabel label; //temporary probably
+	private Image image; //image of animal
+	private int imageWidth;
+	private int imageHeight;
+	
 	//
 	//CONSTRUCTOR
 	/**
@@ -37,6 +46,7 @@ public class Animal {
 		this.displayDuration = displayDuration;
 		this.timeLeftOnScreen = displayDuration;
 		this.visible = visible;
+		this.image = loadImage("mussel.png");
 	}
 	
 	//METHODS
@@ -64,6 +74,24 @@ public class Animal {
 			regenerateAnimal();
 		}
 		else {timeLeftOnScreen--;}
+	}
+	
+	/**returns the image in the path images/filename
+	 * sets imageWidth and imageHeight
+	 * @param filename the name of the file to be loaded
+	 * @return 
+	 */
+	public Image loadImage(String filename) {
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(new File("images/" + filename));
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		//return image.getScaledInstance(scoreEffect, scoreEffect, scoreEffect);
+		this.imageWidth = image.getWidth();
+		this.imageHeight = image.getHeight();
+		return image;
 	}
 	
 	public String toString(){
@@ -134,6 +162,14 @@ public class Animal {
 
 	public void setLabel(JLabel label) {
 		this.label = label;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 	
 
