@@ -1,6 +1,7 @@
 package Game3;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -63,7 +64,15 @@ public class Game3 {
 	
 	public void initPanel(JFrame frame) {
 		this.bigGamePanel	= (JPanel)frame.getContentPane();
-		this.gamePanel		= new JPanel() ;
+		this.gamePanel		= new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				for (Mussel current : getMussels()) {
+					g.drawImage(current.draw(), current.getXLoc(), current.getYLoc(), null);
+				}
+			}
+		};
 		gamePanel.setLayout(null);
 		timeAndScore = new JLabel("Time:"+getTime()+"    Score:"+getScore());
 		timeAndScore.setBounds(0,0,frame.getWidth(),30);
@@ -76,17 +85,6 @@ public class Game3 {
 			plantSpot.setBounds(300 + (i%8)*(gameFrame.getWidth()-350)/8, 50 + (i/8)*(gameFrame.getHeight()-75)/4, (gameFrame.getWidth() - 375)/8, (gameFrame.getHeight() - 100)/4);
 			gamePanel.add(plantSpot);
 		}
-		for (int i = 0 ; i < getMussels().size() ; i++) {
-			Mussel currMussel = getMussels().get(i);
-			gamePanel.remove(currMussel.getMusselDrawing());
-			JLabel tempMussel = new JLabel("Mussel!");
-			tempMussel.setBounds(0,0,gameFrame.getWidth(),30);
-			tempMussel.setBackground(Color.CYAN);
-			tempMussel.setOpaque(true);
-			tempMussel.setBounds(currMussel.getXLoc(), currMussel.getYLoc(), 50 + 20*currMussel.getStage(), 50 + 20*currMussel.getStage());
-			currMussel.setMusselDrawing(tempMussel);
-			gamePanel.add(tempMussel);
-		}
 		final int timerInterval = 1000;
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -95,19 +93,11 @@ public class Game3 {
 	    			addScore(10);
 	    		}
 	    		if (getTime() % 5 == 0) {
-		    		for (int i = 0 ; i < getMussels().size() ; i++) {
-		    			Mussel currMussel = getMussels().get(i);
-		    			gamePanel.remove(currMussel.getMusselDrawing());
-		    			JLabel tempMussel = new JLabel("Mussel!");
-		    			tempMussel.setBounds(0,0,gameFrame.getWidth(),30);
-		    			tempMussel.setBackground(Color.CYAN);
-		    			tempMussel.setOpaque(true);
-		    			tempMussel.setBounds(currMussel.getXLoc(), currMussel.getYLoc(), 50 + 20*currMussel.getStage(), 50 + 20*currMussel.getStage());
-		    			currMussel.setMusselDrawing(tempMussel);
-		    			gamePanel.add(tempMussel);
-		    			currMussel.grow();
-		    		}
+	    			for (Mussel current : getMussels()) {
+	    				current.grow();
+	    			}
 	    		}
+	    		
 	    		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
 	    		gameFrame.setContentPane(gamePanel);
 	    		gameFrame.setVisible(true);

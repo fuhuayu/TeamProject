@@ -1,5 +1,12 @@
 package Game3;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
@@ -21,7 +28,7 @@ public class Mussel {
 	 */
 	public Mussel(int xloc, int yloc) {
 		this.xloc = xloc;
-		this.yloc = yloc; //Danielle you should quit the group...but rlly
+		this.yloc = yloc;
 		this.stage = 0;
 		this.musselDrawing = new JLabel();
 	}
@@ -51,6 +58,16 @@ public class Mussel {
 	}
 	public JLabel getMusselDrawing() {
 		return musselDrawing;
+	}
+	
+	public Image draw() {
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(new File("images/mussel.png"));
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		return image.getScaledInstance(132*(getStage() + 1)/4, 80*(getStage() + 1)/4, 1);
 	}
 
 	public void setStage(int stage) {
