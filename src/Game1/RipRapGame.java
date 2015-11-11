@@ -123,6 +123,7 @@ public class RipRapGame {
 		this.frame=frame;
 		this.jumpingBar=new JumpingBar(20, 30, this);
 		this.objects=new ArrayList<MovingObject>();
+		this.crab=new Crab(0,0,100);
 		initPanel();
 	}
 
@@ -142,6 +143,8 @@ public class RipRapGame {
 	 * initialize the game with RipRap wall and obstacles randomly displaced
 	 */
 	public boolean initGame(){
+		crab.addItem(panel, "images/crab.png");
+		objects.add(crab);
 		for(int i=1;i<5;i++){
 			Cloud cloud = new Cloud(200,1000,200);
 			cloud.addItem(panel, "images/cloud"+i+".png");
@@ -155,6 +158,8 @@ public class RipRapGame {
 	public boolean initPanel(){
 		panel=new JPanel();
 		panel.setLayout(null);
+		panel.setBackground(new Color(135, 206, 235));
+		panel.setOpaque(true);
 		JButton Button = new JButton("Return");
 		Button.setBounds(0, 600, 100, 50);
 		Button.addActionListener(new ActionListener() {

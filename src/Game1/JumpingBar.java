@@ -103,6 +103,7 @@ public class JumpingBar {
 			this.game.score+=100;
 		}
 		this.barloc=100;
+		this.game.crab.clicked();
 	}
 	/**
 	 * CurrentValue should increase based on real time
