@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JLabel;
@@ -85,6 +86,15 @@ public class Game3 {
 			}
 		};
 		gamePanel.setLayout(null);
+		//return button
+		JButton Button = new JButton("Return");
+		Button.setBounds(0, 600, 100, 50);
+		Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				endGame();
+			}});
+		gamePanel.add(Button);
+		
 		timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
 		timeAndScore.setBounds(0,0,frame.getWidth(),30);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));

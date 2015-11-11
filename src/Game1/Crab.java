@@ -44,7 +44,7 @@ public class Crab extends MovingObject {
 	 * @see Game2.MovingObject#update()
 	 */
 	public void clicked(){
-		speed=-3;
+		speed=-6;
 	}
 	public void update(){
 		if(speed!=0){
@@ -60,9 +60,12 @@ public class Crab extends MovingObject {
 				}
 				currheight+=speed;
 			}
+			this.getPosition().setLocation(this.getPosition().x+3, this.getPosition().y);
 		}
 		
-		this.getPosition().setLocation(this.getPosition().x+1, this.getPosition().y);
+		else{
+			this.getPosition().setLocation(this.getPosition().x+1, this.getPosition().y);
+		}
 		
 		this.getLabel().setBounds(this.getPosition().x, this.getPosition().y+currheight, 
 				this.getLabel().getWidth(), this.getLabel().getHeight());

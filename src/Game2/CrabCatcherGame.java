@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -168,6 +169,14 @@ public class CrabCatcherGame {
 			}
 		};
 		panel.setLayout(null);
+		//return button
+		JButton Button = new JButton("Return");
+		Button.setBounds(0, 600, 100, 50);
+		Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				endGame();
+			}});
+		panel.add(Button);
 		TS = new JLabel("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
 		TS.setBounds(0,0,frame.getWidth(),30);
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
