@@ -49,8 +49,13 @@ public class Game3 {
 		this.score	=	0	;
 		this.money	=	100	;
 		this.plants	=	new ArrayList<Plant>();
-		for (int i = 0 ; i < 32 ; i++) {
-			this.plants.add(new Plant(i/8, i%8, ""));
+		for (int i = 0 ; i < 28 ; i++) {
+			if (i == 0 || i == 1 || i == 7) {
+				this.plants.add(new Plant(i/7, i%7, "Grass"));
+			}
+			else {
+				this.plants.add(new Plant(i/7, i%7, ""));
+			}
 		}
 		this.enemies	=	new ArrayList<Runoff>();
 		this.mussels	=	new ArrayList<Mussel>();
@@ -75,7 +80,7 @@ public class Game3 {
 					g.drawImage(current.draw(), current.getXLoc(), current.getYLoc(), null);
 				}
 				for (Plant current : getPlants()) {
-					g.drawImage(current.draw(), current.getCol()*150 + 320, current.getRow()*150 + 70, null);
+					g.drawImage(current.draw(), current.getCol()*130 + 320, current.getRow()*130 + 70, null);
 				}
 			}
 		};
@@ -95,7 +100,7 @@ public class Game3 {
     				current.grow();
     			}
 	    		
-    			timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
+    			timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
 	    		gameFrame.setContentPane(gamePanel);
 	    		gameFrame.setVisible(true);
 	    		if(getTime()<=0){
@@ -133,7 +138,7 @@ public class Game3 {
 			if (current.getStage() ==  100) {
 				if ((xLoc > current.getXLoc() && xLoc < current.getXLoc() + 132) &&
 					(yLoc > current.getYLoc() && yLoc < current.getYLoc() + 80)) {
-					addScore(50);
+					addScore(50); addMoney(100);
 					current.setStage(0);
 				}
 			}

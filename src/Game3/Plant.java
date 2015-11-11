@@ -20,6 +20,7 @@ public class Plant {
 	int 	strength ;
 	int 	health 	 ;
 	String 	type ;
+	Image   image;
 	/**
 	 * Constructor
 	 * strength is determined by the plant type (Grass = 3)
@@ -34,6 +35,18 @@ public class Plant {
 		this.type	=	type	;
 		this.strength	=	(type.equals("Grass"))	?	3	:	4	;
 		this.health		=	(type.equals("Grass"))	?	10	:	15	;
+		BufferedImage image = null;
+		try {
+			if (getType().equals("Grass")) {
+				image = ImageIO.read(new File("images/Grass.png"));
+			}
+			else {
+				image = ImageIO.read(new File("images/noPlant.png"));
+			}
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		this.image = image.getScaledInstance(130, 130, 1);
 	}
 	
 	/**
@@ -45,18 +58,8 @@ public class Plant {
 	}
 
 	public Image draw() {
-		BufferedImage image = null;
-		try {
-			if (getType().equals(image)) {
-				image = ImageIO.read(new File("images/Grass.png"));
-			}
-			else {
-				image = ImageIO.read(new File("images/noPlant.png"));
-			}
-		} catch(IOException e) {
-			System.out.println("Read Error: " + e.getMessage());
-		}
-		return image.getScaledInstance(150, 150, 1);
+		
+		return image;
 	}
 	
 	/**
@@ -100,6 +103,9 @@ public class Plant {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	public Image getImage() {
+		return image;
 	}
 	
 }
