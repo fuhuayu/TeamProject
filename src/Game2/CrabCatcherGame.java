@@ -2,13 +2,18 @@ package Game2;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,6 +44,9 @@ public class CrabCatcherGame {
 	private Timer timer;
 	private JPanel bigpan;
 	private JLabel TS;
+	private Image crabImage;
+	private Image mittencrabImage;
+	private Image fishImage;
 
 	//CONSTRUCTOR	
 	/**
@@ -75,6 +83,29 @@ public class CrabCatcherGame {
 	
 	
 	//METHODS
+	/**returns the image in the path images/filename
+	 * sets imageWidth and imageHeight
+	 * @param filename the name of the file to be loaded
+	 * @return 
+	 */
+	public Image loadImage(String filename) {
+		Image image = null;
+		try {
+			image = ImageIO.read(new File("images/" + filename));
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		image = image.getScaledInstance(250, 200, 0);
+		return image;
+	}
+	
+	public void loadAnimalImages(){
+		mittencrabImage = loadImage("mittencrab.jpg");
+		fishImage = loadImage("fish.png");
+		crabImage = loadImage("crab.png");
+		
+	}
+	
 	/**
 	 * Updates the game's timed elements
 	 */
@@ -98,15 +129,29 @@ public class CrabCatcherGame {
 		//on start button pressed
 		//plays intro with instructions?
 		//initialize game - sets variables to defaults, generates animals 
+		loadAnimalImages();
 		generateAnimals();
 		//initialize panel
-		initPanel();
+		initPanel();	
 		
 		//sets content to this game's panel
 		bigpan=(JPanel) frame.getContentPane();
 		frame.setContentPane(this.panel);
 		frame.setVisible(true);
 		timer.start();		
+	}
+	
+	public Image getAnimalImage(String type){
+		if(type.equals("crab")){
+			return crabImage;
+		}
+		else if (type.equals("mittencrab")){
+			return mittencrabImage;
+		}
+		else if (type.equals("fish")){
+			return fishImage;
+		}
+		else return null;
 	}
 	
 	public boolean initPanel(){
@@ -117,7 +162,7 @@ public class CrabCatcherGame {
 				super.paintComponent(g);
 				for (Animal animal : getAnimals()) {
 					if (animal.isVisible()){
-						g.drawImage(animal.getImage(), animal.getXloc(), animal.getYloc(), null);
+						g.drawImage(getAnimalImage(animal.getTypeOfAnimal()), animal.getXloc(), animal.getYloc(), null);
 					}
 				}
 			}
@@ -227,11 +272,13 @@ public class CrabCatcherGame {
 	public void onClick(MouseEvent event){
 		//see if user clicked an animal and update accordingly
 		//if getAnimalClicked() returns an Animal,
+		System.out.println("YOU CLICKED.");
 		Animal animal = getAnimalClicked(event.getX(), event.getY());
 		if (animal != null){
 			//call regenerateAnimal() and add animal's scoreEffect to game score (not going below 0)
 			animal.regenerateAnimal();
 			updateScore(animal.getScoreEffect());
+			System.out.println("score changed by " + animal.getScoreEffect());
 		}
 		
 	}
@@ -253,11 +300,15 @@ public class CrabCatcherGame {
 		//return the animal if user clicked animal, else return null;
 		//add some kind of tolerance
 		Animal clicked = null;
+		System.out.println("animals: " + animals);
 		for (Animal animal: animals){
+			System.out.println("height: " + animal.getImageHeight() + ", width: " + animal.getImageWidth());
+			
 			if(x <= animal.getXloc() + animal.getImageWidth() && x >= animal.getXloc()
 					&& y <= animal.getYloc() + animal.getImageHeight()
 					&& y >= animal.getYloc()){
 				clicked = animal;
+				System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
 				break;
 			}
 		}

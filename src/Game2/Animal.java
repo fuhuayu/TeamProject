@@ -23,12 +23,9 @@ public class Animal {
 	private double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
 	private boolean visible;
 	private JLabel label; //temporary probably
-	private BufferedImage image; //image of animal
-	private int imageWidth;
-	private int imageHeight;
-	private BufferedImage crabImage;
-	private BufferedImage mittencrabImage;
-	private BufferedImage fishImage;
+	private Image image; //image of animal
+	private int imageWidth = 250;
+	private int imageHeight = 200;
 		
 	//
 	//CONSTRUCTOR
@@ -49,7 +46,6 @@ public class Animal {
 		this.displayDuration = displayDuration;
 		this.timeLeftOnScreen = displayDuration;
 		this.visible = visible;
-		this.image = loadImage("crab.png");
 	}
 	
 	//METHODS
@@ -79,19 +75,6 @@ public class Animal {
 		else {timeLeftOnScreen--;}
 	}
 	
-	/**returns the image in the path images/filename
-	 * @param filename the name of the file to be loaded
-	 * @return 
-	 */
-	public BufferedImage loadImage(String filename) {
-		BufferedImage image = null;
-		try {
-			image = ImageIO.read(new File("images/" + filename));
-		} catch(IOException e) {
-			System.out.println("Read Error: " + e.getMessage());
-		}
-		return image;
-	}
 	
 	/*public void setAnimalImages(){
 		BufferedImage crab = loadImage("crab.png");
@@ -177,7 +160,7 @@ public class Animal {
 		return image;
 	}
 
-	public void setImage(BufferedImage image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
 

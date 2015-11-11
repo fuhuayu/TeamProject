@@ -53,6 +53,7 @@ public class gameWindow {
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				System.out.println("game runnin is " + bigGame.getGamesRunning());
 				if (bigGame.getGamesRunning() == 3) {
 					bigGame.getGame3().onClick(e);
 				}
@@ -84,7 +85,7 @@ public class gameWindow {
 		frame.getContentPane().add(btnStartGame_1);
 		btnStartGame_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(1);
+				bigGame.setGameRunning(2);
 				bigGame.setGame2(new CrabCatcherGame(0, null, 0, 0, 0, null, 0, false, bigGame, frame));
 				bigGame.getGame2().startGame();
 			}
