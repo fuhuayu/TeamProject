@@ -98,12 +98,14 @@ public class JumpingBar {
 	public void clicked(){
 		if(this.barloc<this.stop1){
 			this.game.score-=200;
+			this.game.crab.clicked(0);
 		}
 		else if(this.barloc<(this.stop1+this.stop2)){
 			this.game.score+=100;
+			this.game.crab.clicked(1);
 		}
 		this.barloc=100;
-		this.game.crab.clicked();
+		
 	}
 	/**
 	 * CurrentValue should increase based on real time

@@ -43,8 +43,10 @@ public class Crab extends MovingObject {
 	/* (non-Javadoc)
 	 * @see Game2.MovingObject#update()
 	 */
-	public void clicked(){
-		speed=-6;
+	public void clicked(int i){
+		if(i==1)speed=-6;
+		else if(i==0)this.getPosition().setLocation(this.getPosition().x-100, this.getPosition().y);
+		
 	}
 	public void update(){
 		if(speed!=0){
