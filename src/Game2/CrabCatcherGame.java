@@ -250,9 +250,18 @@ public class CrabCatcherGame {
 	 * @return
 	 */
 	public Animal getAnimalClicked(int x, int y){
-		//return the animal if user clicked animal (mouseXY == animalXY), else return null;
-		//ad some kind of tolerance
-		return null;
+		//return the animal if user clicked animal, else return null;
+		//add some kind of tolerance
+		Animal clicked = null;
+		for (Animal animal: animals){
+			if(x <= animal.getXloc() + animal.getImageWidth() && x >= animal.getXloc()
+					&& y <= animal.getYloc() + animal.getImageHeight()
+					&& y >= animal.getYloc()){
+				clicked = animal;
+				break;
+			}
+		}
+		return clicked;
 	}
 
 	

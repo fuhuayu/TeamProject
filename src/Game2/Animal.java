@@ -23,10 +23,13 @@ public class Animal {
 	private double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
 	private boolean visible;
 	private JLabel label; //temporary probably
-	private Image image; //image of animal
+	private BufferedImage image; //image of animal
 	private int imageWidth;
 	private int imageHeight;
-	
+	private BufferedImage crabImage;
+	private BufferedImage mittencrabImage;
+	private BufferedImage fishImage;
+		
 	//
 	//CONSTRUCTOR
 	/**
@@ -46,7 +49,7 @@ public class Animal {
 		this.displayDuration = displayDuration;
 		this.timeLeftOnScreen = displayDuration;
 		this.visible = visible;
-		this.image = loadImage("mussel.png");
+		this.image = loadImage("crab.png");
 	}
 	
 	//METHODS
@@ -77,22 +80,28 @@ public class Animal {
 	}
 	
 	/**returns the image in the path images/filename
-	 * sets imageWidth and imageHeight
 	 * @param filename the name of the file to be loaded
 	 * @return 
 	 */
-	public Image loadImage(String filename) {
+	public BufferedImage loadImage(String filename) {
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("images/" + filename));
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
-		//return image.getScaledInstance(scoreEffect, scoreEffect, scoreEffect);
-		this.imageWidth = image.getWidth();
-		this.imageHeight = image.getHeight();
 		return image;
 	}
+	
+	/*public void setAnimalImages(){
+		BufferedImage crab = loadImage("crab.png");
+		BufferedImage mittencrab = loadImage("mittencrab.png");
+		BufferedImage fish = loadImage("fish.png");
+		
+		crab = (BufferedImage)image.getScaledInstance(imageWidth/2, imageHeight/2, 0);
+		mittencrab = (BufferedImage)image.getScaledInstance(imageWidth/2, imageHeight/2, 0);
+		fish = (BufferedImage)image.getScaledInstance(imageWidth/2, imageHeight/2, 0);		
+	}*/
 	
 	public String toString(){
 		return (typeOfAnimal + " " + timeLeftOnScreen);
@@ -168,8 +177,24 @@ public class Animal {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(BufferedImage image) {
 		this.image = image;
+	}
+
+	public int getImageWidth() {
+		return imageWidth;
+	}
+
+	public void setImageWidth(int imageWidth) {
+		this.imageWidth = imageWidth;
+	}
+
+	public int getImageHeight() {
+		return imageHeight;
+	}
+
+	public void setImageHeight(int imageHeight) {
+		this.imageHeight = imageHeight;
 	}
 	
 
