@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -23,15 +24,10 @@ import OverallGame.OverallGame;
  * Main class of game2
  */
 
-public class RipRapGame {
-	int score;//current game score
-	int time,currtime;//total time and current time
-	long starttime;//time when game start
-	Crab crab;
-	JumpingBar jumpingBar;
-	ArrayList<Stone> stones;
+public class RipRapGame implements Serializable{
+	 
+
 	Sun sun;
-	ArrayList<MovingObject> objects;
 	private OverallGame bigGame;
 	ArrayList<RipRapWall> wall;
 	JPanel panel;
@@ -44,65 +40,35 @@ public class RipRapGame {
 	/**
 	 * Getters for properties
 	 */
-	public ArrayList<RipRapWall> getWall() {
-		return wall;
-	}
-
-	public void setWall(ArrayList<RipRapWall> wall) {
-		this.wall = wall;
-	}
-	
-	public Crab getCrab() {
-		return crab;
-	}
-
-	public void setCrab(Crab crab) {
-		this.crab = crab;
-	}
-
-	public JumpingBar getJumpingBar() {
-		return jumpingBar;
-	}
-
-	public void setJumpingBar(JumpingBar jumpingBar) {
-		this.jumpingBar = jumpingBar;
-	}
-
-	public ArrayList<Stone> getStones() {
-		return stones;
-	}
-
-	public void setStones(ArrayList<Stone> stones) {
-		this.stones = stones;
-	}
-
-	public Sun getSun() {
-		return sun;
-	}
-
-	public void setSun(Sun sun) {
-		this.sun = sun;
-	}
-
-	
-
-	public int getScore(){
-		return score;
-	}
-	public int getTime() {
-		return currtime;
-	}
-	
-	public OverallGame getBigGame() {
-		return bigGame;
-	}
-	
-	public void setBigGame(OverallGame bigGame) {
-		this.bigGame= bigGame;
-	}
-
-
-
+	public ArrayList<RipRapWall> getWall() {return wall;}
+	public void setWall(ArrayList<RipRapWall> wall) {this.wall = wall;}
+	public Crab getCrab() {return crab;}
+	public void setCrab(Crab crab) {this.crab = crab;}
+	public JumpingBar getJumpingBar() {	return jumpingBar;}
+	public void setJumpingBar(JumpingBar jumpingBar) {this.jumpingBar = jumpingBar;}
+	public Sun getSun() {return sun;}
+	public void setSun(Sun sun) {this.sun = sun;}
+	public int getScore(){return score;}
+	public int getTime() {return currtime;}
+	public OverallGame getBigGame() {	return bigGame;}
+	public void setBigGame(OverallGame bigGame) {	this.bigGame= bigGame;}
+	public String toString()
+    {
+        return "[RipRapGame: score=" + score + 
+            " time=" + time +
+            " starttime=" + starttime +
+            " crab=" + crab +
+            " JumpingBar="+ jumpingBar +
+            " objects="+ objects +
+            "]";
+        
+    }    
+	int score;//current game score
+	int time,currtime;//total time and current time
+	long starttime;//time when game start
+	Crab crab;
+	JumpingBar jumpingBar;
+	ArrayList<MovingObject> objects;
 
 	//Constructor
 	/**
@@ -145,7 +111,7 @@ public class RipRapGame {
 	public boolean initGame(){
 		crab.addItem(panel, "images/crab.png");
 		objects.add(crab);
-		for(int i=1;i<5;i++){
+		for(int i=1;i<4;i++){
 			Cloud cloud = new Cloud(200,1000,200);
 			cloud.addItem(panel, "images/cloud"+i+".png");
 			objects.add(cloud);

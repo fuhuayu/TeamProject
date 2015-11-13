@@ -6,16 +6,18 @@ import javax.swing.JFrame;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 
 import Game1.RipRapGame;
 import Game2.CrabCatcherGame;
 import Game3.Game3;
 
-public class gameWindow {
+public class gameWindow implements Serializable{
 	private OverallGame bigGame;
 
 	private JFrame frame;

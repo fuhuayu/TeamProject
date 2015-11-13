@@ -3,6 +3,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -15,7 +16,7 @@ import javax.swing.JPanel;
  * @since   2015-11-02
  * Class of all moving object;
  */
-public class MovingObject {
+public class MovingObject implements Serializable{
 private Point position;
 private int size,w,h;
 private JLabel label;

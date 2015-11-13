@@ -3,6 +3,7 @@ package Game1;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -15,7 +16,7 @@ import javax.swing.JPanel;
  * @since   2015-11-02
  * Jumping Bar in the game for player to click and to make the crab move.
  */
-public class JumpingBar {
+public class JumpingBar implements Serializable{
 	int currentValue,stop1,stop2;
 	int speed;
 	int barloc;
