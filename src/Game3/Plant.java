@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
  * @since   2015-11-02
  * Handles the plant objects (defense) for game 3
  */
-public class Plant {
+public class Plant extends Tile{
 	int 	row ;
 	int 	col ;
 	int 	strength ;
@@ -30,23 +30,19 @@ public class Plant {
 	 * @param type - type of plant to be placed
 	 */
 	public Plant(int row, int col, String type) {
-		this.row 	=	row	;
-		this.col	=	col	;
+		super(row, col);
+		this.row = row ;
+		this.col = col ;
 		this.type	=	type	;
 		this.strength	=	(type.equals("Grass"))	?	3	:	4	;
 		this.health		=	(type.equals("Grass"))	?	10	:	15	;
-		BufferedImage image = null;
+		this.image = null;
 		try {
-			if (getType().equals("Grass")) {
-				image = ImageIO.read(new File("images/Grass.png"));
-			}
-			else {
-				image = ImageIO.read(new File("images/noPlant.png"));
-			}
+			this.image = ImageIO.read(new File("images/Grass.png")).getScaledInstance(130, 130, 1);
+			
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
-		this.image = image.getScaledInstance(130, 130, 1);
 	}
 	
 	/**
@@ -55,11 +51,6 @@ public class Plant {
 	 */
 	public boolean equals(Plant other)  {
 		return (row == other.getRow() && col == other.getCol() && type == other.getType());
-	}
-
-	public Image draw() {
-		
-		return image;
 	}
 	
 	/**

@@ -18,20 +18,26 @@ import javax.swing.JLabel;
 public class Mussel {
 	private int xloc ;
 	private int yloc ;
-private int stage;
-	private JLabel musselDrawing;
+	private int stage;
+	private  Image musselDrawing;
+	
 	
 	/**
-	 * Constructor for Mussels, all mussels start at stage 1
-	 * @param xloc - graphical x location of the mussel
-	 * @param yloc - graphical y location of the mussel
+	 * Constructor for Mussels, all mussels start at stage 0
 	 */
 	public Mussel(int xloc, int yloc) {
-		this.xloc = xloc;
-		this.yloc = yloc;
-		this.stage = 0;
-		this.musselDrawing = new JLabel();
+		this.xloc	=	xloc	;
+		this.yloc	=	yloc	;
+		this.stage	=	0		;
+		try {
+			this.musselDrawing = ImageIO.read(new File("images/mussel.png"));
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
 	}
+	
+	
 	
 	/**
 	 * Mussels will grow if a certain time has passed since its last growth
@@ -41,7 +47,7 @@ private int stage;
 		if (getStage() < 100) {
 			setStage(getStage() + 1);
 		}
-	} ;
+	}
 	
 	/**
 	 * Getters and Setters
@@ -56,18 +62,8 @@ private int stage;
 	public int getYLoc() {
 		return yloc;
 	}
-	public JLabel getMusselDrawing() {
-		return musselDrawing;
-	}
-	
-	public Image draw() {
-		BufferedImage image = null;
-		try {
-			image = ImageIO.read(new File("images/mussel.png"));
-		} catch(IOException e) {
-			System.out.println("Read Error: " + e.getMessage());
-		}
-		return image.getScaledInstance(132*(getStage() + 1)/101, 80*(getStage() + 1)/101, 1);
+	public Image getMusselDrawing() {
+		return musselDrawing.getScaledInstance(132*(getStage() + 1)/101, 80*(getStage() + 1)/101, 1);
 	}
 
 	public void setStage(int stage) {
@@ -80,7 +76,20 @@ private int stage;
 		this.yloc = yLoc;
 	}
 	
-	public void setMusselDrawing(JLabel newDrawing) {
+	public void setMusselDrawing(Image newDrawing) {
 		this.musselDrawing = newDrawing;
+	}
+	/**
+	 * This method is for creating mussels from a serialized version of mussels
+	 * @param xloc
+	 * @param yloc
+	 * @param stage
+	 * @param musselDrawing
+	 */
+	public Mussel(int xloc, int yloc, int stage, Image musselDrawing) {
+		this.xloc = xloc;
+		this.yloc = yloc;
+		this.stage = stage;
+		this.musselDrawing = musselDrawing;
 	}
 }

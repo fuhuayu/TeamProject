@@ -1,5 +1,10 @@
 package Game3;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
@@ -7,11 +12,12 @@ package Game3;
  * @since   2015-11-02
  * Handles the runoff (enemies) for game 3
  */
-public class Runoff {
+public class Runoff extends Tile{
 	int row ;
 	int col ; 
 	int strength ;
 	int health ;
+	Image image;
 	
 	/**
 	 * Constructor
@@ -21,10 +27,18 @@ public class Runoff {
 	 * @param col - the column to place the runoff in
 	 */
 	public Runoff(int row, int col) {
-		this.row	=	row	;
-		this.col	=	col	;
+		super(row, col);
+		this.row = row ;
+		this.col = col ;
 		this.strength	=	2	;
 		this.health		=	10	;
+		this.image = null;
+		try {
+			this.image = ImageIO.read(new File("images/Grass.png")).getScaledInstance(130, 130, 1);
+			
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
 	} ;
 	
 	/**
@@ -35,8 +49,6 @@ public class Runoff {
 		return (row == other.getRow() && col == other.getCol());
 	}
 
-	
-	
 	/**
 	 * Getters and Setters
 	 */
@@ -70,6 +82,14 @@ public class Runoff {
 
 	public void setHealth(int health) {
 		this.health = health;
-	} 
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
 	
 }
