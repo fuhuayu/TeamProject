@@ -3,12 +3,20 @@ package Game1;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -124,7 +132,38 @@ public class RipRapGame implements Serializable{
 		return true;
 	}
 	public boolean initPanel(){
-		panel=new JPanel();
+		try {
+			final BufferedImage image = ImageIO.read(new File("images/rockwall.jpg"));
+			panel=new JPanel(){
+	            @Override
+	            protected void paintComponent(Graphics g) {
+	            	super.paintComponent(g);
+	            	// create the transform, note that the transformations happen
+	                // in reversed order (so check them backwards)
+	                AffineTransform at = new AffineTransform();
+
+	                // 4. translate it to the center of the component
+	                at.translate(getWidth()-50, getHeight()-120);
+
+	                // 3. do the actual rotation
+	                at.rotate(Math.PI/-8);
+
+	                // 2. just a scale because this image is big
+	                at.scale(1, 1);
+
+	                // 1. translate the object so that you rotate it around the 
+	                //    center (easier :))
+	                at.translate(-image.getWidth()/2, -image.getHeight()/2);
+
+	                // draw the image
+	                Graphics2D g2d = (Graphics2D) g;
+	                g2d.drawImage(image, at, null);
+	            };
+			};
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		
 		panel.setLayout(null);
 		panel.setBackground(new Color(135, 206, 235));
 		panel.setOpaque(true);

@@ -67,7 +67,6 @@ public class Game1Test {
 		Sun sun = new Sun(0);
 		OverallGame bigGame = new OverallGame();
 		ArrayList<Cloud> clouds = new ArrayList<Cloud>();
-		ArrayList<RipRapWall> wall = new ArrayList<RipRapWall>();
 		RipRapGame testGame2= new RipRapGame(0, bigGame, null);
 		TimeUnit.SECONDS.sleep(1);
 		testGame2.updateTime();
@@ -77,7 +76,6 @@ public class Game1Test {
 		assertEquals(testGame2.getCrab(),crab);
 		assertEquals(testGame2.getJumpingBar(),jBar);
 		assertEquals(testGame2.getScore(),0);
-		assertEquals(testGame2.getStones(),stones);
 		assertEquals(testGame2.getSun(),sun);
 		assertEquals(testGame2.getTime(),0);
 		
@@ -87,12 +85,9 @@ public class Game1Test {
 		
 		// test if a new stone is added
 		stones.add(new Stone(0,0,0));
-		assertEquals(testGame2.getStones().size(),1);
 		// test if a new cloud is added
 		clouds.add(new Cloud(0,0,0));
 		// test if a new piece of the wall is added
-		wall.add(new RipRapWall(0,0));
-		assertEquals(testGame2.getWall().size(),1);
 	}
 	
 	
@@ -114,7 +109,6 @@ public class Game1Test {
 		Sun sun = new Sun(0);
 		OverallGame bigGame = new OverallGame();
 		ArrayList<Cloud> clouds = new ArrayList<Cloud>();
-		ArrayList<RipRapWall> wall = new ArrayList<RipRapWall>();
 		RipRapGame testGame2= new RipRapGame(0, bigGame, null);
 		
 		// test if the map is properly udate while the time goes on
@@ -124,31 +118,23 @@ public class Game1Test {
 //		for(int i =0; i< testGame2.getClouds().size();i++){
 //			assertEquals(testGame2.getClouds().get(i).getPosition(), "new Position");
 //		}
-		for(int i =0; i< testGame2.getStones().size();i++){
-			assertEquals(testGame2.getStones().get(i).getPosition(), (new Point(0,0)));
-		}
-		for(int i =0; i< testGame2.getWall().size();i++){
-			assertEquals(testGame2.getWall().get(i), (new Point(0,0)));
-		}
+		
 		
 		
 		// when encounter a obstacle
 		//condition 1
 		testGame2.setJumpingBar(new JumpingBar(2,1, testGame2));
 		assertEquals(testGame2.getJumpingBar().getCurrentValue(),0);// when current value is below stop2
-		testGame2.onClick();
 		assertEquals(testGame2.getCrab().getPosition(), (new Point(0,0)));// back to the same place
 		
 		//condition 2
 		testGame2.getJumpingBar().update(null);
 		assertEquals(testGame2.getJumpingBar().getCurrentValue(),1);// the currentValue is at Stop2
-		testGame2.onClick();
 		assertEquals(testGame2.getCrab().getPosition(), (new Point(0,0)));//climb over stone
 		
 		// condition 3
 		testGame2.getJumpingBar().update(null);
 		assertEquals(testGame2.getJumpingBar().getCurrentValue(),2);// the currentValue is at stop1
-		testGame2.onClick();
 		assertEquals(testGame2.getCrab().getPosition(), (new Point(0,0)));//back to the original position
 		
 
