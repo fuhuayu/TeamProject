@@ -63,7 +63,7 @@ public class Mussel {
 		return yloc;
 	}
 	public Image getMusselDrawing() {
-		return musselDrawing.getScaledInstance(132*(getStage() + 1)/101, 80*(getStage() + 1)/101, 1);
+		return musselDrawing.getScaledInstance(132*(getStage() + 1)/101 + 1, 80*(getStage() + 1)/101 + 1, 1);
 	}
 
 	public void setStage(int stage) {
