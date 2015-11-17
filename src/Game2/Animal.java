@@ -13,7 +13,11 @@ import javax.swing.JLabel;
  * @author Dwegrzyn
  * A class representing the animals that appear in the Crab Catcher game
  */
-public class Animal {
+public class Animal implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 201L;
 	//FIELDS
 	private int xloc;
 	private int yloc;
@@ -27,6 +31,36 @@ public class Animal {
 	private int imageWidth = 250;
 	private int imageHeight = 200;
 		
+	/**All-parameter constructor. Not used publicly.
+	 * @param xloc
+	 * @param yloc
+	 * @param typeOfAnimal
+	 * @param scoreEffect
+	 * @param displayDuration
+	 * @param timeLeftOnScreen
+	 * @param visible
+	 * @param label
+	 * @param image
+	 * @param imageWidth
+	 * @param imageHeight
+	 */
+	private Animal(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
+			double displayDuration, double timeLeftOnScreen, boolean visible,
+			JLabel label, Image image, int imageWidth, int imageHeight) {
+		super();
+		this.xloc = xloc;
+		this.yloc = yloc;
+		this.typeOfAnimal = typeOfAnimal;
+		this.scoreEffect = scoreEffect;
+		this.displayDuration = displayDuration;
+		this.timeLeftOnScreen = timeLeftOnScreen;
+		this.visible = visible;
+		this.label = label;
+		this.image = image;
+		this.imageWidth = imageWidth;
+		this.imageHeight = imageHeight;
+	}
+
 	//
 	//CONSTRUCTOR
 	/**
@@ -86,14 +120,21 @@ public class Animal {
 		fish = (BufferedImage)image.getScaledInstance(imageWidth/2, imageHeight/2, 0);		
 	}*/
 	
-	public String toString(){
+	/*public String toString(){
 		return (typeOfAnimal + " " + timeLeftOnScreen);
-	}
+	}*/
 
 	
 	//GETTERS & SETTERS
 	public int getXloc() {
 		return xloc;
+	}
+
+	@Override
+	public String toString() {
+		return "Animal " + typeOfAnimal + " [location=(" + xloc + ", " + yloc + ")" + ", scoreEffect=" + scoreEffect
+				+ ", timeLeft=" + timeLeftOnScreen + ", visible="
+				+ visible + "]";
 	}
 
 	public void setXloc(int xloc) {

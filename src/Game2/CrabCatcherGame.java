@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -28,7 +29,14 @@ import OverallGame.OverallGame;
  * @author Dwegrzyn
  *
  */
-public class CrabCatcherGame {
+public class CrabCatcherGame implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 200L;
+	/**
+	 * 
+	 */
 	//FIELDS
 	private double time; 
 	private double speed;
@@ -49,6 +57,55 @@ public class CrabCatcherGame {
 	private Image mittencrabImage;
 	private Image fishImage;
 
+	/**The all-parameter constructor for crab catcher game. Not used publicly.
+	 * @param time
+	 * @param speed
+	 * @param animals
+	 * @param score
+	 * @param lives
+	 * @param gameLength
+	 * @param mouseListener
+	 * @param maxAnimalsOnScreen
+	 * @param gameOver
+	 * @param bigGame
+	 * @param frame
+	 * @param panel
+	 * @param timer
+	 * @param bigpan
+	 * @param tS
+	 * @param crabImage
+	 * @param mittencrabImage
+	 * @param fishImage
+	 */
+	private CrabCatcherGame(double time, double speed, Animal[] animals,
+			int score, int lives, double gameLength,
+			MouseAdapter mouseListener, int maxAnimalsOnScreen,
+			boolean gameOver, OverallGame bigGame, JFrame frame, JPanel panel,
+			Timer timer, JPanel bigpan, JLabel tS, Image crabImage,
+			Image mittencrabImage, Image fishImage) {
+		super();
+		this.time = time;
+		this.speed = speed;
+		this.animals = animals;
+		this.score = score;
+		this.lives = lives;
+		this.gameLength = gameLength;
+		this.mouseListener = mouseListener;
+		this.maxAnimalsOnScreen = maxAnimalsOnScreen;
+		this.gameOver = gameOver;
+		this.bigGame = bigGame;
+		this.frame = frame;
+		this.panel = panel;
+		this.timer = timer;
+		this.bigpan = bigpan;
+		TS = tS;
+		this.crabImage = crabImage;
+		this.mittencrabImage = mittencrabImage;
+		this.fishImage = fishImage;
+	}
+
+
+
 	//CONSTRUCTOR	
 	/**
 	 * @param time - how long the game has been running
@@ -62,7 +119,7 @@ public class CrabCatcherGame {
 	 * @param bigGame - the overall game that this mini game is a part of
 	 * @param frame - the frame the game is drawn in
 	 */
-	
+	//----------------------------------------------------------------UPDATE TO CALL SUPER!
 	public CrabCatcherGame(double speed, Animal[] animals,
 			int score, int lives, double gameLength,
 			MouseAdapter mouseListener, int maxAnimalsOnScreen,
@@ -337,6 +394,15 @@ public class CrabCatcherGame {
 		}
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "CrabCatcherGame [time=" + time + ", speed=" + speed
+				+ ", animals=" + Arrays.toString(animals) + ", score=" + score
+				+ ", lives=" + lives + ", gameLength=" + gameLength
+				+ ", maxAnimalsOnScreen=" + maxAnimalsOnScreen + ", gameOver="
+				+ gameOver + ", bigGame=" + bigGame + ", timer=" + timer + "]";
+	}
 	
 	//GETTERS & SETTERS
 	public double getTime() {
