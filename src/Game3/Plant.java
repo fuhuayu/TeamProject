@@ -98,5 +98,8 @@ public class Plant extends Tile{
 	public Image getImage() {
 		return image;
 	}
+	public String toString(){
+		return "Plants [ Row: "+row+", Col: "+col+", Strength: "+strength+", Health: "+health+", Type: "+type;
+	}
 	
 }
