@@ -113,6 +113,7 @@ public class Game3 {
 	    	public void actionPerformed(ActionEvent e) {
 	    		setTime(getTime() - (double)(timerInterval)/1000);
 	    		update();
+	    		moveRunoff();
 	    		setTickCount((getTickCount()+1)%500);
 			}
 	    });
@@ -220,12 +221,18 @@ public class Game3 {
 	
 	public void moveRunoff() {
 		for (Runoff current : getEnemies() ) {
-			if (current.getTicksSinceMoved() > 14) {
+			int col = current.getCol() ;
+			int row = current.getRow() ;
+			if (current.getTicksSinceMoved() > 30) {
 				current.setTicksSinceMoved(0);
-				if (!(getTiles().get(7*current.getRow()+current.getCol()-1) instanceof Plant)) {
-					getTiles().get(current.getRow()*7 + current.getCol()-1).setCol(current.getCol());
-					current.setCol(current.getCol() -1);
-					Collections.swap(getTiles(), 7*current.getRow()+current.getCol(), 7*current.getRow()+current.getCol()-1);
+				if (!(getTiles().get(7*row+col-1) instanceof Plant) && col > 0) {
+					getTiles().get(row*7 + col-1).setCol(col);
+					current.setCol(col -1);
+					Collections.swap(getTiles(), 7*row+col, 7*row+col-1);
+					
+				}
+				else if(col>0){
+					battle((Plant)getTiles().get(7*row+col),current);
 				}
 			}
 			current.setTicksSinceMoved(current.getTicksSinceMoved() + 1);
@@ -254,20 +261,18 @@ public class Game3 {
 		Random rand = new Random();
 		int xLoc	=	rand.nextInt(getGameFrame().getWidth()/5 - 90)	; 
 		int yLoc	=	rand.nextInt(getGameFrame().getHeight() - 200) + 50	;
-		boolean notOverlapping = false ;
-		if (getMussels().size() != 0) {
-			while (!notOverlapping) {
-				for(Mussel current : getMussels()) {
-					Rectangle newMussel = new Rectangle(xLoc,yLoc,132,80);
-					Rectangle curMussel = new Rectangle(current.getXLoc(), current.getYLoc(),132,80);
-					if (newMussel.intersects(curMussel)) {
-						xLoc = rand.nextInt(getGameFrame().getWidth()/5 - 90);
-						yLoc = rand.nextInt(350) + 50;
-						notOverlapping = true ;
-					}
-				}
-				notOverlapping = !notOverlapping;
+		for (int i = 0 ; i < getMussels().size();) {
+			System.out.println("are  u stuck??/");
+			Mussel current = getMussels().get(i);
+			Rectangle newMussel = new Rectangle(xLoc,yLoc,132,80);
+			Rectangle curMussel = new Rectangle(current.getXLoc(), current.getYLoc(),132,80);
+			if (newMussel.intersects(curMussel)) {
+				xLoc = rand.nextInt(getGameFrame().getWidth()/5 - 90);
+				yLoc = rand.nextInt(350) + 50;
+				i=0;
 			}
+			else {i++;}
+				
 		}
 		getMussels().add(new Mussel(xLoc, yLoc));
 	}
