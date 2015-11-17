@@ -29,7 +29,8 @@ public class RipRapGame implements Serializable{
 
 	Sun sun;
 	private OverallGame bigGame;
-	ArrayList<RipRapWall> wall;
+	ArrayList<Stone> stones;
+	Stone stone;
 	JPanel panel;
 	boolean ends;
 	long fps=30;
@@ -40,8 +41,6 @@ public class RipRapGame implements Serializable{
 	/**
 	 * Getters for properties
 	 */
-	public ArrayList<RipRapWall> getWall() {return wall;}
-	public void setWall(ArrayList<RipRapWall> wall) {this.wall = wall;}
 	public Crab getCrab() {return crab;}
 	public void setCrab(Crab crab) {this.crab = crab;}
 	public JumpingBar getJumpingBar() {	return jumpingBar;}
@@ -89,7 +88,6 @@ public class RipRapGame implements Serializable{
 		this.frame=frame;
 		this.jumpingBar=new JumpingBar(20, 30, this);
 		this.objects=new ArrayList<MovingObject>();
-		this.crab=new Crab(0,0,100);
 		initPanel();
 	}
 
@@ -109,6 +107,10 @@ public class RipRapGame implements Serializable{
 	 * initialize the game with RipRap wall and obstacles randomly displaced
 	 */
 	public boolean initGame(){
+		stone=new Stone(1200,600,100);
+		stone.addItem(panel, "images/rock.png");
+		objects.add(stone);
+		crab=new Crab(300,600,100);
 		crab.addItem(panel, "images/crab.png");
 		objects.add(crab);
 		for(int i=1;i<4;i++){
@@ -209,13 +211,7 @@ public class RipRapGame implements Serializable{
 		
 	}
 	
-	/**click the button at a proper time to make crab jump over the obstacle
-	 * 
-	 */
-	public void onClick(){
-		
-	}
-
+	
 	
 
 }

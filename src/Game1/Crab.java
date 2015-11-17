@@ -15,11 +15,11 @@ public class Crab extends MovingObject {
 	 * Initialize the speed and mode both to be 1
 	 */
 	public Crab(int x, int y, int size) {
-		super(0, 600, size);
+		super(x, y, size);
 		// TODO Auto-generated constructor stub
 		this.mode=1;
 		this.speed=0;
-		this.height=100;
+		this.height=200;
 		this.currheight=0;
 	}
 	/**
@@ -44,8 +44,7 @@ public class Crab extends MovingObject {
 	 * @see Game2.MovingObject#update()
 	 */
 	public void clicked(int i){
-		if(i==1)speed=-6;
-		else if(i==0)this.getPosition().setLocation(this.getPosition().x-100, this.getPosition().y);
+		if(i==1)speed=-9;
 		
 	}
 	public void update(){
@@ -62,12 +61,8 @@ public class Crab extends MovingObject {
 				}
 				currheight+=speed;
 			}
-			this.getPosition().setLocation(this.getPosition().x+3, this.getPosition().y);
 		}
 		
-		else{
-			this.getPosition().setLocation(this.getPosition().x+1, this.getPosition().y);
-		}
 		
 		this.getLabel().setBounds(this.getPosition().x, this.getPosition().y+currheight, 
 				this.getLabel().getWidth(), this.getLabel().getHeight());

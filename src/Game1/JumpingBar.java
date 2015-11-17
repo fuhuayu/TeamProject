@@ -20,6 +20,7 @@ public class JumpingBar implements Serializable{
 	int currentValue,stop1,stop2;
 	int speed;
 	int barloc;
+	boolean passed;
 	RipRapGame game;
 	JLabel bar;
 	/**
@@ -104,6 +105,7 @@ public class JumpingBar implements Serializable{
 		else if(this.barloc<(this.stop1+this.stop2)){
 			this.game.score+=100;
 			this.game.crab.clicked(1);
+			passed=true;
 		}
 		this.barloc=100;
 		
@@ -116,10 +118,23 @@ public class JumpingBar implements Serializable{
 	public void update(JPanel p){
 		int w=(int)(0.5*p.getWidth()/16);
 		int h=(int)(0.5*p.getHeight()/9);
-		if((this.barloc+speed)<=0||(this.barloc+speed)>=100){
+		int distance=(int) ((this.game.getCrab().getPosition().distance(this.game.stone.getPosition()))/4);
+		if(distance<=0){
+			if(passed==false){
+			this.game.stone.kicked();
+			this.game.score-=200;
+			this.game.crab.clicked(0);}
+			else{
+				passed=false;
+			}
+		}
+		else if(distance>100){
 			this.barloc=100;
 		}
-		this.barloc+=speed;
+		else{
+			this.barloc=distance;
+		}
+		System.out.println(distance);
 		bar.setBounds(w,h+h*this.barloc/12-2,w,3);
 	}
 
