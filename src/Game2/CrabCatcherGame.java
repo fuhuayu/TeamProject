@@ -131,13 +131,9 @@ public class CrabCatcherGame implements java.io.Serializable{
 			boolean gameOver, OverallGame bigGame, JFrame frame) {
 		super();
 		this.time = 0;
-		//this.speed = speed;
 		this.animals = animals;
 		this.score = score;
-		//this.lives = lives;
-		//this.gameLength = gameLength;
 		this.mouseListener = mouseListener;
-		//this.maxAnimalsOnScreen = maxAnimalsOnScreen;
 		this.gameOver = gameOver;
 		this.bigGame = bigGame;
 		this.frame = frame;
@@ -305,8 +301,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//set big game running to true
 		//bigGame.setGamesRunning(0);
 		//call big game update
-		frame.setContentPane(bigpan);
-		bigGame.update();		
+		frame.setContentPane(bigpan);		
 	}
 	
 	/**

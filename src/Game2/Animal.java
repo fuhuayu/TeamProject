@@ -1,6 +1,7 @@
 package Game2;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -97,6 +98,12 @@ public class Animal implements java.io.Serializable {
 		visible = r.nextBoolean();
 		//reset timeLeftOnScreen to display duration
 		timeLeftOnScreen = displayDuration;
+	}
+	
+	public boolean collidesWith(Animal other){
+		 Rectangle thisRect = new Rectangle(xloc, yloc, imageWidth, imageHeight);
+		 Rectangle otherRect = new Rectangle(other.getXloc(), other.getYloc(), other.getImageWidth(), other.getImageHeight());
+		return thisRect.intersects(otherRect);
 	}
 	
 	/**
