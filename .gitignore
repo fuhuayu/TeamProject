@@ -1,1 +1,4 @@
 *.class
+src/Game2/Animal.java
+
+src/Game2/CrabCatcherGame.java
