@@ -57,6 +57,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private Image crabImage;
 	private Image mittencrabImage;
 	private Image fishImage;
+	private Image backgroundImage;
 	private static int mittencrabScoreEffect = 6;
 	private static int crabScoreEffect = -5;
 	private static int fishScoreEffect = -3;
@@ -158,14 +159,18 @@ public class CrabCatcherGame implements java.io.Serializable{
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
-		image = image.getScaledInstance(250, 200, 0);
+		if (filename.equals("ocean_background.jpg")){
+			image = image.getScaledInstance(frame.getWidth(), frame.getHeight(), 0);
+		}
+		else{image = image.getScaledInstance(250, 200, 0);}
 		return image;
 	}
 	
 	public void loadAnimalImages(){
-		mittencrabImage = loadImage("mittencrab.jpg");
+		mittencrabImage = loadImage("mittencrab.png");
 		fishImage = loadImage("fish.png");
 		crabImage = loadImage("crab.png");
+		backgroundImage = loadImage("ocean_background.jpg");
 		
 	}
 	
@@ -222,11 +227,14 @@ public class CrabCatcherGame implements java.io.Serializable{
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
+				//draw background
+				g.drawImage(backgroundImage, 0, 0, null);
+				//draw animals
 				for (Animal animal : getAnimals()) {
 					if (animal.isVisible()){
 						g.drawImage(getAnimalImage(animal.getTypeOfAnimal()), animal.getXloc(), animal.getYloc(), null);
 					}
-				}
+				}	
 			}
 		};
 		panel.setLayout(null);
@@ -277,13 +285,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	
 	public boolean updatePanel(){
 		//visual updates
-		TS.setText("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
-		/*for (int i=0; i< animals.length; i++){
-			Animal a = animals[i];
-			a.getLabel().setText(a.toString());
-			a.getLabel().setLocation(a.getXloc(), a.getYloc());
-		}*/
-		
+		TS.setText("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);	
 		frame.repaint();
 		
 		return true;
