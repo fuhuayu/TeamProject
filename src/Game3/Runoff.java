@@ -1,5 +1,6 @@
 package Game3;
 
+import java.io.Serializable;
 
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
@@ -7,7 +8,7 @@ package Game3;
  * @since   2015-11-02
  * Handles the runoff (enemies) for game 3
  */
-public class Runoff {
+public class Runoff implements Serializable{
 	int row ;
 	int col ; 
 	int strength ;
@@ -72,4 +73,7 @@ public class Runoff {
 		this.health = health;
 	} 
 	
+	public String toString(){
+		return "Row: "+row+"Col: "+col+"Strength: "+strength+"Health: "+health;
+	}
 }

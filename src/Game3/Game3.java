@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -22,7 +23,7 @@ import OverallGame.OverallGame;
  * The Game Handler for the final game
  * This will handle all logic, Input and Graphics for the final game
  */
-public class Game3 {
+public class Game3 implements Serializable{
 	private double 	time 	;
 	private int 	score	;
 	private int 	money   ;
@@ -287,5 +288,11 @@ public class Game3 {
 		this.bigGame = bigGame;
 	}
 
+	public String toString(){
+		return "Time: "+time+"Score: "+score+"Money: "+money+"\n"
+				+"Plants: "+plants+"\n"+"Enemies: "+enemies+"\n"+
+				"Mussels: "+mussels;
+	}
+	
 	
 }

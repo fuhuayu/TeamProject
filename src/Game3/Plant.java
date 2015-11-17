@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
@@ -14,7 +15,7 @@ import javax.imageio.ImageIO;
  * @since   2015-11-02
  * Handles the plant objects (defense) for game 3
  */
-public class Plant {
+public class Plant implements Serializable{
 	int 	row ;
 	int 	col ;
 	int 	strength ;
@@ -106,6 +107,11 @@ public class Plant {
 	}
 	public Image getImage() {
 		return image;
+	}
+	
+	public String toString(){
+		return "Row: "+row+"Col:"+col+"Strength: "+strength+"Health: "+health
+				+"Type: "+type;
 	}
 	
 }

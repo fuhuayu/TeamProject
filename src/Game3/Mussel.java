@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -15,7 +16,7 @@ import javax.swing.JLabel;
  * @since   2015-11-02
  * Handles the mussels (lives and money boosters) for game 3
  */
-public class Mussel {
+public class Mussel implements Serializable{
 	private int xloc ;
 	private int yloc ;
 private int stage;
@@ -82,5 +83,9 @@ private int stage;
 	
 	public void setMusselDrawing(JLabel newDrawing) {
 		this.musselDrawing = newDrawing;
+	}
+	
+	public String toString(){
+		return "Stage: " + stage + "Xloc: " + xloc + "Yloc: " + yloc;
 	}
 }
