@@ -15,7 +15,7 @@ import javax.swing.JLabel;
  * @since   2015-11-02
  * Handles the mussels (lives and money boosters) for game 3
  */
-public class Mussel {
+public class Mussel implements java.io.Serializable{
 	private int xloc ;
 	private int yloc ;
 	private int stage;
@@ -78,6 +78,10 @@ public class Mussel {
 	
 	public void setMusselDrawing(Image newDrawing) {
 		this.musselDrawing = newDrawing;
+	}
+	
+	public String toString(){
+		return "Mussels [ Xloc: "+xloc+", Yloc: "+yloc+", Stage: "+stage +"]";
 	}
 	/**
 	 * This method is for creating mussels from a serialized version of mussels

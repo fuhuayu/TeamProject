@@ -25,7 +25,7 @@ import OverallGame.OverallGame;
  * The Game Handler for the final game
  * This will handle all logic, Input and Graphics for the final game
  */
-public class Game3 {
+public class Game3 implements java.io.Serializable{
 	private double 	time 	;
 	private int 	score	;
 	private int 	money   ;
@@ -445,6 +445,12 @@ public class Game3 {
 
 	public void setTimer(Timer timer) {
 		this.timer = timer;
+	}
+	
+	public String toString(){
+		return "Game3 [ Time: "+time+", Score: "+score+", Money: "+money+"\n"+plants.toString()+"\n"
+				+enemies.toString()+"\n"+mussels.toString()+"\n"+", Game Over: "+gameOver+", Big Game: "+bigGame
+				+", Timer"+timer+"]";
 	}
 
 	/**

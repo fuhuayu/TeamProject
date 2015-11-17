@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
  * @since   2015-11-02
  * Handles the runoff (enemies) for game 3
  */
-public class Runoff extends Tile{
+public class Runoff extends Tile implements java.io.Serializable{
 	int row ;
 	int col ; 
 	int strength ;
@@ -101,5 +101,10 @@ public class Runoff extends Tile{
 	public void setImage(Image image) {
 		this.image = image;
 	}
+	
+	public String toString(){
+		return "Runoff [ Row: "+row+", Col: "+col+", Strength: "+strength+"Health: "+health+", TicksSinceMoved: "
+				+ticksSinceMoved+"]";
+				}
 	
 }

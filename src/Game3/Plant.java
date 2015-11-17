@@ -99,7 +99,7 @@ public class Plant extends Tile{
 		return image;
 	}
 	public String toString(){
-		return "Plants [ Row: "+row+", Col: "+col+", Strength: "+strength+", Health: "+health+", Type: "+type;
+		return "Plants [ Row: "+row+", Col: "+col+", Strength: "+strength+", Health: "+health+", Type: "+type+"]";
 	}
 	
 }
