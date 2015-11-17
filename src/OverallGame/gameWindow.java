@@ -1,16 +1,25 @@
 package OverallGame;
 
 import java.awt.Font;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import Game1.RipRapGame;
@@ -69,7 +78,7 @@ public class gameWindow implements Serializable{
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 		JButton btnStartGame = new JButton("Start Game 1");	
-		btnStartGame.setBounds(0, 0, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight());
+		btnStartGame.setBounds(0, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		btnStartGame.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(btnStartGame);
 		btnStartGame.addActionListener(new ActionListener() {
@@ -82,29 +91,103 @@ public class gameWindow implements Serializable{
 		
 		
 		JButton btnStartGame_1 = new JButton("Start Game 2");
-		btnStartGame_1.setBounds(frame.getContentPane().getWidth()/3, 0, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight());
+		btnStartGame_1.setBounds(frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		btnStartGame_1.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(btnStartGame_1);
 		btnStartGame_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(2);
-				bigGame.setGame2(new CrabCatcherGame(0, null, 0, 0, 0, null, 0, false, bigGame, frame));
-				bigGame.getGame2().startGame();
+				if (bigGame.getGamesComplete()[0] == true) {
+					bigGame.setGameRunning(2);
+					bigGame.setGame2(new CrabCatcherGame(0, null, 0, 0, 0, null, 0, false, bigGame, frame));
+					bigGame.getGame2().startGame();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Complete game 1 in order to play this game");
+				}
 			}
 		});
 		
 		JButton btnStartGame_2 = new JButton("Start Game 3");
-		btnStartGame_2.setBounds(2*frame.getContentPane().getWidth()/3, 0, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight());
+		btnStartGame_2.setBounds(2*frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		btnStartGame_2.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(btnStartGame_2);
 		btnStartGame_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(3);
-				bigGame.setGame3(new Game3(bigGame));
-				bigGame.getGame3().update();
+				if (bigGame.getGamesComplete()[1] == true) {
+					bigGame.setGameRunning(3);
+					bigGame.setGame3(new Game3(bigGame));
+					bigGame.getGame3().update();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Complete the other games to play  the final game");
+				}
 			}
 		});
+		JButton activateAll = new JButton("Unlock all Games");
+		activateAll.setBounds(2*frame.getContentPane().getWidth()/3, 0, frame.getContentPane().getWidth()/3, 50);
+		activateAll.setFont(new Font("Serif", Font.PLAIN, 50));
+		frame.getContentPane().add(activateAll);
+		activateAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean [] newComplete = new boolean[3];
+				newComplete[0] = true;
+				newComplete[1] = true;
+				newComplete[2] = true;
+				bigGame.setGamesComplete(newComplete);
+			}
+		});
+		JButton viewHighScores = new JButton("View High Scores");
+		viewHighScores.setBounds(0, 0, frame.getContentPane().getWidth()/3, 50);
+		viewHighScores.setFont(new Font("Serif", Font.PLAIN, 50));
+		frame.getContentPane().add(viewHighScores);
+		viewHighScores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, bigGame.getHighscores());
+			}
+		});
+		
+		JLabel currentScore = new JLabel("Overall Score: " + bigGame.getOverallScore());
+		currentScore.setBounds(new Rectangle(frame.getContentPane().getWidth()/3,0,frame.getContentPane().getWidth()/3,50));
+		currentScore.setHorizontalAlignment((int)JPanel.CENTER_ALIGNMENT);
+		currentScore.setFont(new Font("Serif", Font.PLAIN, 50));
+		currentScore.setVisible(true);
+		frame.getContentPane().add(currentScore);
+		
 		frame.repaint();
+	}
+	
+	/**
+	 * Method to serialize OverallGame, which contains the other games as params
+	 * So this output will contain the serialized version of every object
+	 * @param obj
+	 * @param fileName
+	 * @throws IOException
+	 */
+	public static void serialize(Object obj, String fileName) {
+		try {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	        fos.close();
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Method to read a game state from file and instantiate it. The reverse of the serialize function
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static Object deserialize(String fileName) throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream(fileName);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		OverallGame obj = (OverallGame)ois.readObject();
+		ois.close();
+		return obj;
 	}
 	
 	public String toString() {

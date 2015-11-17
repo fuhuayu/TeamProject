@@ -2,8 +2,11 @@ package OverallGame;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,7 +30,7 @@ public class OverallGame implements Serializable{
 	private int overallScore ;
 	private boolean[] gamesComplete ;
 	private int   gamesRunning   ;
-	private int[] highscores 		;
+	private String highscores 		;
 	transient private double timeInIdle;
 	private static final long serialVersionUID = 0;
 	private CrabCatcherGame game1;
@@ -50,37 +53,57 @@ public class OverallGame implements Serializable{
 	 * game2 = null
 	 * game3 = null
 	 * gamesRunning (0 if overall, 1 if game1, 2 if game2, 3 if game3)
+	 * @throws IOException 
 	 */
 	public OverallGame() {
 		this.overallScore = 0;
 		this.gamesComplete = new boolean[3]; this.gamesComplete[0] = false ;
 		this.gamesComplete[1] = false ; this.gamesComplete[2] = false ;
 		this.gamesRunning = 0 ;
-		this.highscores = null;
 		this.timeInIdle = 0;
 		this.game1 = null;
 		this.game2 = null;
 		this.game3 = null;
 		this.frame = new gameWindow(this) ;
+		this.highscores = initializeHighscores();
+		
+		
 	} ;
 	
-	/**
-	 * Animates the map containing the game locations
-	 * Players can click on a game to start it
-	 * Players can view the high scores and exit the game
-	 * If the player sits idle for too long, the game will restart
-	 */
-	public void update() {
+	private static String initializeHighscores() {
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader("highScores.txt"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        return sb.toString();
+	    }
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+			return "";
+		}
+		finally {
+	        try {
+				br.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
 		
 	}
-	
-	/**
-	 * This method will start the game that the player picks
-	 * or will exit the game if they click the exit button
-	 * @param e - a Mouse Event (click) from the user that will determine their action
-	 */
-	public void onClick(MouseEvent e) {} ;
-	
+
 	/**
 	 * Method to serialize OverallGame, which contains the other games as params
 	 * So this output will contain the serialized version of every object
@@ -107,11 +130,20 @@ public class OverallGame implements Serializable{
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static Object deserialize(String fileName) throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(fileName);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		OverallGame obj = (OverallGame)ois.readObject();
-		ois.close();
+	public static Object deserialize(String fileName) {
+		OverallGame obj = null ;
+		try {	
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			obj = (OverallGame)ois.readObject();
+			ois.close();
+		}
+		catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		catch (ClassNotFoundException e){
+			System.out.println("Read Error: " + e.getMessage());
+		}
 		return obj;
 	}
 	
@@ -138,10 +170,11 @@ public class OverallGame implements Serializable{
 	/**
 	 * main function to begin the games with
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String [] args) {
+	public static void main(String [] args) throws IOException {
 		OverallGame testGame = new OverallGame() ;
-		//System.out.println(testGame);
+		System.out.println(testGame);
 		//OverallGame.serialize(testGame, "testSerialize.ser");
 	}
 
@@ -177,11 +210,11 @@ public class OverallGame implements Serializable{
 		this.gamesRunning = gameRunning;
 	}
 
-	public int[] getHighscores() {
+	public String getHighscores() {
 		return highscores;
 	}
 
-	public void setHighscores(int[] highscores) {
+	public void setHighscores(String highscores) {
 		this.highscores = highscores;
 	}
 
@@ -237,5 +270,20 @@ public class OverallGame implements Serializable{
 	public void setGameWindow(gameWindow frame) {
 		this.frame = frame;
 	}
+
+	public OverallGame(int overallScore, boolean[] gamesComplete, int gamesRunning, String highscores, double timeInIdle,
+			CrabCatcherGame game1, RipRapGame game2, Game3 game3, gameWindow frame) {
+		super();
+		this.overallScore = overallScore;
+		this.gamesComplete = gamesComplete;
+		this.gamesRunning = gamesRunning;
+		this.highscores = highscores;
+		this.timeInIdle = timeInIdle;
+		this.game1 = game1;
+		this.game2 = game2;
+		this.game3 = game3;
+		this.frame = frame;
+	}
+	
 	
 }
