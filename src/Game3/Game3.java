@@ -185,7 +185,7 @@ public class Game3 {
 			int col = (xLoc - 328)	/130	;
 			System.out.println("Row: " + row + "  Col: " + col);
 			if (getMoney() >= 100) {
-				setMoney(getMoney() - 100);
+				addMoney(-100);
 				addPlant(row, col, "Grass");
 			}
 		}
