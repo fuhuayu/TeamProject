@@ -107,6 +107,10 @@ public class gameWindow implements Serializable{
 		frame.repaint();
 	}
 	
+	public String toString() {
+		return "Frame: " + getFrame();
+	}
+	
 	public JFrame getFrame() {
 		return frame;
 	}

@@ -17,6 +17,7 @@ public class Runoff extends Tile{
 	int col ; 
 	int strength ;
 	int health ;
+	int ticksSinceMoved ;
 	Image image;
 	
 	/**
@@ -32,6 +33,7 @@ public class Runoff extends Tile{
 		this.col = col ;
 		this.strength	=	2	;
 		this.health		=	10	;
+		this.ticksSinceMoved = 0;
 		this.image = null;
 		try {
 			this.image = ImageIO.read(new File("images/Grass.png")).getScaledInstance(130, 130, 1);
@@ -82,6 +84,14 @@ public class Runoff extends Tile{
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+	
+	public int getTicksSinceMoved() {
+		return ticksSinceMoved ;
+	}
+	
+	public void setTicksSinceMoved(int ticksSinceMoved) {
+		this.ticksSinceMoved = ticksSinceMoved ;
 	}
 
 	public Image getImage() {

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 
@@ -87,11 +88,16 @@ public class OverallGame implements Serializable{
 	 * @param fileName
 	 * @throws IOException
 	 */
-	public static void serialize(Object obj, String fileName) throws IOException {
-        FileOutputStream fos = new FileOutputStream(fileName);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(obj);
-        fos.close();
+	public static void serialize(Object obj, String fileName) {
+		try {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	        fos.close();
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
 	}
 	
 	/**
@@ -104,9 +110,29 @@ public class OverallGame implements Serializable{
 	public static Object deserialize(String fileName) throws IOException, ClassNotFoundException {
 		FileInputStream fis = new FileInputStream(fileName);
 		ObjectInputStream ois = new ObjectInputStream(fis);
-		Object obj = ois.readObject();
+		OverallGame obj = (OverallGame)ois.readObject();
 		ois.close();
 		return obj;
+	}
+	
+	public String toString() {
+		Object game;
+		if (getGamesRunning() == 1) {
+			game = getGame1();
+		}
+		else if (getGamesRunning() == 2) {
+			game = getGame2() ;
+		}
+		else if (getGamesRunning() == 3) {
+			game = getGame3() ;
+		}
+		else {
+			game = null;
+		}
+		return 	"Overall Score: "	+	getOverallScore()	+ "\n"	+
+				"Games Complete: "	+	Arrays.toString(getGamesComplete())	+ "\n"	+
+				"Current Game: "	+	game	+ "\n"	+
+				"Frame Properties: "+	getGameWindow() ;
 	}
 	
 	/**
@@ -115,6 +141,8 @@ public class OverallGame implements Serializable{
 	 */
 	public static void main(String [] args) {
 		OverallGame testGame = new OverallGame() ;
+		//System.out.println(testGame);
+		//OverallGame.serialize(testGame, "testSerialize.ser");
 	}
 
 

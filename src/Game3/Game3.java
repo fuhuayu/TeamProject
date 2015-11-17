@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -115,6 +116,7 @@ public class Game3 {
 	    		setTickCount((getTickCount()+1)%500);
 			}
 	    });
+		gameFrame.setContentPane(gamePanel);
 	}
 	
 	/**
@@ -139,7 +141,7 @@ public class Game3 {
 				addRunoff();
 			}
 		}
-		gameFrame.setContentPane(gamePanel);
+		gamePanel.repaint();
 		gameFrame.setVisible(true);
 		if(getTime()<=0){
 			endGame();
@@ -212,8 +214,22 @@ public class Game3 {
 	public void addRunoff() {
 		Random rand = new Random() ;
 		int row = rand.nextInt(4);
-		System.out.println(row);
-		getTiles().set(7*row+6, new Runoff(row, 6));
+		getEnemies().add(new Runoff(row, 6)) ;
+		getTiles().set(7*row+6, getEnemies().get(getEnemies().size() - 1));
+	}
+	
+	public void moveRunoff() {
+		for (Runoff current : getEnemies() ) {
+			if (current.getTicksSinceMoved() > 14) {
+				current.setTicksSinceMoved(0);
+				if (!(getTiles().get(7*current.getRow()+current.getCol()-1) instanceof Plant)) {
+					getTiles().get(current.getRow()*7 + current.getCol()-1).setCol(current.getCol());
+					current.setCol(current.getCol() -1);
+					Collections.swap(getTiles(), 7*current.getRow()+current.getCol(), 7*current.getRow()+current.getCol()-1);
+				}
+			}
+			current.setTicksSinceMoved(current.getTicksSinceMoved() + 1);
+		}
 	}
 
 	/**
@@ -237,7 +253,7 @@ public class Game3 {
 	public void addMussel() {
 		Random rand = new Random();
 		int xLoc	=	rand.nextInt(getGameFrame().getWidth()/5 - 90)	; 
-		int yLoc	=	rand.nextInt(getGameFrame().getHeight() - 90)	;
+		int yLoc	=	rand.nextInt(getGameFrame().getHeight() - 200) + 50	;
 		boolean notOverlapping = false ;
 		if (getMussels().size() != 0) {
 			while (!notOverlapping) {
