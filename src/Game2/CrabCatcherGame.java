@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -45,7 +46,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private int lives = 3;
 	private double gameLength = 22; //how long is this game?
 	private MouseAdapter mouseListener;
-	private int maxAnimalsOnScreen = 3; 
+	private int maxAnimalsOnScreen = 10; 
 	private boolean gameOver = false;
 	private OverallGame bigGame;
 	private JFrame frame;
@@ -56,6 +57,9 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private Image crabImage;
 	private Image mittencrabImage;
 	private Image fishImage;
+	private static int mittencrabScoreEffect = 6;
+	private static int crabScoreEffect = -5;
+	private static int fishScoreEffect = -3;
 
 	/**The all-parameter constructor for crab catcher game. Not used publicly.
 	 * @param time
@@ -136,6 +140,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 		this.gameOver = gameOver;
 		this.bigGame = bigGame;
 		this.frame = frame;
+		loadAnimalImages();
 	}
 
 	
@@ -187,7 +192,6 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//on start button pressed
 		//plays intro with instructions?
 		//initialize game - sets variables to defaults, generates animals 
-		loadAnimalImages();
 		generateAnimals();
 		//initialize panel
 		initPanel();	
@@ -310,17 +314,37 @@ public class CrabCatcherGame implements java.io.Serializable{
 	public void generateAnimals(){
 		//constructs the max number of animals to place on screen
 		animals = new Animal[maxAnimalsOnScreen];
-		for (int i=0; i < maxAnimalsOnScreen; i++){
-			//sets properties randomly for each animal
-			//makeRandomAnimal();
+		for (int i=0; i < maxAnimalsOnScreen; i++){			
+			animals[i] = makeRandomAnimal();
 		}
 		//TEMPORARY LIST
-		Animal crab = new Animal(10, 100, "crab", -5, 4, true);
+		/*Animal crab = new Animal(10, 100, "crab", -5, 4, true);
 		Animal fish = new Animal(frame.getWidth()-200, frame.getHeight()-250, "fish", -3, 5, true);
 		Animal mittencrab = new Animal(frame.getWidth()/2, 500, "mittencrab", 5, 3, true);
 		animals[0] = crab;
 		animals[1] = fish;
-		animals[2] = mittencrab;
+		animals[2] = mittencrab;*/
+	}
+	
+	
+	/**
+	 * @return a random animal
+	 */
+	public Animal makeRandomAnimal(){
+		Random r = new Random();
+		int xloc = r.nextInt(frame.getWidth());
+		int yloc = r.nextInt(frame.getHeight());
+		int duration = r.nextInt(6);
+		boolean visible = r.nextBoolean();
+		
+		int typenum = r.nextInt(100);
+		String type = "crab";
+		int effect = crabScoreEffect;
+		if (typenum >= 0 && typenum <= 40){type = "mittencrab"; effect = mittencrabScoreEffect;}
+		else if (typenum < 70){type = "fish"; effect = fishScoreEffect;}
+		
+		Animal animal = new Animal(xloc, yloc, type, effect, duration, visible);
+		return animal;
 	}
 	
 	

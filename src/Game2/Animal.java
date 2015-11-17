@@ -89,11 +89,12 @@ public class Animal implements java.io.Serializable {
 	 */
 	public void regenerateAnimal(){
 		//sets animal visibility to false (could use an animation here)
-		//visible = false;
+		visible = false;
 		//gives animal a random location
 		Random r = new Random();
 		xloc = r.nextInt(800);
 		yloc = r.nextInt(800);
+		visible = r.nextBoolean();
 		//reset timeLeftOnScreen to display duration
 		timeLeftOnScreen = displayDuration;
 	}
