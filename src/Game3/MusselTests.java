@@ -26,8 +26,8 @@ public class MusselTests {
 	
 	public void testDraw() {
 		Mussel testMussel = new Mussel(1,1) ;
-		System.out.println(testMussel.draw());
-		assertEquals(testMussel.draw(), null);
+		System.out.println(testMussel.getMusselDrawing());
+		assertEquals(testMussel.getMusselDrawing(), null);
 	}
 
 }
