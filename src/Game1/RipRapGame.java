@@ -183,7 +183,7 @@ public class RipRapGame implements java.io.Serializable{
 		panel.add(Button);
 		
 		
-		int timerTimeInMilliSeconds = 90;
+		int timerTimeInMilliSeconds = 20;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		updateTime();
