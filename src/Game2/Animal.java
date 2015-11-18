@@ -31,6 +31,7 @@ public class Animal implements java.io.Serializable {
 	private Image image; //image of animal
 	private int imageWidth = 250;
 	private int imageHeight = 200;
+	private boolean expired;
 		
 	/**All-parameter constructor. Not used publicly.
 	 * @param xloc
@@ -81,6 +82,7 @@ public class Animal implements java.io.Serializable {
 		this.displayDuration = displayDuration;
 		this.timeLeftOnScreen = displayDuration;
 		this.visible = visible;
+		this.expired = false;
 	}
 	
 	//METHODS
@@ -105,9 +107,11 @@ public class Animal implements java.io.Serializable {
 	@Override
 	public boolean equals(Object obj){
 		Animal other = (Animal)(obj);
+		if (other == null){return false;}		
+		else{
 		Rectangle thisRect = new Rectangle(xloc, yloc, imageWidth, imageHeight);
-		 Rectangle otherRect = new Rectangle(other.getXloc(), other.getYloc(), other.getImageWidth(), other.getImageHeight());
-		return (thisRect.intersects(otherRect));
+		Rectangle otherRect = new Rectangle(other.getXloc(), other.getYloc(), other.getImageWidth(), other.getImageHeight());
+		return (thisRect.intersects(otherRect));}
 	}
 	
 	/**
@@ -117,6 +121,7 @@ public class Animal implements java.io.Serializable {
 		//decrease animal's timer; if timer is 0, regenerate animal
 		if (timeLeftOnScreen <= 0){
 			regenerateAnimal();
+			//expired = true;			
 		}
 		else {timeLeftOnScreen--;}
 	}
@@ -231,6 +236,14 @@ public class Animal implements java.io.Serializable {
 
 	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
+	}
+
+	public boolean isExpired() {
+		return expired;
+	}
+
+	public void setExpired(boolean expired) {
+		this.expired = expired;
 	}
 	
 

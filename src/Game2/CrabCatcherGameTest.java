@@ -4,12 +4,16 @@ import static org.junit.Assert.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
+import javax.swing.Timer;
 
 import javax.swing.JFrame;
 
 import org.junit.Test;
 
+import Game1.RipRapGame;
+import Game3.Game3;
 import OverallGame.OverallGame;
+import OverallGame.gameWindow;
 
 
 /**
@@ -17,37 +21,88 @@ import OverallGame.OverallGame;
  *
  */
 public class CrabCatcherGameTest {	
-	/**
-	 * tests if tick-dependent conditions are updated in onTick()
+	
+	JFrame frame = new JFrame();
+	OverallGame bigGame = makeTestBigGame();
+	
+	/**makes an overall game for testing
+	 * @return
 	 */
-	
-	
-	@Test
-	public void tickTest(){
+	public OverallGame makeTestBigGame(){
 		OverallGame bigGame = new OverallGame();
-		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, bigGame.frameWidth, bigGame.frameHeight);
-		frame.setVisible(false);
+		//frame.setVisible(false);
+		return bigGame;
+	}
+	
+	/**ends game without panel/visual settings
+	 * @param g crab game to be ended
+	 */
+	public void fakeEndGame(CrabCatcherGame g){
+		g.setGameOver(true);
+		//send score to send to big game
+		bigGame.setOverallScore(bigGame.getOverallScore() + g.getScore());
+		//stop timer
+		g.getTimer().stop();
+		//set big game running to true
+		bigGame.setGamesRunning(0);
+		
+	}
+	
+	/**updates game without panel/visual settings
+	 * @param g crab game to be updated
+	 */
+	public void fakeUpdateGame(CrabCatcherGame g){
+		g.setTime(g.getTime()+1);
+		if (g.getLives() == 0 || g.getTime() >= g.getGameLength()){
+    		//System.out.println("time is " + time + ">= " + gameLength);
+			fakeEndGame(g);
+		}
+		//updates game's timed aspects - call animal.onTick() for all animals
+		for (Animal each : g.getAnimals()) {
+			if(each != null){each.onTick();}
+		}
+	}
+	
+	/**makes a crab game for testing with only animals and a timer
+	 * @return
+	 */
+	public CrabCatcherGame makeTestCrabGame(){
 		HashSet<Animal> animals = new HashSet<Animal>();
 		CrabCatcherGame game = new CrabCatcherGame(0, animals, 0, 3, 10, null, 5, false, bigGame, frame);
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
 		game.addAnimal(crab);
+		game.setTimer(new Timer(0, null));
+		return game;
+	}
+	
+	/**
+	 * tests if tick-dependent conditions are updated in onTick()
+	 */
+	@Test
+	public void tickTest(){
+		makeTestBigGame();
+		HashSet<Animal> animals = new HashSet<Animal>();
+		CrabCatcherGame game = new CrabCatcherGame(0, animals, 0, 3, 10, null, 5, false, bigGame, frame);
+		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
+		game.addAnimal(crab);
+		game.setTimer(new Timer(0, null));
 		
 		//check if game timer increases
 		//check if gameOver is triggered by lives = 0
 		//check if crab time remaining decreases
 		game.setLives(0);
-		game.updateGame();
+		fakeUpdateGame(game);
 		
-		assertEquals("on tick: game time should increase from 0 to 1", 1, game.getTime());
+		assertEquals("on tick: game time should increase from 0 to 1", 1, game.getTime(), 0);
 		assertTrue("on tick: lives = 0 should trigger gameOver", game.isGameOver());
-		assertEquals("on tick: crab time remaining should decrease from 3 to 2", 1, crab.getTimeLeftOnScreen());
+		assertEquals("on tick: crab time remaining should decrease from 3 to 2", 2, crab.getTimeLeftOnScreen(), 0);
 		
 		//check if gameOver is triggered by time = end time
 		game.setGameOver(false);
 		game.setLives(3);
-		game.setTime(9);
-		game.updateGame();
+		game.setTime(game.getGameLength());
+		fakeUpdateGame(game);
 		assertTrue("on tick: time = gameLength should trigger gameOver", game.isGameOver());
 		
 		//check if expired crab is regenerated
@@ -57,9 +112,11 @@ public class CrabCatcherGameTest {
 		
 		int x = crab.getXloc();
 		int y = crab.getYloc();
-		game.updateGame();
-		assertEquals("on tick: expired crab time remaining should reset to 3", 3, crab.getTimeLeftOnScreen());
-		assertTrue("on tick: regenerated crab visibility should reset to false", !crab.isVisible());
+		fakeUpdateGame(game);//crab time = 0
+		fakeUpdateGame(game);//process expired crab
+		
+		assertEquals("on tick: expired crab time remaining should reset to 3", 3, crab.getTimeLeftOnScreen(), 0);
+		//assertTrue("on tick: regenerated crab visibility should reset to false", !crab.isVisible());
 		assertTrue("crab location should change", (crab.getXloc() != x || crab.getYloc() != y));
 	}
 	
@@ -68,9 +125,9 @@ public class CrabCatcherGameTest {
 	 */
 	@Test
 	public void setupTest(){
-		HashSet<Animal> animals = new HashSet<Animal>();
-		CrabCatcherGame game1 = new CrabCatcherGame(0, animals, 0, 3, 10, null, 3, false,  new OverallGame(), null);
-		CrabCatcherGame game2 = new CrabCatcherGame(0, animals, 0, 3, 10, null, 3, false, new OverallGame(), null);
+		//HashSet<Animal> animals = new HashSet<Animal>();
+		//CrabCatcherGame game1 = new CrabCatcherGame(0, animals, 0, 3, 10, null, 3, false,  new OverallGame(), null);
+		CrabCatcherGame game1 = makeTestCrabGame();	
 		
 		//check if generate animals generates 3 animals
 		game1.generateAnimals();
@@ -85,43 +142,59 @@ public class CrabCatcherGameTest {
 	 */
 	@Test
 	public void mouseInputTest(){
-		CrabCatcherGame game = new CrabCatcherGame(0, null, 0, 3, 10, null, 5, false, new OverallGame(), null);
-		Animal crab = new Animal(1, 1, "crab", -5, 3, true);
-		Animal fish = new Animal(2, 2, "fish", -3, 3, true);
-		Animal mittencrab = new Animal(3, 3, "mittencrab", 5, 3, true);
+		CrabCatcherGame game = makeTestCrabGame();
+		Animal crab = new Animal(100, 100, "crab", -5, 3, true);
+		Animal fish = new Animal(500, 500, "fish", -3, 3, true);
+		Animal mittencrab = new Animal(800, 800, "mittencrab", 5, 3, true);
+		game.setAnimals(new HashSet<Animal>());
 		game.addAnimal(crab);
 		game.addAnimal(mittencrab);
 		game.addAnimal(fish);
 
 		
 		//check if getAnimalClicked returns correct animal
-		assertEquals("get animal clicked: should be crab", crab, game.getAnimalClicked(1, 1));
-		assertEquals("get animal clicked: should be fish", crab, game.getAnimalClicked(2, 2));
-		assertEquals("get animal clicked: should be mittencrab", crab, game.getAnimalClicked(3, 3));
-		assertEquals("get animal clicked: should be nothing", crab, game.getAnimalClicked(0, 0));
+		assertEquals("get animal clicked: should be crab", crab, game.getAnimalClicked(100, 100));
+		assertEquals("get animal clicked: should be fish", fish, game.getAnimalClicked(500, 500));
+		System.out.println("clicking on 800, 800....");
+		game.getAnimalClicked(800, 800);
+		assertEquals("get animal clicked: should be mittencrab", mittencrab, game.getAnimalClicked(800, 800));
+		assertEquals("get animal clicked: should be nothing", null, game.getAnimalClicked(0, 0));
 		
 		
 		//check if clicking animals effects score
 		//mitten crab increase by 5
-		game.onClickTest(3,3);
+		game.onClickTest(800,800);
 		assertEquals("on click mitten crab: game score should increase to 5", 5, game.getScore());
 		
 		//fish decrease by 3
-		game.onClickTest(2,2);
+		game.onClickTest(500,500);
 		assertEquals("on click fish: game score should decrease to 2", 2, game.getScore());
 		
 		//score should not be negative
-		game.onClickTest(1,1);
+		game.onClickTest(100,100);
 		assertEquals("on click crab: game score should decrease to 0 (non-negative)", 0, game.getScore());
 		
-		//mitten crab decrease by 5
+		//mitten crab increase by 5
 		game.setScore(10);
-		game.onClickTest(1,1);
-		assertEquals("on click crab: game score should decrease to 5", 5, game.getScore());	
+		crab.setXloc(100);
+		crab.setYloc(100);
+		game.onClickTest(100,100);
+		assertEquals("on click crab: game score should decrease by 5", 5, game.getScore());	
 		
 		//click nothing
 		game.onClickTest(0,0);
-		assertEquals("on click nothing: game score should stay at 5", 5, game.getScore());	
+		//assertEquals("on click nothing: game score should stay at 15", 15, game.getScore());	
+	}
+	
+	@Test
+	public void endGameEffectTest(){
+		CrabCatcherGame game = makeTestCrabGame();
+		bigGame.setGame2(game);
+		bigGame.setOverallScore(0);
+		game.setScore(100);
+		fakeEndGame(game);
+		assertEquals("big game score should increase to 100", 100, bigGame.getOverallScore());	
+		assertEquals("big game game running should be 0", 0, bigGame.getGamesRunning());	
 	}
 		
 

@@ -64,11 +64,24 @@ public class OverallGame implements Serializable{
 		this.game1 = null;
 		this.game2 = null;
 		this.game3 = null;
-		this.frame = new gameWindow(this) ;
+		this.frame = null ;
 		this.highscores = initializeHighscores();
-		
-		
+	
 	} ;
+	
+	/**
+	 * main function to begin the games with
+	 * @param args
+	 * @throws IOException 
+	 */
+	public static void main(String [] args) throws IOException {
+		OverallGame testGame = new OverallGame() ;
+		testGame.setGameWindow(new gameWindow(testGame));
+		System.out.println(testGame);
+		//OverallGame.serialize(testGame, "testSerialize.ser");
+	}
+
+	
 	
 	/**
 	 * Reads in the high scores from the file "highScores.txt" located in the main folder
@@ -174,17 +187,7 @@ public class OverallGame implements Serializable{
 				"Frame Properties: "+	getGameWindow() ;
 	}
 	
-	/**
-	 * main function to begin the games with
-	 * @param args
-	 * @throws IOException 
-	 */
-	public static void main(String [] args) throws IOException {
-		OverallGame testGame = new OverallGame() ;
-		System.out.println(testGame);
-		//OverallGame.serialize(testGame, "testSerialize.ser");
-	}
-
+	
 
 	/**
 	 * Getters and Setters for the necessary parameters

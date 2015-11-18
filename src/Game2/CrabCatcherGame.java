@@ -10,7 +10,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -181,10 +185,14 @@ public class CrabCatcherGame implements java.io.Serializable{
 			endGame();
 		}
 		//updates game's timed aspects - call animal.onTick() for all animals
-		for (Animal each : animals) {
-			if(each != null){each.onTick();}
-		}
 		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
+		for (Animal each : animals) {
+			if(each != null){			
+				//if(each.isExpired()){makeOrRegenAnimal(each);}
+				}
+				each.onTick();
+		}
+		
 	}
 	
 	/**
@@ -218,6 +226,10 @@ public class CrabCatcherGame implements java.io.Serializable{
 		else return null;
 	}
 	
+	/**initializes the game's JPanel and layout
+	 * establishes the paintComponent method to be later called in repaint()
+	 * @return
+	 */
 	public boolean initPanel(){
 		//layout and draw things
 		panel = new JPanel(){
@@ -264,6 +276,9 @@ public class CrabCatcherGame implements java.io.Serializable{
 		return true;
 	}
 	
+	/**called on each tick, this updates panel visuals (text and graphics)
+	 * @return
+	 */
 	public boolean updatePanel(){
 		//visual updates
 		TS.setText("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);	
@@ -343,11 +358,22 @@ public class CrabCatcherGame implements java.io.Serializable{
 		if (animal != null){
 			//call regenerateAnimal() and add animal's scoreEffect to game score (not going below 0)
 			animal.regenerateAnimal();
+			//makeOrRegenAnimal(animal);
 			updateScore(animal.getScoreEffect());
 			System.out.println("score changed by " + animal.getScoreEffect());
 		}
 		
 	}
+	
+	/*public void makeOrRegenAnimal(Animal a){
+		if (animals.remove(a)){
+			Animal b = makeRandomAnimal();
+			boolean added = false;
+			while(!added){
+				added = animals.add(b);
+			}
+		}
+	}*/
 	
 	/**Method for testing click events
 	 * @param x
@@ -355,6 +381,15 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 */
 	public void onClickTest(int x, int y){	
 		//does same as onClick, but for testing this just takes x and y
+		Animal animal = getAnimalClicked(x, y);
+		if (animal != null){
+			//call regenerateAnimal() and add animal's scoreEffect to game score (not going below 0)
+			animal.regenerateAnimal();
+			//makeOrRegenAnimal(animal);
+			updateScore(animal.getScoreEffect());
+			System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
+			System.out.println("score changed by " + animal.getScoreEffect());
+		}
 	}
 	
 	/** checks whether there is an animal at the given x y coordinates
@@ -366,9 +401,9 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//return the animal if user clicked animal, else return null;
 		//add some kind of tolerance
 		Animal clicked = null;
-		System.out.println("animals: " + animals);
+		//System.out.println("animals: " + animals);
 		for (Animal animal: animals){
-			System.out.println("height: " + animal.getImageHeight() + ", width: " + animal.getImageWidth());
+			//System.out.println("height: " + animal.getImageHeight() + ", width: " + animal.getImageWidth());
 			
 			if(x <= animal.getXloc() + animal.getImageWidth() && x >= animal.getXloc()
 					&& y <= animal.getYloc() + animal.getImageHeight()
@@ -403,6 +438,52 @@ public class CrabCatcherGame implements java.io.Serializable{
 				+ ", maxAnimalsOnScreen=" + maxAnimalsOnScreen + ", gameOver="
 				+ gameOver + ", bigGame=" + bigGame + ", timer=" + timer + "]";
 	}
+	
+	
+	
+	//SERIALIZATION
+	/**
+	 * Method to serialize Crab Catcher Game
+	 * @param obj
+	 * @param fileName
+	 * @throws IOException
+	 */
+	public static void serialize(Object obj, String fileName) {
+		try {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	        fos.close();
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Method to read a game state from file and instantiate it. The reverse of the serialize function
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static Object deserialize(String fileName) {
+		OverallGame obj = null ;
+		try {	
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			obj = (OverallGame)ois.readObject();
+			ois.close();
+		}
+		catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		catch (ClassNotFoundException e){
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		return obj;
+	}
+	
 	
 	//GETTERS & SETTERS
 	public double getTime() {
@@ -515,16 +596,20 @@ public class CrabCatcherGame implements java.io.Serializable{
 		this.frame = frame;
 	}
 
-
-
 	public JPanel getPanel() {
 		return panel;
 	}
 
-
-
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
 	}
 	
 
