@@ -56,7 +56,7 @@ public class Game3 implements java.io.Serializable{
 	 * @param bigGame - The handler for the entire game
 	 */
 	public Game3(OverallGame bigGame) {
-		this.time	=	40.0	;
+		this.time	=	20.0	;
 		this.score	=	0	;
 		this.money	=	100	;
 		this.plants	=	new ArrayList<Plant>();
@@ -289,6 +289,7 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void addMussel() {
 		Random rand = new Random();
+		int tooManyTries = 0;
 		int xLoc	=	rand.nextInt(getGameFrame().getWidth()/5 - 90)	; 
 		int yLoc	=	rand.nextInt(getGameFrame().getHeight() - 200) + 50	;
 		Rectangle newMussel = new Rectangle(xLoc,yLoc,132,80);
@@ -302,9 +303,12 @@ public class Game3 implements java.io.Serializable{
 				xLoc = rand.nextInt(getGameFrame().getWidth()/5 - 90);
 				yLoc = rand.nextInt(350) + 50;
 				i=0;
+				tooManyTries++;
 			}
 			else {i++;}
-				
+			if (tooManyTries > 50) {
+				i = getMussels().size();
+			}
 		}
 		getMussels().add(new Mussel(xLoc, yLoc));
 	}
