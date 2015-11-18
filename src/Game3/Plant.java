@@ -1,9 +1,13 @@
 package Game3;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
@@ -14,7 +18,8 @@ import javax.imageio.ImageIO;
  * @since   2015-11-02
  * Handles the plant objects (defense) for game 3
  */
-public class Plant extends Tile{
+public class Plant extends Tile implements Serializable{
+	private static final long serialVersionUID = 302L;
 	int 	row ;
 	int 	col ;
 	int 	strength ;
@@ -101,5 +106,61 @@ public class Plant extends Tile{
 	public String toString(){
 		return "Plants [ Row: "+row+", Col: "+col+", Strength: "+strength+", Health: "+health+", Type: "+type+"]";
 	}
+	
+	/**
+	 * Method to serialize OverallGame, which contains the other games as params
+	 * So this output will contain the serialized version of every object
+	 * @param obj
+	 * @param fileName
+	 * @throws IOException
+	 */
+	public static void serialize(Object obj, String fileName) {
+		try {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	        fos.close();
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Method to read a game state from file and instantiate it. The reverse of the serialize function
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static Object deserialize(String fileName) {
+		Plant obj = null ;
+		try {	
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			obj = (Plant)ois.readObject();
+			ois.close();
+		}
+		catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		catch (ClassNotFoundException e){
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		return obj;
+	}
+
+	public Plant(int row, int col, int row2, int col2, int strength,
+			int health, String type, Image image) {
+		super(row, col);
+		row = row2;
+		col = col2;
+		this.strength = strength;
+		this.health = health;
+		this.type = type;
+		this.image = image;
+	}
+	
+	
 	
 }

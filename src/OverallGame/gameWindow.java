@@ -27,6 +27,9 @@ import Game2.CrabCatcherGame;
 import Game3.Game3;
 
 public class gameWindow implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
 	private OverallGame bigGame;
 
 	private JFrame frame;
@@ -116,7 +119,6 @@ public class gameWindow implements Serializable{
 				if (bigGame.getGamesComplete()[1] == true) {
 					bigGame.setGamesRunning(3);
 					bigGame.setGame3(new Game3(bigGame));
-					bigGame.getGame3().update();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Complete the other games to play  the final game");
@@ -182,11 +184,20 @@ public class gameWindow implements Serializable{
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static Object deserialize(String fileName) throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(fileName);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		OverallGame obj = (OverallGame)ois.readObject();
-		ois.close();
+	public static Object deserialize(String fileName) {
+		gameWindow obj = null ;
+		try {	
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			obj = (gameWindow)ois.readObject();
+			ois.close();
+		}
+		catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		catch (ClassNotFoundException e){
+			System.out.println("Read Error: " + e.getMessage());
+		}
 		return obj;
 	}
 	

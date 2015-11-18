@@ -1,13 +1,16 @@
 package Game3;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -27,6 +30,7 @@ import OverallGame.OverallGame;
  * This will handle all logic, Input and Graphics for the final game
  */
 public class Game3 implements java.io.Serializable{
+	private static final long serialVersionUID = 300L;
 	private double 	time 	;
 	private int 	score	;
 	private int 	money   ;
@@ -55,16 +59,13 @@ public class Game3 implements java.io.Serializable{
 		this.time	=	40.0	;
 		this.score	=	0	;
 		this.money	=	100	;
-		/*
-		 * In the current build,  plants are placed at [0, 0], [0 1] and [1,0]
-		 */
 		this.plants	=	new ArrayList<Plant>();
+		this.enemies	=	new ArrayList<Runoff>();
+		this.mussels	=	new ArrayList<Mussel>();
 		this.tiles	= 	new ArrayList<Tile>() ; 
 		for (int i = 0 ; i < 28 ; i++) {
 			this.tiles.add(new Tile(i/7, i%7));
 		}
-		this.enemies	=	new ArrayList<Runoff>();
-		this.mussels	=	new ArrayList<Mussel>();
 		this.gameRunning	=	true;
 		this.gameOver	=	false;
 		this.bigGame	=	bigGame;
@@ -203,6 +204,7 @@ public class Game3 implements java.io.Serializable{
 	 * @param type - the type of plant to be placed
 	 */
 	public void addPlant(int row, int col, String type) {
+		getPlants().add(new Plant(row, col, type));
 		getTiles().set(7*row+col, new Plant(row, col, type));
 	}
 	
@@ -523,5 +525,47 @@ public class Game3 implements java.io.Serializable{
 		this.timer = timer;
 	}
 	
+	/**
+	 * Method to serialize OverallGame, which contains the other games as params
+	 * So this output will contain the serialized version of every object
+	 * @param obj
+	 * @param fileName
+	 * @throws IOException
+	 */
+	public static void serialize(Object obj, String fileName) {
+		try {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	        fos.close();
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Method to read a game state from file and instantiate it. The reverse of the serialize function
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static Object deserialize(String fileName) {
+		Game3 obj = null ;
+		try {	
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			obj = (Game3)ois.readObject();
+			ois.close();
+		}
+		catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		catch (ClassNotFoundException e){
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		return obj;
+	}
 	
 }

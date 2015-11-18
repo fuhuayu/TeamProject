@@ -1,16 +1,11 @@
 package OverallGame;
 import static org.junit.Assert.*;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-import javax.swing.JTree;
 
 import org.junit.Test;
 
-import Game2.Animal;
-import Game2.CrabCatcherGame;
-import Game3.Game3;
 
 /**
  * @author Brendan, David, Danielle, Zhanglong and Huayu

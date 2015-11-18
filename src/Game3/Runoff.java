@@ -2,7 +2,11 @@ package Game3;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.imageio.ImageIO;
 
@@ -13,6 +17,7 @@ import javax.imageio.ImageIO;
  * Handles the runoff (enemies) for game 3
  */
 public class Runoff extends Tile implements java.io.Serializable{
+	private static final long serialVersionUID = 303L;
 	int row ;
 	int col ; 
 	int strength ;
@@ -105,6 +110,61 @@ public class Runoff extends Tile implements java.io.Serializable{
 	public String toString(){
 		return "Runoff [ Row: "+row+", Col: "+col+", Strength: "+strength+"Health: "+health+", TicksSinceMoved: "
 				+ticksSinceMoved+"]";
-				}
+	}
+	/**
+	 * Method to serialize OverallGame, which contains the other games as params
+	 * So this output will contain the serialized version of every object
+	 * @param obj
+	 * @param fileName
+	 * @throws IOException
+	 */
+	public static void serialize(Object obj, String fileName) {
+		try {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	        fos.close();
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Method to read a game state from file and instantiate it. The reverse of the serialize function
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static Object deserialize(String fileName) {
+		Runoff obj = null ;
+		try {	
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			obj = (Runoff)ois.readObject();
+			ois.close();
+		}
+		catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		catch (ClassNotFoundException e){
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		return obj;
+	}
+
+	public Runoff(int row, int col, int row2, int col2, int strength,
+			int health, int ticksSinceMoved, Image image) {
+		super(row, col);
+		row = row2;
+		col = col2;
+		this.strength = strength;
+		this.health = health;
+		this.ticksSinceMoved = ticksSinceMoved;
+		this.image = image;
+	}
+	
+	
 	
 }
