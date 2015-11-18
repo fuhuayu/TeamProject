@@ -134,8 +134,10 @@ public class RipRapGame implements Serializable{
 	public boolean initPanel(){
 		try {
 			final BufferedImage image = ImageIO.read(new File("images/rockwall.jpg"));
+			final BufferedImage background = ImageIO.read(new File("images/game1background.jpg"));
 			panel=new JPanel(){
 	            @Override
+	            
 	            protected void paintComponent(Graphics g) {
 	            	super.paintComponent(g);
 	            	// create the transform, note that the transformations happen
@@ -143,10 +145,10 @@ public class RipRapGame implements Serializable{
 	                AffineTransform at = new AffineTransform();
 
 	                // 4. translate it to the center of the component
-	                at.translate(getWidth()-50, getHeight()-120);
+	                at.translate(getWidth()-500, getHeight()+160);
 
 	                // 3. do the actual rotation
-	                at.rotate(Math.PI/-8);
+	                at.rotate(Math.PI/-70);
 
 	                // 2. just a scale because this image is big
 	                at.scale(1, 1);
@@ -157,6 +159,7 @@ public class RipRapGame implements Serializable{
 
 	                // draw the image
 	                Graphics2D g2d = (Graphics2D) g;
+	                g2d.drawImage(background, null, null);
 	                g2d.drawImage(image, at, null);
 	            };
 			};
@@ -176,7 +179,7 @@ public class RipRapGame implements Serializable{
 		panel.add(Button);
 		
 		
-		int timerTimeInMilliSeconds = 20;
+		int timerTimeInMilliSeconds = 90;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		updateTime();
@@ -247,6 +250,7 @@ public class RipRapGame implements Serializable{
 	public void endGame(){
 		timer.stop();
 		frame.setContentPane(bigpan);
+		this.bigGame.setGameRunning(0);
 		
 	}
 	
