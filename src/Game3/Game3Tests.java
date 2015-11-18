@@ -27,7 +27,7 @@ public class Game3Tests {
 		OverallGame testBigGame = new OverallGame();
 		Game3 testGame = new Game3(testBigGame) ;
 		testGame.addPlant(1, 1, "Grass");
-		testGame.addRunoff(1, 3);
+		testGame.addRunoff();
 		testGame.setTime(5);
 		testGame.update(); //runoff will move next to plant
 		testGame.setGameRunning(true);
@@ -125,11 +125,11 @@ public class Game3Tests {
 	public void testAddRunoff() {
 		OverallGame testBigGame = new OverallGame();
 		Game3 testGame = new Game3(testBigGame) ;
-		testGame.addRunoff(1,1) ;
+		testGame.addRunoff() ;
 		ArrayList<Runoff> testRunoff = new ArrayList<Runoff>(1);
 		testRunoff.add(new Runoff(1,1));
 		assertEquals(testGame.getEnemies(), testRunoff);
-		testGame.addRunoff(1,1) ;
+		testGame.addRunoff() ;
 		testRunoff.add(new Runoff(2,1));
 		assertEquals(testGame.getEnemies(), testRunoff);
 	}
@@ -157,7 +157,7 @@ public class Game3Tests {
 		assertEquals(testGame.getPlants().get(0).getHealth(), 2) ;
 		assertEquals(testGame.getEnemies(), new ArrayList<Runoff>(0)) ;
 		//Now we will kill the plant
-		testGame.addRunoff(1, 2);
+		testGame.addRunoff();
 		testGame.battle(testGame.getPlants().get(0), testGame.getEnemies().get(0));
 		assertEquals(testGame.getPlants(), new ArrayList<Plant>(0)) ;
 		assertEquals(testGame.getEnemies().get(0).getHealth(), 7)	;
@@ -177,6 +177,6 @@ public class Game3Tests {
 		boolean [] winLastGame = {false, false, true};
 		assertEquals(testBigGame.getGamesComplete(),  winLastGame);
 		assertEquals(testBigGame.getOverallScore(), 100);
-		assertEquals(testBigGame.getGameRunning(), true);
+		assertEquals(testBigGame.getGamesRunning(), 0);
 	}
 }

@@ -83,7 +83,7 @@ public class gameWindow implements Serializable{
 		frame.getContentPane().add(btnStartGame);
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bigGame.setGameRunning(1);
+				bigGame.setGamesRunning(1);
 				bigGame.setGame1(new RipRapGame(20, bigGame, frame));
 				bigGame.getGame1().run();
 			}
@@ -97,7 +97,7 @@ public class gameWindow implements Serializable{
 		btnStartGame_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (bigGame.getGamesComplete()[0] == true) {
-					bigGame.setGameRunning(2);
+					bigGame.setGamesRunning(2);
 					bigGame.setGame2(new CrabCatcherGame(0, null, 0, 0, 0, null, 0, false, bigGame, frame));
 					bigGame.getGame2().startGame();
 				}
@@ -114,7 +114,7 @@ public class gameWindow implements Serializable{
 		btnStartGame_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (bigGame.getGamesComplete()[1] == true) {
-					bigGame.setGameRunning(3);
+					bigGame.setGamesRunning(3);
 					bigGame.setGame3(new Game3(bigGame));
 					bigGame.getGame3().update();
 				}

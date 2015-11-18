@@ -213,7 +213,7 @@ public class OverallGame implements Serializable{
 		return gamesRunning;
 	}
 
-	public void setGameRunning(int gameRunning) {
+	public void setGamesRunning(int gameRunning) {
 		this.gamesRunning = gameRunning;
 	}
 

@@ -323,7 +323,7 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void endGame() {
 		getBigGame().setOverallScore(getBigGame().getOverallScore() + getScore());
-		setGameRunning(false);
+		getBigGame().setGamesRunning(0);
 		timer.stop();
 		gameFrame.setContentPane(bigGamePanel);
 		gameFrame.setVisible(true);
@@ -413,7 +413,7 @@ public class Game3 implements java.io.Serializable{
 		this.gameRunning = gameRunning;
 	}
 
-	public boolean isGameOver() {
+	public boolean getGameOver() {
 		return gameOver;
 	}
 
