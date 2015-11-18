@@ -70,6 +70,10 @@ public class OverallGame implements Serializable{
 		
 	} ;
 	
+	/**
+	 * Reads in the high scores from the file "highScores.txt" located in the main folder
+	 * @return The string of high scores for this game
+	 */
 	private static String initializeHighscores() {
 		BufferedReader br = null;
 		try {
@@ -147,6 +151,9 @@ public class OverallGame implements Serializable{
 		return obj;
 	}
 	
+	/**
+	 * Prints out the key Parameters that represent the game
+	 */
 	public String toString() {
 		Object game;
 		if (getGamesRunning() == 1) {
@@ -271,6 +278,18 @@ public class OverallGame implements Serializable{
 		this.frame = frame;
 	}
 
+	/**
+	 * overall constructor for use of creating an instance of the game with serializable and deserializable
+	 * @param overallScore
+	 * @param gamesComplete
+	 * @param gamesRunning
+	 * @param highscores
+	 * @param timeInIdle
+	 * @param game1
+	 * @param game2
+	 * @param game3
+	 * @param frame
+	 */
 	public OverallGame(int overallScore, boolean[] gamesComplete, int gamesRunning, String highscores, double timeInIdle,
 			CrabCatcherGame game1, RipRapGame game2, Game3 game3, gameWindow frame) {
 		super();

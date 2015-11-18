@@ -36,7 +36,7 @@ public class Runoff extends Tile implements java.io.Serializable{
 		this.ticksSinceMoved = 0;
 		this.image = null;
 		try {
-			this.image = ImageIO.read(new File("images/Grass.png")).getScaledInstance(130, 130, 1);
+			this.image = ImageIO.read(new File("images/runoff.jpg")).getScaledInstance(130, 130, 1);
 			
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
