@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -41,7 +42,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	//FIELDS
 	private double time; 
 	private double speed;
-	private Animal[] animals; 
+	private HashSet<Animal> animals; 
 	private int score;
 	private int lives = 3;
 	private double gameLength = 22; //how long is this game?
@@ -82,7 +83,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 * @param mittencrabImage
 	 * @param fishImage
 	 */
-	private CrabCatcherGame(double time, double speed, Animal[] animals,
+	private CrabCatcherGame(double time, double speed, HashSet<Animal> animals,
 			int score, int lives, double gameLength,
 			MouseAdapter mouseListener, int maxAnimalsOnScreen,
 			boolean gameOver, OverallGame bigGame, JFrame frame, JPanel panel,
@@ -125,7 +126,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 * @param frame - the frame the game is drawn in
 	 */
 	//----------------------------------------------------------------UPDATE TO CALL SUPER!
-	public CrabCatcherGame(double speed, Animal[] animals,
+	public CrabCatcherGame(double speed, HashSet<Animal> animals,
 			int score, int lives, double gameLength,
 			MouseAdapter mouseListener, int maxAnimalsOnScreen,
 			boolean gameOver, OverallGame bigGame, JFrame frame) {
@@ -247,22 +248,6 @@ public class CrabCatcherGame implements java.io.Serializable{
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
 		panel.add(TS);
 		
-		
-		/*for (int i=0; i < animals.length; i++){
-			JLabel label = new JLabel(animals[i].toString());
-			label.setBackground(Color.YELLOW);
-			label.setOpaque(true);
-			label.setBounds(animals[i].getXloc(), animals[i].getYloc(), 200, 50);
-			label.setVisible(true);
-			panel.add(label);
-			animals[i].setLabel(label);
-		}*/
-		
-		
-		
-		
-		
-		
 		//declare timer
 		int timerTimeInMilliSeconds = 1000;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
@@ -299,8 +284,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//stop timer
 		timer.stop();
 		//set big game running to true
-		//bigGame.setGamesRunning(0);
-		//call big game update
+		bigGame.setGamesRunning(0);
+		//return to big game
 		frame.setContentPane(bigpan);		
 	}
 	
@@ -310,17 +295,10 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 */
 	public void generateAnimals(){
 		//constructs the max number of animals to place on screen
-		animals = new Animal[maxAnimalsOnScreen];
+		animals = new HashSet<Animal>();
 		for (int i=0; i < maxAnimalsOnScreen; i++){			
-			animals[i] = makeRandomAnimal();
+			animals.add(makeRandomAnimal());
 		}
-		//TEMPORARY LIST
-		/*Animal crab = new Animal(10, 100, "crab", -5, 4, true);
-		Animal fish = new Animal(frame.getWidth()-200, frame.getHeight()-250, "fish", -3, 5, true);
-		Animal mittencrab = new Animal(frame.getWidth()/2, 500, "mittencrab", 5, 3, true);
-		animals[0] = crab;
-		animals[1] = fish;
-		animals[2] = mittencrab;*/
 	}
 	
 	
@@ -351,6 +329,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	public void addAnimal(Animal animal){
 		//for testing purposes
 		//adds animal to game's animal list
+		animals.add(animal);
 	}
 	
 	/**Checks if the user clicked an animal and update game accordingly
@@ -419,7 +398,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "CrabCatcherGame [time=" + time + ", speed=" + speed
-				+ ", animals=" + Arrays.toString(animals) + ", score=" + score
+				+ ", animals=" + animals.toString() + ", score=" + score
 				+ ", lives=" + lives + ", gameLength=" + gameLength
 				+ ", maxAnimalsOnScreen=" + maxAnimalsOnScreen + ", gameOver="
 				+ gameOver + ", bigGame=" + bigGame + ", timer=" + timer + "]";
@@ -446,12 +425,12 @@ public class CrabCatcherGame implements java.io.Serializable{
 	}
 
 
-	public Animal[] getAnimals() {
+	public HashSet<Animal> getAnimals() {
 		return animals;
 	}
 
 
-	public void setAnimals(Animal[] animals) {
+	public void setAnimals(HashSet<Animal> animals) {
 		this.animals = animals;
 	}
 

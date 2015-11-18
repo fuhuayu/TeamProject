@@ -3,6 +3,9 @@ import static org.junit.Assert.*;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
+
+import javax.swing.JFrame;
 
 import org.junit.Test;
 
@@ -22,7 +25,11 @@ public class CrabCatcherGameTest {
 	@Test
 	public void tickTest(){
 		OverallGame bigGame = new OverallGame();
-		CrabCatcherGame game = new CrabCatcherGame(0, null, 0, 3, 10, null, 5, false, bigGame, null);
+		JFrame frame = new JFrame();
+		frame.setBounds(100, 100, bigGame.frameWidth, bigGame.frameHeight);
+		frame.setVisible(false);
+		HashSet<Animal> animals = new HashSet<Animal>();
+		CrabCatcherGame game = new CrabCatcherGame(0, animals, 0, 3, 10, null, 5, false, bigGame, frame);
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
 		game.addAnimal(crab);
 		
@@ -61,14 +68,14 @@ public class CrabCatcherGameTest {
 	 */
 	@Test
 	public void setupTest(){
-		Animal[] animals = new Animal[3];
+		HashSet<Animal> animals = new HashSet<Animal>();
 		CrabCatcherGame game1 = new CrabCatcherGame(0, animals, 0, 3, 10, null, 3, false,  new OverallGame(), null);
 		CrabCatcherGame game2 = new CrabCatcherGame(0, animals, 0, 3, 10, null, 3, false, new OverallGame(), null);
 		
 		//check if generate animals generates 3 animals
 		game1.generateAnimals();
-		for (int i=0; i < game1.getAnimals().length; i++){
-			assertTrue("generateAnimals: 3 animals should exist", game1.getAnimals()[i] != null);
+		for (int i=0; i < game1.getMaxAnimalsOnScreen(); i++){
+			assertTrue("generateAnimals: 3 animals should exist", !game1.getAnimals().isEmpty());
 		}
 		
 	}
