@@ -1,5 +1,7 @@
 package OverallGame;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,8 +35,10 @@ public class OverallGame implements Serializable{
 	private RipRapGame game2;
 	private Game3 game3;
 	private gameWindow frame;
-	public final int frameWidth = 1280;
-	public final int frameHeight = 720; 
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final int frameWidth	=	(int)(screenSize.getWidth() - screenSize.getWidth()/10);
+	public static final int frameHeight	=	(int)(screenSize.getHeight() - screenSize.getHeight()/10);
+	public static final double	xToYScale	=	frameWidth/frameHeight ;
 	
 	/**
 	 * Constructor

@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 
 import javax.imageio.ImageIO;
 
+import OverallGame.OverallGame;
+
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
  * @version 0.1
@@ -41,7 +43,7 @@ public class Runoff extends Tile implements java.io.Serializable{
 		this.ticksSinceMoved = 0;
 		this.image = null;
 		try {
-			this.image = ImageIO.read(new File("images/runoff.jpg")).getScaledInstance(130, 130, 1);
+			this.image = ImageIO.read(new File("images/runoff.png")).getScaledInstance(OverallGame.frameHeight/(10), OverallGame.frameHeight/10, 1);
 			
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
