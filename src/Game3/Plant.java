@@ -25,7 +25,9 @@ public class Plant extends Tile implements Serializable{
 	int 	strength ;
 	int 	health 	 ;
 	String 	type ;
-	Image   image;
+	Image   grassImage;
+	Image mangroveImage;
+	
 	/**
 	 * Constructor
 	 * strength is determined by the plant type (Grass = 3)
@@ -41,13 +43,23 @@ public class Plant extends Tile implements Serializable{
 		this.type	=	type	;
 		this.strength	=	(type.equals("Grass"))	?	3	:	4	;
 		this.health		=	(type.equals("Grass"))	?	10	:	15	;
-		this.image = null;
+		this.image=null;
+		loadPlantImages();}
+	
+	public Image loadImage(String filename) {
 		try {
-			this.image = ImageIO.read(new File("images/Grass.png")).getScaledInstance(130, 130, 1);
-			
+			image = ImageIO.read(new File("images/" + filename)).getScaledInstance(130,130,1);
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
+		return image;
+	}
+	
+	public void loadPlantImages(){
+		if(type=="Grass"){
+		grassImage = loadImage("Grass.png");}
+		else
+		mangroveImage = loadImage("mangrove.jpg");
 	}
 	
 	/**

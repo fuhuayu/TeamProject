@@ -21,7 +21,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import OverallGame.OverallGame;
 
@@ -52,6 +54,10 @@ public class Game3 implements java.io.Serializable{
 	private long startTime ;
 	private Timer timer;
 	private static Image background;
+	private JPopupMenu menu;
+	JMenuItem grass = new JMenuItem("Grass");
+	JMenuItem mangrove = new JMenuItem("Mangrove");
+	
 	
 	/**
 	 * Game Constructor
@@ -80,12 +86,17 @@ public class Game3 implements java.io.Serializable{
 		this.tickCount = 0;
 		initPanel(gameFrame);
 		timer.start();
+		this.menu = new JPopupMenu();
+		menu.add(grass);
+		menu.add(mangrove);
 		this.background = null;
 		try {
 			this.background = ImageIO.read(new File("images/game3Background.png")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
+		
+		
 		
 	}
 
@@ -117,6 +128,7 @@ public class Game3 implements java.io.Serializable{
 			public void actionPerformed(ActionEvent e) {
 				endGame();
 			}});
+		
 		gamePanel.add(Button);
 		
 		timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
@@ -197,13 +209,31 @@ public class Game3 implements java.io.Serializable{
 			}
 		}
 		else {
-			int row = (yLoc - 100)	/130 	;
-			int col = (xLoc - 328)	/130	;
+			final int row = (yLoc - 100)	/130 	;
+			final int col = (xLoc - 328)	/130	;
 			System.out.println("Row: " + row + "  Col: " + col);
-			if (getMoney() >= 100) {
-				addMoney(-100);
-				addPlant(row, col, "Grass");
-			}
+			timer.stop();
+			menu.show(e.getComponent(), xLoc, yLoc);
+			grass.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					if(getMoney()>=100){
+						addMoney(-100);
+						addPlant(row,col,"Grass");
+						timer.start();}
+					else{ timer.start();}
+				}
+			});
+			mangrove.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					if(getMoney()>=100){
+						addMoney(-100);
+						addPlant(row,col,"Mangrove");
+						timer.start();}
+					else{ timer.start();}
+					
+				}
+			});
+			
 		}
 		
  	}
