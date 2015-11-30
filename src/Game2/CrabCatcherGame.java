@@ -54,7 +54,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private ArrayList<Animal> animals; 
 	private int score;
 	private int lives = 3;
-	private double gameLength = 60; //how long is this game?
+	private double gameLength = 20; //how long is this game?
 	private MouseAdapter mouseListener;
 	private int maxAnimalsOnScreen = 10; 
 	private boolean gameOver = false;
@@ -206,6 +206,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 			//tick all animals
 			Animal current = it.next();
 			current.onTick(this);
+			updatePanel();
 			//remove expired animals
 			if (current.getTimeLeftOnScreen() <= 0){
 				Animal copy = current.copy();
@@ -368,7 +369,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 		Random r = new Random();
 		int xloc = r.nextInt(bigGame.frameWidth);
 		int yloc = r.nextInt(bigGame.frameHeight);
-		int duration = r.nextInt(7);
+		int duration = 7 - r.nextInt(5);
 		boolean visible = r.nextBoolean();
 		
 		int typenum = r.nextInt(100);
