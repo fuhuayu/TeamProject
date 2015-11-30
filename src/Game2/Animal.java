@@ -95,6 +95,7 @@ public class Animal implements java.io.Serializable {
 		visible = false;
 		//gives animal a random location
 		Random r = new Random();
+		//USE SCREEN WIDTH
 		xloc = r.nextInt(800);
 		yloc = r.nextInt(800);
 		visible = r.nextBoolean();
@@ -103,9 +104,13 @@ public class Animal implements java.io.Serializable {
 	}
 	
 	
-	//overridden bc we only want to check for image overlap
-	@Override
-	public boolean equals(Object obj){
+
+
+	/**Returns true if the objects' image rectangles intersect
+	 * @param obj MUST be an object with x, y loc and imageWidth/Height getters
+	 * @return
+	 */
+	public boolean overlapsWith(Object obj){
 		Animal other = (Animal)(obj);
 		if (other == null){return false;}		
 		else{

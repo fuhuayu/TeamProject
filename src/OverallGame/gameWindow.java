@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -80,9 +81,10 @@ public class gameWindow implements Serializable{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
-		JButton btnStartGame = new JButton("Start Game 1");	
+		JButton btnStartGame = new JButton();	
+		ImageIcon imgGame1 = new ImageIcon("images/Game1Button.png");
+		btnStartGame.setIcon(imgGame1);
 		btnStartGame.setBounds(0, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
-		btnStartGame.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(btnStartGame);
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,9 +95,10 @@ public class gameWindow implements Serializable{
 		});
 		
 		
-		JButton btnStartGame_1 = new JButton("Start Game 2");
+		JButton btnStartGame_1 = new JButton();
+		ImageIcon imgGame2 = new ImageIcon("images/Game2Button.png");
+		btnStartGame_1.setIcon(imgGame2);
 		btnStartGame_1.setBounds(frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
-		btnStartGame_1.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(btnStartGame_1);
 		btnStartGame_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -110,7 +113,9 @@ public class gameWindow implements Serializable{
 			}
 		});
 		
-		JButton btnStartGame_2 = new JButton("Start Game 3");
+		JButton btnStartGame_2 = new JButton();
+		ImageIcon imgGame3 = new ImageIcon("images/Game3Button.png");
+		btnStartGame_2.setIcon(imgGame3);
 		btnStartGame_2.setBounds(2*frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		btnStartGame_2.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(btnStartGame_2);

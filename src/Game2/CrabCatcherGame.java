@@ -49,7 +49,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private HashSet<Animal> animals; 
 	private int score;
 	private int lives = 3;
-	private double gameLength = 22; //how long is this game?
+	private double gameLength = 60; //how long is this game?
 	private MouseAdapter mouseListener;
 	private int maxAnimalsOnScreen = 10; 
 	private boolean gameOver = false;
@@ -161,9 +161,14 @@ public class CrabCatcherGame implements java.io.Serializable{
 			System.out.println("Read Error: " + e.getMessage());
 		}
 		if (filename.equals("ocean_background.jpg")){
-			image = image.getScaledInstance(frame.getWidth(), frame.getHeight(), 0);
+			image = image.getScaledInstance(bigGame.frameWidth, bigGame.frameHeight, 0);
 		}
-		else{image = image.getScaledInstance(250, 200, 0);}
+		else{
+			//need to customize animal sizes
+			int height = (int)(bigGame.frameHeight/3.5);
+			int width = (int) (height*0.8);
+			image = image.getScaledInstance(width, height, 0);
+			}
 		return image;
 	}
 	
@@ -322,8 +327,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 */
 	public Animal makeRandomAnimal(){
 		Random r = new Random();
-		int xloc = r.nextInt(frame.getWidth());
-		int yloc = r.nextInt(frame.getHeight());
+		int xloc = r.nextInt(bigGame.frameWidth);
+		int yloc = r.nextInt(bigGame.frameHeight);
 		int duration = r.nextInt(6);
 		boolean visible = r.nextBoolean();
 		
@@ -345,6 +350,19 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//for testing purposes
 		//adds animal to game's animal list
 		animals.add(animal);
+	}
+	
+	/**Returns true if that animal overlaps with an animal in the existing animal list
+	 * @param animal
+	 * @return
+	 */
+	public boolean uniqueLocation(Animal animal){
+		boolean locTaken = false;
+		for (Animal a: animals){
+			locTaken = locTaken || a.overlapsWith(animal);
+		}
+		return locTaken;
+		
 	}
 	
 	/**Checks if the user clicked an animal and update game accordingly
