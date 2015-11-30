@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -192,12 +193,28 @@ public class CrabCatcherGame implements java.io.Serializable{
 		}
 		//updates game's timed aspects - call animal.onTick() for all animals
 		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
-		for (Animal each : animals) {
+		ListIterator<Animal> it = animals.listIterator();
+		while (it.hasNext()){
+			//tick all animals
+			Animal current = it.next();
+			//current.onTick(this);
+			//remove expired animals
+			if (current.getTimeLeftOnScreen() <= 0){
+				Animal copy = current.copy();
+				it.remove();
+				updatePanel();
+				copy.regenerateAnimal(); //regenerate as a new random animal
+				it.add(setUniqueLocAnimal(copy));				
+			}
+		}
+			
+		/*for (Animal each : animals) {
 			if(each != null){			
 				//if(each.isExpired()){makeOrRegenAnimal(each);}
 				}
-				each.onTick();
-		}
+		each.onTick(this);
+		CONCURRENT MOD ERROR - removing from list in loop		
+		}*/
 		
 	}
 	
@@ -336,10 +353,21 @@ public class CrabCatcherGame implements java.io.Serializable{
 		int typenum = r.nextInt(100);
 		String type = "crab";
 		int effect = crabScoreEffect;
-		if (typenum >= 0 && typenum <= 40){type = "mittencrab"; effect = mittencrabScoreEffect;}
-		else if (typenum < 70){type = "fish"; effect = fishScoreEffect;}
+		Image img = crabImage;		
+		if (typenum >= 0 && typenum <= 40){
+			type = "mittencrab"; 
+			effect = mittencrabScoreEffect; 
+			img = mittencrabImage;
+			}
+		
+		else if (typenum < 70){
+			type = "fish"; 
+			effect = fishScoreEffect;
+			img = fishImage;
+			}
 		
 		Animal animal = new Animal(xloc, yloc, type, effect, duration, visible);
+		animal.setImage(img); //note: also sets image height and width
 		return animal;
 	}
 	
@@ -353,7 +381,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 		animals.add(animal);
 	}
 	
-	/**Returns true if that animal overlaps with an animal in the existing animal list
+	/**Returns true if that animal does NOT overlap with an animal in the existing animal list
 	 * @param animal
 	 * @return
 	 */
@@ -361,30 +389,53 @@ public class CrabCatcherGame implements java.io.Serializable{
 		boolean locTaken = false;
 		for (Animal a: animals){
 			locTaken = locTaken || a.overlapsWith(animal);
+			//if (a.overlapsWith(animal)){System.out.println("OVERLAP: " + animal.toString() + " has its location taken by: " + a.toString());}
 		}
-		return locTaken;
+		return !locTaken; //is the location unique (not taken)?
 		
 	}
 	
-	public void addUniqueAnimal(Animal a){
-	
+	/**makes sure animal is in a unique location, resetting location if needed
+	 * @param newAnimal
+	 */
+	public Animal setUniqueLocAnimal(Animal newAnimal){
+		//set up random location generator
+		Random r = new Random();
+		
+		boolean uniqueLoc = false;
+		//until we have added the animal..
+		while (!uniqueLoc){
+			//true if it if it has a unique location
+			if (uniqueLocation(newAnimal)){
+				//animals.add(newAnimal);
+				uniqueLoc = true;
+			}
+			//otherwise reset its location and try again
+			else{
+				newAnimal.setXloc(r.nextInt(bigGame.frameWidth));
+				newAnimal.setYloc(r.nextInt(bigGame.frameHeight));
+			}
+		}
+		return newAnimal;
 	}
 	
 	/**Checks if the user clicked an animal and update game accordingly
 	 * @param event the mouse event being processed
 	 */
 	public void onClick(MouseEvent event){
-		//see if user clicked an animal and update accordingly
 		//if getAnimalClicked() returns an Animal,
-		System.out.println("YOU CLICKED.");
+		//System.out.println("YOU CLICKED.");
 		Animal animal = getAnimalClicked(event.getX(), event.getY());
 		if (animal != null){
-			//call regenerateAnimal() and add animal's scoreEffect to game score (not going below 0)
-			animal.regenerateAnimal();
-			//makeOrRegenAnimal(animal);
+			//hide animal and add animal's scoreEffect to game score (not going below 0)
+			animal.setVisible(false);
 			updateScore(animal.getScoreEffect());
-			System.out.println("score changed by " + animal.getScoreEffect());
-		}
+			updatePanel(); //repaint the frame and display score change
+			animals.remove(animal);
+			animal.regenerateAnimal(); //regenerate as a new random animal
+			animals.add(setUniqueLocAnimal(animal));
+			//System.out.println("score changed by " + animal.getScoreEffect());
+			}
 		
 	}
 	
@@ -406,10 +457,14 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//does same as onClick, but for testing this just takes x and y
 		Animal animal = getAnimalClicked(x, y);
 		if (animal != null){
-			//call regenerateAnimal() and add animal's scoreEffect to game score (not going below 0)
-			animal.regenerateAnimal();
-			//makeOrRegenAnimal(animal);
+			//hide animal and add animal's scoreEffect to game score (not going below 0)
+			animal.setVisible(false);
 			updateScore(animal.getScoreEffect());
+			//animal.regenerateAnimal(); //regenerate as a new random animal
+			animals.remove(animal);
+			animal.regenerateAnimal();
+			animals.add(setUniqueLocAnimal(animal));
+			
 			//System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
 			//System.out.println("score changed by " + animal.getScoreEffect());
 		}
@@ -432,7 +487,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 					&& y <= animal.getYloc() + animal.getImageHeight()
 					&& y >= animal.getYloc()){
 				clicked = animal;
-				System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
+				//System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
 				break;
 			}
 		}

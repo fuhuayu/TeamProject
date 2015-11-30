@@ -60,7 +60,7 @@ public class CrabCatcherGameTest {
 		}
 		//updates game's timed aspects - call animal.onTick() for all animals
 		for (Animal each : g.getAnimals()) {
-			if(each != null){each.onTick();}
+			if(each != null){each.onTickTest();}
 		}
 	}
 	
@@ -70,8 +70,8 @@ public class CrabCatcherGameTest {
 	public CrabCatcherGame makeTestCrabGame(){
 		ArrayList<Animal> animals = new ArrayList<Animal>();
 		CrabCatcherGame game = new CrabCatcherGame(0, animals, 0, 3, 10, null, 5, false, bigGame, frame);
-		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
-		game.addAnimal(crab);
+		//Animal crab = new Animal(0, 0, "crab", 5, 3, true);
+		//game.addAnimal(crab);
 		game.setTimer(new Timer(0, null));
 		return game;
 	}
@@ -139,25 +139,38 @@ public class CrabCatcherGameTest {
 	
 	@Test
 	public void animalOverlapTest(){
-		CrabCatcherGame game1 = makeTestCrabGame();
-		ArrayList<Animal> animals = new ArrayList<Animal>();
+		CrabCatcherGame gamet = makeTestCrabGame();
+		gamet.setTimer(null);
+		ArrayList<Animal> animals1 = new ArrayList<Animal>();
 		
 		Animal crab = new Animal(10, 15, "crab", -5,
 				10, true);
 		Animal fish = new Animal(410, 15, "fish", -3, 10, true);
-		Animal fish2 = new Animal(400, 400, "fish", -3, 10, true);
-		Animal fish3 = new Animal(950, 950, "fish", -3, 10, true);
+		Animal fish2 = new Animal(400, 20, "fish", -4, 10, true);
+		Animal fish3 = new Animal(950, 950, "fish", -6, 10, true);
+		fish3.setImageWidth(250);
+		fish3.setImageHeight(200);
 		
-		animals.add(crab);
-		animals.add(fish);
-		game1.setAnimals(animals);
-		assertFalse(game1.uniqueLocation(fish2));
-		for (Animal a: game1.getAnimals()){
-			if(!a.overlapsWith(fish3)){
+		animals1.add(crab);
+		animals1.add(fish);
+		gamet.setAnimals(animals1);
+		System.out.println("animal list ---- " + gamet.getAnimals());
+	
+		for (Animal a: gamet.getAnimals()){
+			a.setImageWidth(250);
+			a.setImageHeight(200);
+			if(a.overlapsWith(fish3)){
+				System.out.println("Overlap detected with: " + a.toString());
+			}
+			if(a.overlapsWith(fish3)){
 				System.out.println("Overlap detected with: " + a.toString());
 			}
 		}
-		assertTrue(game1.uniqueLocation(fish3));
+		System.out.println("animal listNOW ---- " + gamet.getAnimals());
+		System.out.println("starting hereeee");
+		assertTrue("fish 3 should have a unique location", gamet.uniqueLocation(fish3));
+		assertFalse("fish 2 should have its location taken", gamet.uniqueLocation(fish2));
+		
 		
 		
 	}
@@ -167,6 +180,7 @@ public class CrabCatcherGameTest {
 	 */
 	@Test
 	public void mouseInputTest(){
+		System.out.println("starting mouseInputTest");
 		CrabCatcherGame game = makeTestCrabGame();
 		Animal crab = new Animal(100, 100, "crab", -5, 3, true);
 		Animal fish = new Animal(500, 500, "fish", -3, 3, true);

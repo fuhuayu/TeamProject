@@ -85,6 +85,16 @@ public class Animal implements java.io.Serializable {
 		this.expired = false;
 	}
 	
+	//COPIER
+	/**returns a copy of the animal
+	 * @return
+	 */
+	public Animal copy(){
+		Animal copy = new Animal(xloc, yloc, typeOfAnimal, scoreEffect, displayDuration, visible);
+		copy.setImage(image); //note: also sets image height and width
+		return copy;
+	}
+	
 	//METHODS
 	/**
 	 * Call this method to regenerate animal after it is caught or time on screen expires
@@ -122,7 +132,23 @@ public class Animal implements java.io.Serializable {
 	/**
 	 * updates animal's timed elements - decreases timeLeftOnScreen
 	 */
-	public void onTick(){
+	public void onTick(CrabCatcherGame game){
+		//decrease animal's timer; if timer is 0, regenerate animal
+		if (timeLeftOnScreen <= 0){
+			//game.getAnimals().remove(this);
+			//regenerateAnimal(); //regenerate as a new random animal
+			//game.addUniqueLocAnimal(this);
+			//this.expired = true;
+		}
+		else {timeLeftOnScreen--;}
+	}
+	
+	
+	/**For testing purposes only; 
+	 * updates animal's timed elements - decreases timeLeftOnScreen
+	 * @param game
+	 */
+	public void onTickTest(){
 		//decrease animal's timer; if timer is 0, regenerate animal
 		if (timeLeftOnScreen <= 0){
 			regenerateAnimal();
@@ -225,6 +251,8 @@ public class Animal implements java.io.Serializable {
 
 	public void setImage(Image image) {
 		this.image = image;
+		this.imageHeight = image.getHeight(null);
+		this.imageWidth = image.getWidth(null);
 	}
 
 	public int getImageWidth() {
