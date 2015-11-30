@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
-
+import OverallGame.OverallGame;
 
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
@@ -25,8 +25,7 @@ public class Plant extends Tile implements Serializable{
 	int 	strength ;
 	int 	health 	 ;
 	String 	type ;
-	Image   grassImage;
-	Image mangroveImage;
+	Image   image;
 	
 	/**
 	 * Constructor
@@ -41,14 +40,14 @@ public class Plant extends Tile implements Serializable{
 		this.row = row ;
 		this.col = col ;
 		this.type	=	type	;
-		this.strength	=	(type.equals("Grass"))	?	3	:	4	;
-		this.health		=	(type.equals("Grass"))	?	10	:	15	;
+		this.strength	=	(type.equals("Grass"))	?	4	:	2	;
+		this.health		=	(type.equals("Grass"))	?	250	:	400	;
 		this.image=null;
 		loadPlantImages();}
 	
 	public Image loadImage(String filename) {
 		try {
-			image = ImageIO.read(new File("images/" + filename)).getScaledInstance(130,130,1);
+			this.image = ImageIO.read(new File("images/" + filename)).getScaledInstance(Game3.scalor,Game3.scalor,1);
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
@@ -57,9 +56,11 @@ public class Plant extends Tile implements Serializable{
 	
 	public void loadPlantImages(){
 		if(type=="Grass"){
-		grassImage = loadImage("Grass.png");}
-		else
-		mangroveImage = loadImage("mangrove.jpg");
+			loadImage("Grass.png");
+		}
+		else {
+			loadImage("mangrove.jpg");
+		}
 	}
 	
 	/**

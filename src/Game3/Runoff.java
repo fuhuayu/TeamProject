@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -18,14 +19,15 @@ import OverallGame.OverallGame;
  * @since   2015-11-02
  * Handles the runoff (enemies) for game 3
  */
-public class Runoff extends Tile implements java.io.Serializable{
+public class Runoff implements java.io.Serializable{
 	private static final long serialVersionUID = 303L;
 	int row ;
-	int col ; 
+	int length ;
+	int front ; 
 	int strength ;
-	int health ;
+	ArrayList<Integer> health ;
 	int ticksSinceMoved ;
-	Image image;
+	ArrayList<Image> images;
 	
 	/**
 	 * Constructor
@@ -34,16 +36,16 @@ public class Runoff extends Tile implements java.io.Serializable{
 	 * @param row - the row to place the runoff in
 	 * @param col - the column to place the runoff in
 	 */
-	public Runoff(int row, int col) {
-		super(row, col);
+	public Runoff(int row, int front) {
 		this.row = row ;
-		this.col = col ;
+		this.front = front ;
+		this.length = 1 ;
 		this.strength	=	2	;
-		this.health		=	10	;
+		this.health		=	new ArrayList<Integer>()	; health.add(250);
 		this.ticksSinceMoved = 0;
-		this.image = null;
+		this.images = new ArrayList<Image>();
 		try {
-			this.image = ImageIO.read(new File("images/runoff.png")).getScaledInstance(OverallGame.frameHeight/(10), OverallGame.frameHeight/10, 1);
+			this.images.add(ImageIO.read(new File("images/runoff.png")).getScaledInstance(Game3.scalor, Game3.scalor, 1));
 			
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
@@ -55,12 +57,35 @@ public class Runoff extends Tile implements java.io.Serializable{
 	 * @param other - the runoff to be compared to
 	 */
 	public boolean equals (Runoff other) {
-		return (row == other.getRow() && col == other.getCol());
+		return (row == other.getRow() && front == other.getFront());
+	}
+	public void grow() {
+		if (getLength() < 5 && getHealth().get(0) > 0) {
+			setLength(getLength()+1) ;
+			getHealth().add(150);
+			try {
+				this.images.add(ImageIO.read(new File("images/runoff.png")).getScaledInstance(Game3.scalor, Game3.scalor, 1));
+				
+			} catch(IOException e) {
+				System.out.println("Read Error: " + e.getMessage());
+			}
+		}
+	}
+	
+	public void removeFront() {
+		getHealth().remove(0);
+		setLength(getLength()-1);
+		getImages().remove(0);
+		setFront(getFront()+Game3.scalor);
 	}
 
 	/**
 	 * Getters and Setters
 	 */
+	public String toString(){
+		return "Runoff [ Row: "+row+", Front Location: "+front+", Strength: "+strength+"Health: "+health+", TicksSinceMoved: "
+				+ticksSinceMoved+"]";
+	}
 	public int getRow() {
 		return row;
 	}
@@ -69,12 +94,20 @@ public class Runoff extends Tile implements java.io.Serializable{
 		this.row = row;
 	}
 
-	public int getCol() {
-		return col;
+	public int getLength() {
+		return length;
 	}
 
-	public void setCol(int col) {
-		this.col = col;
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public int getFront() {
+		return front;
+	}
+
+	public void setFront(int front) {
+		this.front = front;
 	}
 
 	public int getStrength() {
@@ -85,34 +118,34 @@ public class Runoff extends Tile implements java.io.Serializable{
 		this.strength = strength;
 	}
 
-	public int getHealth() {
+	public ArrayList<Integer> getHealth() {
 		return health;
 	}
 
-	public void setHealth(int health) {
+	public void setHealth(ArrayList<Integer> health) {
 		this.health = health;
 	}
-	
+
 	public int getTicksSinceMoved() {
-		return ticksSinceMoved ;
+		return ticksSinceMoved;
 	}
-	
+
 	public void setTicksSinceMoved(int ticksSinceMoved) {
-		this.ticksSinceMoved = ticksSinceMoved ;
+		this.ticksSinceMoved = ticksSinceMoved;
 	}
 
-	public Image getImage() {
-		return image;
+	public ArrayList<Image> getImages() {
+		return images;
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
+	public void setImages(ArrayList<Image> images) {
+		this.images = images;
 	}
-	
-	public String toString(){
-		return "Runoff [ Row: "+row+", Col: "+col+", Strength: "+strength+"Health: "+health+", TicksSinceMoved: "
-				+ticksSinceMoved+"]";
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
+
 	/**
 	 * Method to serialize OverallGame, which contains the other games as params
 	 * So this output will contain the serialized version of every object
@@ -157,14 +190,13 @@ public class Runoff extends Tile implements java.io.Serializable{
 	}
 
 	public Runoff(int row, int col, int row2, int col2, int strength,
-			int health, int ticksSinceMoved, Image image) {
-		super(row, col);
+			ArrayList<Integer> health, int ticksSinceMoved, ArrayList<Image> images) {
 		row = row2;
 		col = col2;
 		this.strength = strength;
 		this.health = health;
 		this.ticksSinceMoved = ticksSinceMoved;
-		this.image = image;
+		this.images = images;
 	}
 	
 	

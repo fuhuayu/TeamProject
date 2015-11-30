@@ -122,10 +122,8 @@ public class Game3Tests {
 		testBigGame.getGame3().getTimer().stop();
 		testBigGame.getGame3().addRunoff() ;
 		boolean foundRunoff = false ;
-		for(Tile current : testBigGame.getGame3().getTiles()) {
-			if (current instanceof Runoff) {
-				foundRunoff = true;
-			}
+		for(Runoff current : testBigGame.getGame3().getEnemies()) {
+			foundRunoff = true;
 		}
 		assertEquals(true, foundRunoff);
 		
@@ -143,7 +141,7 @@ public class Game3Tests {
 		testBigGame.getGame3().getTimer().stop();
 		testBigGame.getGame3().addRunoff() ;
 		boolean foundRunoff = false ;
-		for(Tile current : testBigGame.getGame3().getTiles()) {
+		for(Runoff current : testBigGame.getGame3().getEnemies()) {
 			if (current instanceof Runoff) {
 				foundRunoff = true;
 				((Runoff) current).setTicksSinceMoved(31);
@@ -152,13 +150,13 @@ public class Game3Tests {
 		assertEquals(true, foundRunoff);
 		testBigGame.getGame3().moveRunoff();
 		Runoff movedRunoff = null;
-		for(Tile current : testBigGame.getGame3().getTiles()) {
+		for(Runoff current : testBigGame.getGame3().getEnemies()) {
 			if (current instanceof Runoff) {
 				foundRunoff = true;
 				movedRunoff = (Runoff) current;
 			}
 		}
-		assertEquals(5,movedRunoff.getCol());
+		assertEquals(5,movedRunoff.getFront());
 		
 	}
 

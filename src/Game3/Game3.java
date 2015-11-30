@@ -36,6 +36,9 @@ import OverallGame.OverallGame;
  */
 public class Game3 implements java.io.Serializable{
 	private static final long serialVersionUID = 300L;
+	public  static final int scalor = (OverallGame.frameHeight < OverallGame.frameWidth) ? OverallGame.frameHeight/8 : OverallGame.frameWidth/8;
+	public 	static final int xOffset= (OverallGame.frameWidth/3);
+	public 	static final int yOffset= (OverallGame.frameHeight/6);
 	private double 	time 	;
 	private int 	score	;
 	private int 	money   ;
@@ -66,13 +69,13 @@ public class Game3 implements java.io.Serializable{
 	 * @param bigGame - The handler for the entire game
 	 */
 	public Game3(OverallGame bigGame) {
-		this.time	=	20.0	;
+		this.time	=	50.0	;
 		this.score	=	0	;
 		this.money	=	100	;
-		this.plants	=	new ArrayList<Plant>();
+		this.plants	=		new ArrayList<Plant>();
 		this.enemies	=	new ArrayList<Runoff>();
 		this.mussels	=	new ArrayList<Mussel>();
-		this.tiles	= 	new ArrayList<Tile>() ; 
+		this.tiles	= 		new ArrayList<Tile>() ; 
 		for (int i = 0 ; i < 28 ; i++) {
 			this.tiles.add(new Tile(i/7, i%7));
 		}
@@ -116,14 +119,25 @@ public class Game3 implements java.io.Serializable{
 					g.drawImage(current.getMusselDrawing(), current.getXLoc(), current.getYLoc(), null);
 				}
 				for (Tile current : getTiles()) {
-					g.drawImage(current.getImage(), current.getCol()*130 + 320, current.getRow()*130 + 70, null);
+					if (current instanceof Plant) {
+						g.drawImage(current.getImage(), current.getCol()*(scalor) + xOffset, current.getRow()*(scalor) + yOffset, null);
+					}
+					else  {
+						g.drawImage(current.getImage(), current.getCol()*(scalor) + xOffset, current.getRow()*(scalor) + yOffset, null);
+					}
 				}
+				for (Runoff current : getEnemies()) {
+					for(int i = 0 ; i < current.getImages().size(); i++) {
+						g.drawImage(current.getImages().get(i), current.getFront() + scalor*i, current.getRow()*(scalor) + yOffset, null);
+					}
+				}
+				
 			}
 		};
 		gamePanel.setLayout(null);
 		//return button
 		JButton Button = new JButton("Return");
-		Button.setBounds(0, 600, 100, 50);
+		Button.setBounds(OverallGame.frameWidth-scalor, 0, scalor, scalor);
 		Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				endGame();
@@ -145,6 +159,7 @@ public class Game3 implements java.io.Serializable{
 			}
 	    });
 		gameFrame.setContentPane(gamePanel);
+		addRunoff();
 	}
 	
 	/**
@@ -163,9 +178,9 @@ public class Game3 implements java.io.Serializable{
 			
 			
 		}
-		if (getTickCount() % 5 == 0) {
+		if (getTickCount() % 6 == 0) {
 			Random rand = new Random();
-			if (rand.nextInt(10) > 7) {
+			if (rand.nextInt(10) > 8) {
 				addRunoff();
 			}
 		}
@@ -193,11 +208,11 @@ public class Game3 implements java.io.Serializable{
 		int yLoc = e.getY();
 		System.out.println("xLocation: " + xLoc + "  yLocation: " + yLoc);
 		Mussel removal = null;
-		if (xLoc < 328) {
+		if (xLoc < xOffset) {
 			for (Mussel current : getMussels()) {
 				if (current.getStage() ==  100) {
-					if ((xLoc > current.getXLoc() && xLoc < current.getXLoc() + 264) &&
-						(yLoc > current.getYLoc() && yLoc < current.getYLoc() + 160)) {
+					if ((xLoc > current.getXLoc() && xLoc < current.getXLoc() + (18/5)*scalor) &&
+						(yLoc > current.getYLoc() && yLoc < current.getYLoc() + 2*scalor)) {
 						addScore(50); addMoney(100);
 						removal = current;
 					}
@@ -208,9 +223,9 @@ public class Game3 implements java.io.Serializable{
 				getMussels().remove(removal);
 			}
 		}
-		else {
-			final int row = (yLoc - 100)	/130 	;
-			final int col = (xLoc - 328)	/130	;
+		else if (getMoney() >= 100){
+			final int row = (yLoc -	yOffset)	/scalor ;
+			final int col = (xLoc - xOffset)	/scalor	;
 			System.out.println("Row: " + row + "  Col: " + col);
 			timer.stop();
 			menu.show(e.getComponent(), xLoc, yLoc);
@@ -247,8 +262,9 @@ public class Game3 implements java.io.Serializable{
 	 * @param type - the type of plant to be placed
 	 */
 	public void addPlant(int row, int col, String type) {
-		getPlants().add(new Plant(row, col, type));
-		getTiles().set(7*row+col, new Plant(row, col, type));
+		Plant plant = new Plant(row, col, type);
+		getPlants().add(plant);
+		getTiles().set(7*row+col, plant);
 	}
 	
 	/**
@@ -259,10 +275,19 @@ public class Game3 implements java.io.Serializable{
 	 *  @param col - the column of the runoff to be made
 	 */
 	public void addRunoff() {
-		Random rand = new Random() ;
-		int row = rand.nextInt(4);
-		getEnemies().add(new Runoff(row, 6)) ;
-		getTiles().set(7*row+6, getEnemies().get(getEnemies().size() - 1));
+		if	(getEnemies().size()	<	4)	{
+			System.out.println(getEnemies().size());
+			Random rand = new Random() ;
+			int row = rand.nextInt(4);
+			for (int i = 0 ; i < getEnemies().size() ; i++) {
+				if (row == getEnemies().get(i).getRow()) {
+					row = rand.nextInt(4);
+					i = 0;
+				}
+			}
+			enemies.add(new Runoff(row, 6*scalor + xOffset)) ;
+		}
+		
 	}
 	
 	
@@ -273,35 +298,39 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void moveRunoff() {
 		Iterator<Runoff> it = getEnemies().iterator();
+		Runoff removal = null;
 		while (it.hasNext()) {
 			Runoff current = it.next() ;
-			int col = current.getCol() ;
+			int col = (current.getFront() - xOffset)/scalor ;
 			int row = current.getRow() ;
-			if (current.getTicksSinceMoved() > 30) {
-				current.setTicksSinceMoved(0);
-				if (col > 0)
-					if (!(getTiles().get(7*row+col-1) instanceof Plant || getTiles().get(7*row+col-1) instanceof Runoff)) {
-						getTiles().set(7*row+col - 1, current);
-						getTiles().set(7*row+col, new Tile(row, col));
-						current.setCol(col - 1);
+			if (current.getFront() > xOffset)
+				if (getTiles().get(7*row+col) instanceof Plant) {
+					Plant plant = (Plant)getTiles().get(7*row+col);
+					battle((Plant)getTiles().get(7*row+col), current);
+					if (current.getHealth().size() == 0) {
+						removal = current;
 					}
-					else {
-						for (Plant currentP : getPlants()) {
-							if ((currentP.getCol()  == col-1) && currentP.getRow() == row) {
-								System.out.println("YOOOO");
-								battle(currentP, current);
-							}
-						}
+					if (plant.getHealth() <= 0) {
+						getPlants().remove(plant);
+						getTiles().set(plant.getRow()*7 +plant.getCol(), new Tile(plant.getRow(), plant.getCol()));
 					}
-				else {
-					if (getMussels().size() > 0) {
-						getMussels().remove(getMussels().size()-1);
-					}
-					it.remove();
-					getTiles().set(7*row+col, new Tile(row, col));
 				}
+				else {
+					if (col != (current.getFront()-1 - xOffset)/scalor) {
+						current.grow();
+					}
+					current.setFront(current.getFront()-1);
+				}
+			else {
+				if (getMussels().size() > 0) {
+					getMussels().remove(getMussels().size()-1);
+				}
+				removal = current;
 			}
 			current.setTicksSinceMoved(current.getTicksSinceMoved() + 1);
+		}
+		if (removal != null) {
+			getEnemies().remove(removal);
 		}
 		
 	}
@@ -315,14 +344,9 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void battle(Plant plant, Runoff runoff) {
 		plant.setHealth(plant.getHealth() - runoff.getStrength());
-		if (plant.getHealth() <= 0) {
-			getPlants().remove(plant);
-			getTiles().set(plant.getRow()*7 +plant.getCol(), new Tile(plant.getRow(), plant.getCol()));
-		}
-		runoff.setHealth(runoff.getHealth() - plant.getStrength());
-		if (runoff.getHealth() <= 0) {
-			getEnemies().remove(runoff) ;
-			getTiles().set(runoff.getRow()*7 +runoff.getCol(), new Tile(runoff.getRow(), runoff.getCol()));
+		runoff.getHealth().set(0, runoff.getHealth().get(0) - plant.getStrength());
+		if(runoff.getHealth().get(0) < 0) {
+			runoff.removeFront();
 		}
 	}
 	
@@ -333,18 +357,17 @@ public class Game3 implements java.io.Serializable{
 	public void addMussel() {
 		Random rand = new Random();
 		int tooManyTries = 0;
-		int xLoc	=	rand.nextInt(getGameFrame().getWidth()/5 - 90)	; 
-		int yLoc	=	rand.nextInt(getGameFrame().getHeight() - 200) + 50	;
-		Rectangle newMussel = new Rectangle(xLoc,yLoc,132,80);
-		Rectangle curMussel = new Rectangle(0, 0,132,80);
+		int xLoc	=	rand.nextInt(xOffset	-	(18/5)*scalor);
+		int yLoc	=	rand.nextInt(OverallGame.frameHeight-yOffset*3/4-2*scalor) + yOffset*3/4;
+		Rectangle newMussel = new Rectangle(xLoc,yLoc,(9/5)*scalor,scalor);
+		Rectangle curMussel = new Rectangle(0, 0,(9/5)*scalor,scalor);
 		for (int i = 0 ; i < getMussels().size();) {
-			//System.out.println("are  u stuck??/");
 			Mussel current = getMussels().get(i);
-			newMussel.setBounds(xLoc,yLoc,132,80);
-			curMussel.setBounds(current.getXLoc(), current.getYLoc(),132,80);
+			newMussel.setBounds(xLoc,yLoc,(9/5)*scalor,scalor);
+			curMussel.setBounds(current.getXLoc(), current.getYLoc(),(9/5)*scalor,scalor);
 			if (newMussel.intersects(curMussel)) {
-				xLoc = rand.nextInt(getGameFrame().getWidth()/5 - 90);
-				yLoc = rand.nextInt(350) + 50;
+				xLoc = rand.nextInt(xOffset	-	(18/5)*scalor);
+				yLoc = rand.nextInt(OverallGame.frameHeight-yOffset*3/4-2*scalor) + yOffset*3/4;
 				i=0;
 				tooManyTries++;
 			}

@@ -65,7 +65,7 @@ public class Mussel implements java.io.Serializable{
 		return yloc;
 	}
 	public Image getMusselDrawing() {
-		return musselDrawing.getScaledInstance(132*(getStage() + 1)/101 + 1, 80*(getStage() + 1)/101 + 1, 1);
+		return musselDrawing.getScaledInstance((9/5)*Game3.scalor*(getStage() + 1)/101 + 1, Game3.scalor*(getStage() + 1)/101 + 1, 1);
 	}
 
 	public void setStage(int stage) {
