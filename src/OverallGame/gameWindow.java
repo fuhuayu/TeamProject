@@ -1,6 +1,7 @@
 package OverallGame;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -16,6 +18,7 @@ import javax.swing.JPanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,6 +37,9 @@ public class gameWindow implements Serializable{
 	private OverallGame bigGame;
 
 	private JFrame frame;
+	private Image game1Button;
+	private Image game2Button;
+	private Image game3Button;
 
 	/**
 	 * Launch the application.
@@ -57,6 +63,13 @@ public class gameWindow implements Serializable{
 	 */
 	public gameWindow(OverallGame bigGame) {
 		this.bigGame = bigGame;
+		try {
+			this.game1Button = ImageIO.read(new File("images/game1Button.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight/4, 1);
+			this.game2Button = ImageIO.read(new File("images/game2Button.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight/3, 1);
+			this.game3Button = ImageIO.read(new File("images/game3Button.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight/3, 1);
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
 		initialize();
 	}
 
@@ -77,13 +90,16 @@ public class gameWindow implements Serializable{
 				}
 			}
 		});
-		frame.setBounds(100, 100, this.bigGame.frameWidth, this.bigGame.frameHeight);
+		frame.setBounds(100, 100, OverallGame.frameWidth, OverallGame.frameHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 		JButton btnStartGame = new JButton();	
-		ImageIcon imgGame1 = new ImageIcon("images/Game1Button.png");
+		ImageIcon imgGame1 = new ImageIcon(getGame1Button());
 		btnStartGame.setIcon(imgGame1);
+		btnStartGame.setOpaque(false);
+		btnStartGame.setContentAreaFilled(false);
+		btnStartGame.setBorderPainted(false);
 		btnStartGame.setBounds(0, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		frame.getContentPane().add(btnStartGame);
 		btnStartGame.addActionListener(new ActionListener() {
@@ -96,8 +112,11 @@ public class gameWindow implements Serializable{
 		
 		
 		JButton btnStartGame_1 = new JButton();
-		ImageIcon imgGame2 = new ImageIcon("images/Game2Button.png");
+		ImageIcon imgGame2 = new ImageIcon(getGame2Button());
 		btnStartGame_1.setIcon(imgGame2);
+		btnStartGame_1.setOpaque(false);
+		btnStartGame_1.setContentAreaFilled(false);
+		btnStartGame_1.setBorderPainted(false);
 		btnStartGame_1.setBounds(frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		frame.getContentPane().add(btnStartGame_1);
 		btnStartGame_1.addActionListener(new ActionListener() {
@@ -114,8 +133,11 @@ public class gameWindow implements Serializable{
 		});
 		
 		JButton btnStartGame_2 = new JButton();
-		ImageIcon imgGame3 = new ImageIcon("images/Game3Button.png");
+		ImageIcon imgGame3 = new ImageIcon(getGame3Button());
 		btnStartGame_2.setIcon(imgGame3);
+		btnStartGame_2.setOpaque(false);
+		btnStartGame_2.setContentAreaFilled(false);
+		btnStartGame_2.setBorderPainted(false);
 		btnStartGame_2.setBounds(2*frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		btnStartGame_2.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(btnStartGame_2);
@@ -213,5 +235,31 @@ public class gameWindow implements Serializable{
 	public JFrame getFrame() {
 		return frame;
 	}
+
+	public Image getGame1Button() {
+		return game1Button;
+	}
+
+	public void setGame1Button(Image game1Button) {
+		this.game1Button = game1Button;
+	}
+
+	public Image getGame2Button() {
+		return game2Button;
+	}
+
+	public void setGame2Button(Image game2Button) {
+		this.game2Button = game2Button;
+	}
+
+	public Image getGame3Button() {
+		return game3Button;
+	}
+
+	public void setGame3Button(Image game3Button) {
+		this.game3Button = game3Button;
+	}
+	
+	
 
 }
