@@ -137,6 +137,31 @@ public class CrabCatcherGameTest {
 		
 	}
 	
+	@Test
+	public void animalOverlapTest(){
+		CrabCatcherGame game1 = makeTestCrabGame();
+		HashSet<Animal> animals = new HashSet<Animal>();
+		
+		Animal crab = new Animal(10, 15, "crab", -5,
+				10, true);
+		Animal fish = new Animal(410, 15, "fish", -3, 10, true);
+		Animal fish2 = new Animal(400, 400, "fish", -3, 10, true);
+		Animal fish3 = new Animal(950, 950, "fish", -3, 10, true);
+		
+		animals.add(crab);
+		animals.add(fish);
+		game1.setAnimals(animals);
+		assertFalse(game1.uniqueLocation(fish2));
+		for (Animal a: game1.getAnimals()){
+			if(!a.overlapsWith(fish3)){
+				System.out.println("Overlap detected with: " + a.toString());
+			}
+		}
+		assertTrue(game1.uniqueLocation(fish3));
+		
+		
+	}
+	
 	/**
 	 * tests if mouse handler detects animal clicks and adjusts score accordingly
 	 */
