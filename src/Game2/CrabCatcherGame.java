@@ -23,10 +23,13 @@ import java.util.ListIterator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
 import Game3.Mussel;
@@ -68,6 +71,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private static int mittencrabScoreEffect = 6;
 	private static int crabScoreEffect = -5;
 	private static int fishScoreEffect = -3;
+	private JProgressBar timeBar;
+	private ArrayList<JButton> livesArray = new ArrayList<JButton>(lives);
 
 	/**The all-parameter constructor for crab catcher game. Not used publicly.
 	 * @param time
@@ -193,11 +198,14 @@ public class CrabCatcherGame implements java.io.Serializable{
 		}
 		//updates game's timed aspects - call animal.onTick() for all animals
 		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
+//		for (Animal each: animals){
+//			//each.onTick(this);
+//		}
 		ListIterator<Animal> it = animals.listIterator();
 		while (it.hasNext()){
 			//tick all animals
 			Animal current = it.next();
-			//current.onTick(this);
+			current.onTick(this);
 			//remove expired animals
 			if (current.getTimeLeftOnScreen() <= 0){
 				Animal copy = current.copy();
@@ -278,10 +286,22 @@ public class CrabCatcherGame implements java.io.Serializable{
 				endGame();
 			}});
 		panel.add(Button);
-		TS = new JLabel("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);
-		TS.setBounds(0,0,frame.getWidth(),30);
+		
+		
+		//time/score/lives
+		TS = new JLabel("Score: "+this.score);
+		TS.setBounds(0,0,bigGame.frameWidth,30);
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
 		panel.add(TS);
+		
+		
+		//time bar
+		timeBar = new JProgressBar(0, (int)gameLength);
+		timeBar.setValue((int)gameLength);
+		timeBar.setString("TIME");
+		timeBar.setStringPainted(true);
+		timeBar.setBounds(0, 30, bigGame.frameWidth/4, bigGame.frameHeight/10);
+		panel.add(timeBar);
 		
 		//declare timer
 		int timerTimeInMilliSeconds = 1000;
@@ -304,7 +324,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 */
 	public boolean updatePanel(){
 		//visual updates
-		TS.setText("Time: " + this.time + "   Score: "+this.score + "   Lives: " + this.lives);	
+		if (timeBar != null){timeBar.setValue((int) (this.gameLength - this.time));}
+		TS.setText("Score: "+this.score);	
 		frame.repaint();
 		
 		return true;
@@ -347,20 +368,20 @@ public class CrabCatcherGame implements java.io.Serializable{
 		Random r = new Random();
 		int xloc = r.nextInt(bigGame.frameWidth);
 		int yloc = r.nextInt(bigGame.frameHeight);
-		int duration = r.nextInt(6);
+		int duration = r.nextInt(7);
 		boolean visible = r.nextBoolean();
 		
 		int typenum = r.nextInt(100);
 		String type = "crab";
 		int effect = crabScoreEffect;
 		Image img = crabImage;		
-		if (typenum >= 0 && typenum <= 40){
+		if (typenum >= 0 && typenum <= 60){
 			type = "mittencrab"; 
 			effect = mittencrabScoreEffect; 
 			img = mittencrabImage;
 			}
 		
-		else if (typenum < 70){
+		else if (typenum < 75){
 			type = "fish"; 
 			effect = fishScoreEffect;
 			img = fishImage;
