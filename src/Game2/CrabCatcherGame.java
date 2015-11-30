@@ -18,6 +18,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -46,7 +47,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	//FIELDS
 	private double time; 
 	private double speed;
-	private HashSet<Animal> animals; 
+	private ArrayList<Animal> animals; 
 	private int score;
 	private int lives = 3;
 	private double gameLength = 60; //how long is this game?
@@ -87,7 +88,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 * @param mittencrabImage
 	 * @param fishImage
 	 */
-	private CrabCatcherGame(double time, double speed, HashSet<Animal> animals,
+	private CrabCatcherGame(double time, double speed, ArrayList<Animal> animals,
 			int score, int lives, double gameLength,
 			MouseAdapter mouseListener, int maxAnimalsOnScreen,
 			boolean gameOver, OverallGame bigGame, JFrame frame, JPanel panel,
@@ -130,7 +131,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 * @param frame - the frame the game is drawn in
 	 */
 	//----------------------------------------------------------------UPDATE TO CALL SUPER!
-	public CrabCatcherGame(double speed, HashSet<Animal> animals,
+	public CrabCatcherGame(double speed, ArrayList<Animal> animals,
 			int score, int lives, double gameLength,
 			MouseAdapter mouseListener, int maxAnimalsOnScreen,
 			boolean gameOver, OverallGame bigGame, JFrame frame) {
@@ -165,8 +166,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 		}
 		else{
 			//need to customize animal sizes
-			int height = (int)(bigGame.frameHeight/3.5);
-			int width = (int) (height*0.8);
+			int height = (int)(bigGame.frameHeight/3.6);
+			int width = (int) (height*1.25);
 			image = image.getScaledInstance(width, height, 0);
 			}
 		return image;
@@ -315,7 +316,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 */
 	public void generateAnimals(){
 		//constructs the max number of animals to place on screen
-		animals = new HashSet<Animal>();
+		animals = new ArrayList<Animal>();
 		for (int i=0; i < maxAnimalsOnScreen; i++){			
 			animals.add(makeRandomAnimal());
 		}
@@ -365,6 +366,10 @@ public class CrabCatcherGame implements java.io.Serializable{
 		
 	}
 	
+	public void addUniqueAnimal(Animal a){
+	
+	}
+	
 	/**Checks if the user clicked an animal and update game accordingly
 	 * @param event the mouse event being processed
 	 */
@@ -405,8 +410,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 			animal.regenerateAnimal();
 			//makeOrRegenAnimal(animal);
 			updateScore(animal.getScoreEffect());
-			System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
-			System.out.println("score changed by " + animal.getScoreEffect());
+			//System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
+			//System.out.println("score changed by " + animal.getScoreEffect());
 		}
 	}
 	
@@ -524,12 +529,12 @@ public class CrabCatcherGame implements java.io.Serializable{
 	}
 
 
-	public HashSet<Animal> getAnimals() {
+	public ArrayList<Animal> getAnimals() {
 		return animals;
 	}
 
 
-	public void setAnimals(HashSet<Animal> animals) {
+	public void setAnimals(ArrayList<Animal> animals) {
 		this.animals = animals;
 	}
 

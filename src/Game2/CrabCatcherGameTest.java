@@ -68,7 +68,7 @@ public class CrabCatcherGameTest {
 	 * @return
 	 */
 	public CrabCatcherGame makeTestCrabGame(){
-		HashSet<Animal> animals = new HashSet<Animal>();
+		ArrayList<Animal> animals = new ArrayList<Animal>();
 		CrabCatcherGame game = new CrabCatcherGame(0, animals, 0, 3, 10, null, 5, false, bigGame, frame);
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
 		game.addAnimal(crab);
@@ -82,7 +82,7 @@ public class CrabCatcherGameTest {
 	@Test
 	public void tickTest(){
 		makeTestBigGame();
-		HashSet<Animal> animals = new HashSet<Animal>();
+		ArrayList<Animal> animals = new ArrayList<Animal>();
 		CrabCatcherGame game = new CrabCatcherGame(0, animals, 0, 3, 10, null, 5, false, bigGame, frame);
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
 		game.addAnimal(crab);
@@ -140,7 +140,7 @@ public class CrabCatcherGameTest {
 	@Test
 	public void animalOverlapTest(){
 		CrabCatcherGame game1 = makeTestCrabGame();
-		HashSet<Animal> animals = new HashSet<Animal>();
+		ArrayList<Animal> animals = new ArrayList<Animal>();
 		
 		Animal crab = new Animal(10, 15, "crab", -5,
 				10, true);
@@ -171,7 +171,7 @@ public class CrabCatcherGameTest {
 		Animal crab = new Animal(100, 100, "crab", -5, 3, true);
 		Animal fish = new Animal(500, 500, "fish", -3, 3, true);
 		Animal mittencrab = new Animal(800, 800, "mittencrab", 5, 3, true);
-		game.setAnimals(new HashSet<Animal>());
+		game.setAnimals(new ArrayList<Animal>());
 		game.addAnimal(crab);
 		game.addAnimal(mittencrab);
 		game.addAnimal(fish);
