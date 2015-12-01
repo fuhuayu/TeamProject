@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
@@ -119,14 +120,14 @@ public class RipRapGame implements java.io.Serializable{
 	 * initialize the game with RipRap wall and obstacles randomly displaced
 	 */
 	public boolean initGame(){
-		stone=new Stone(1200,600,100);
+		stone=new Stone(this.panel.getWidth(),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
 		objects.add(stone);
-		crab=new Crab(300,600,100);
+		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
 		crab.addItem(panel, "images/crab.png");
 		objects.add(crab);
 		for(int i=1;i<4;i++){
-			Cloud cloud = new Cloud(200,1000,200);
+			Cloud cloud = new Cloud(this.panel.getWidth()/10,this.panel.getWidth(),(int)(this.panel.getHeight()*0.2));
 			cloud.addItem(panel, "images/cloud"+i+".png");
 			objects.add(cloud);
 		}
@@ -138,7 +139,7 @@ public class RipRapGame implements java.io.Serializable{
 	public boolean initPanel(){
 		try {
 			final BufferedImage image = ImageIO.read(new File("images/rockwall.jpg"));
-			final BufferedImage background = ImageIO.read(new File("images/game1background.jpg"));
+			final Image b = ImageIO.read(new File("images/game1background.jpg")).getScaledInstance(this.frame.getContentPane().getWidth(), this.frame.getContentPane().getHeight(), 1);
 			panel=new JPanel(){
 	            @Override
 	            
@@ -152,7 +153,7 @@ public class RipRapGame implements java.io.Serializable{
 	                at.translate(getWidth()-500, getHeight()+160);
 
 	                // 3. do the actual rotation
-	                at.rotate(Math.PI/-70);
+	                at.rotate(Math.PI/-30);
 
 	                // 2. just a scale because this image is big
 	                at.scale(1, 1);
@@ -163,7 +164,7 @@ public class RipRapGame implements java.io.Serializable{
 
 	                // draw the image
 	                Graphics2D g2d = (Graphics2D) g;
-	                g2d.drawImage(background, null, null);
+	                g2d.drawImage(b, 0,0, null);
 	                g2d.drawImage(image, at, null);
 	            };
 			};
