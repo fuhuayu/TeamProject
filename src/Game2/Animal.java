@@ -100,14 +100,14 @@ public class Animal implements java.io.Serializable {
 	 * Call this method to regenerate animal after it is caught or time on screen expires
 	 * makes the animal invisible, resets its timeLeftOnScreen to display duration, and sets location randomly
 	 */
-	public void regenerateAnimal(){
+	public void regenerateAnimal(int xbound, int ybound){
 		//sets animal visibility to false (could use an animation here)
 		visible = false;
 		//gives animal a random location
 		Random r = new Random();
 		//USE SCREEN WIDTH
-		xloc = r.nextInt(800);
-		yloc = r.nextInt(800);
+		xloc = r.nextInt(xbound - this.imageWidth);
+		yloc = r.nextInt(ybound);
 		visible = r.nextBoolean();
 		//reset timeLeftOnScreen to display duration
 		timeLeftOnScreen = displayDuration;
@@ -151,7 +151,7 @@ public class Animal implements java.io.Serializable {
 	public void onTickTest(){
 		//decrease animal's timer; if timer is 0, regenerate animal
 		if (timeLeftOnScreen <= 0){
-			regenerateAnimal();
+			regenerateAnimal(800, 800);
 			//expired = true;			
 		}
 		else {timeLeftOnScreen--;}

@@ -212,7 +212,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 				Animal copy = current.copy();
 				it.remove();
 				updatePanel();
-				copy.regenerateAnimal(); //regenerate as a new random animal
+				copy.regenerateAnimal(bigGame.frameWidth, bigGame.frameHeight); //regenerate as a new random animal
 				it.add(setUniqueLocAnimal(copy));				
 			}
 		}
@@ -459,7 +459,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 			updatePanel(); //repaint the frame and display score change
 			System.out.println("--> score changed by " + animal.getScoreEffect());
 			animals.remove(animal);
-			animal.regenerateAnimal(); //regenerate as a new random animal
+			animal.regenerateAnimal(bigGame.frameWidth, bigGame.frameHeight); //regenerate as a new random animal
 			animals.add(setUniqueLocAnimal(animal));
 			
 			}
@@ -497,7 +497,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 			//updatePanel(); //repaint the frame and display score change
 			System.out.println("--> score changed by " + animal.getScoreEffect());
 			animals.remove(animal);
-			animal.regenerateAnimal(); //regenerate as a new random animal
+			animal.regenerateAnimal(800, 800); //regenerate as a new random animal
 			animals.add(setUniqueLocAnimal(animal));
 			
 			}
