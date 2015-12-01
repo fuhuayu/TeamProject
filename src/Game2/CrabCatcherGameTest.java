@@ -182,9 +182,9 @@ public class CrabCatcherGameTest {
 	public void mouseInputTest(){
 		System.out.println("starting mouseInputTest");
 		CrabCatcherGame game = makeTestCrabGame();
-		Animal crab = new Animal(100, 100, "crab", -5, 3, true);
-		Animal fish = new Animal(500, 500, "fish", -3, 3, true);
-		Animal mittencrab = new Animal(800, 800, "mittencrab", 5, 3, true);
+		Animal crab = new Animal(100, 100, "crab", -5, 30, true);
+		Animal fish = new Animal(500, 500, "fish", -3, 30, true);
+		Animal mittencrab = new Animal(800, 800, "mittencrab", 5, 30, true);
 		game.setAnimals(new ArrayList<Animal>());
 		game.addAnimal(crab);
 		game.addAnimal(mittencrab);
@@ -206,7 +206,7 @@ public class CrabCatcherGameTest {
 		assertEquals("on click mitten crab: game score should increase to 5", 5, game.getScore());
 		
 		//fish decrease by 3
-		game.onClickTest(500,500);
+		game.onClickTest(500 + fish.getImageWidth(), 500+fish.getImageHeight());
 		assertEquals("on click fish: game score should decrease to 2", 2, game.getScore());
 		
 		//score should not be negative
@@ -217,13 +217,64 @@ public class CrabCatcherGameTest {
 		game.setScore(10);
 		crab.setXloc(100);
 		crab.setYloc(100);
-		game.onClickTest(100,100);
+		crab.setVisible(true);
+		game.onClickTest(100 + crab.getImageWidth()/2, 100+crab.getImageHeight()/2);
 		assertEquals("on click crab: game score should decrease by 5", 5, game.getScore());	
 		
 		//click nothing
 		game.onClickTest(0,0);
 		//assertEquals("on click nothing: game score should stay at 15", 15, game.getScore());	
+		game.setAnimals(new ArrayList<Animal>());
+		
+		Animal problemCrab = new Animal(417, 251, "crab", -3, 10, true);
+		game.addAnimal(problemCrab);
+		problemCrab.setImageHeight(200);
+		problemCrab.setImageWidth(250);
+		System.out.println("535,409 clicked a " + game.getAnimalClicked(535, 409));
+		assertTrue(game.getAnimalClicked(535, 409).equals(problemCrab));
+		System.out.println("problem crab was " + problemCrab);
+		
+		Animal problemCrab2 = new Animal(381, 57, "crab", -3, 10, true);
+		problemCrab2.setImageHeight(200);
+		problemCrab2.setImageWidth(250);
+		game.addAnimal(problemCrab2);
+		System.out.println("489,250 clicked a " + game.getAnimalClicked(489, 250));
+		assertTrue(game.getAnimalClicked(489, 250).equals(problemCrab2));
+		System.out.println("problem crab2 was " + problemCrab2);
 	}
+	
+	
+	
+	/*
+	 *[Animal mittencrab [location=(1039, 353), scoreEffect=6, timeLeft=5.0, visible=false], 
+	 *Animal mittencrab [location=(540, 90), scoreEffect=6, timeLeft=5.0, visible=false], 
+	 *Animal mittencrab [location=(247, 116), scoreEffect=6, timeLeft=7.0, visible=false], 
+	 *Animal crab [location=(253, 145), scoreEffect=-5, timeLeft=3.0, visible=true], 
+	 *Animal crab [location=(911, 324), scoreEffect=-5, timeLeft=4.0, visible=true], 
+	 *Animal fish [location=(602, 16), scoreEffect=-3, timeLeft=7.0, visible=false], 
+	 *Animal mittencrab [location=(836, 572), scoreEffect=6, timeLeft=4.0, visible=true], 
+	 *Animal crab [location=(566, 332), scoreEffect=-5, timeLeft=6.0, visible=false], 
+	 *Animal crab [location=(427, 319), scoreEffect=-5, timeLeft=4.0, visible=false], 
+	 *Animal crab [location=(417, 251), scoreEffect=-5, timeLeft=3.0, visible=true]]
+	 *click was at (535, 409) should have clicked a crab
+	 * */
+	
+	/*
+	 * [Animal mittencrab [location=(250, 13), scoreEffect=6, timeLeft=6.0, visible=false],
+	 *  Animal mittencrab [location=(644, 154), scoreEffect=6, timeLeft=6.0, visible=false],
+	 *   Animal crab [location=(1083, 152), scoreEffect=-5, timeLeft=2.0, visible=true],
+	 *    Animal mittencrab [location=(3, 167), scoreEffect=6, timeLeft=5.0, visible=false],
+	 *     Animal mittencrab [location=(338, 64), scoreEffect=6, timeLeft=4.0, visible=false],
+	 *      Animal mittencrab [location=(75, 555), scoreEffect=6, timeLeft=2.0, visible=true], 
+	 *      Animal mittencrab [location=(1129, 355), scoreEffect=6, timeLeft=4.0, visible=false],
+	 *       Animal crab [location=(381, 57), scoreEffect=-5, timeLeft=2.0, visible=true], 
+	 *       Animal mittencrab [location=(912, 201), scoreEffect=6, timeLeft=5.0, visible=true], 
+	 *       Animal mittencrab [location=(867, 703), scoreEffect=6, timeLeft=3.0, visible=false]]
+		click was at (489, 250)
+	 */
+	 
+	
+	
 	
 	@Test
 	public void endGameEffectTest(){
