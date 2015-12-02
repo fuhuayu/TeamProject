@@ -44,11 +44,14 @@ public class Stone extends MovingObject {
 //				Random randomGenerator = new Random();
 //		          int randomInt = randomGenerator.nextInt(15);
 //			speed=-(randomInt);
-			speed = -6;
+		//}
+			if(tick==0){
+				speed = -6;
+			}
 		}
 		
 	}
 	
 
 }
-}
+
