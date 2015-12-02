@@ -82,11 +82,21 @@ public class gameWindow implements Serializable{
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+
+				//System.out.println("game runnin is " + bigGame.getGamesRunning());
+
 				if (bigGame.getGamesRunning() == 3) {
 					bigGame.getGame3().onClick(e);
 				}
 				else if (bigGame.getGamesRunning() == 2) {
+					//bigGame.getGame2().onClick(e);
+					//System.out.println("using CrabCatcher's regular OnClick");
+				}
+			}
+			public void mousePressed(MouseEvent e){
+				if (bigGame.getGamesRunning() == 2) {
 					bigGame.getGame2().onClick(e);
+					//System.out.println("using CrabCatcher's MousePressed");
 				}
 			}
 		});

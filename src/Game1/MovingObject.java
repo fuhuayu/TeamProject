@@ -49,13 +49,13 @@ public void addItem(JPanel p,String filename){
 	ImageIcon icon=new ImageIcon();
 	try {
 		image = ImageIO.read(new File(filename));
-		icon = new ImageIcon(image.getScaledInstance(size, size*image.getHeight()/image.getWidth(), 1));
+		icon = new ImageIcon(image.getScaledInstance(size*image.getWidth()/image.getHeight(), size, 1));
 		
 	} catch(IOException e) {
 		System.out.println("Read Error: " + e.getMessage());
 	}
 	label.setIcon(icon);
-	label.setBounds(position.x-size/2, position.y-icon.getIconHeight()/2, size,icon.getIconHeight());
+	label.setBounds(position.x, position.y, icon.getIconWidth(),size);
 	
 	p.add(label);
 }

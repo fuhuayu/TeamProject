@@ -82,7 +82,7 @@ public class AnimalTest {
 		int oldy = crab.getYloc();
 		crab.setTimeLeftOnScreen(0);
 		
-		crab.regenerateAnimal();
+		crab.regenerateAnimal(800,800);
 		//check that time reset
 		assertEquals(crab.getTimeLeftOnScreen(), crab.getDisplayDuration(), 0);
 		//check that location changed

@@ -54,7 +54,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private ArrayList<Animal> animals; 
 	private int score;
 	private int lives = 3;
-	private double gameLength = 20; //how long is this game?
+	private double gameLength = 60; //how long is this game?
 	private MouseAdapter mouseListener;
 	private int maxAnimalsOnScreen = 10; 
 	private boolean gameOver = false;
@@ -205,14 +205,15 @@ public class CrabCatcherGame implements java.io.Serializable{
 		while (it.hasNext()){
 			//tick all animals
 			Animal current = it.next();
-			current.onTick(this);
+			current.onTick(this); 
+			//current.move(this);
 			updatePanel();
 			//remove expired animals
 			if (current.getTimeLeftOnScreen() <= 0){
 				Animal copy = current.copy();
 				it.remove();
 				updatePanel();
-				copy.regenerateAnimal(); //regenerate as a new random animal
+				copy.regenerateAnimal(bigGame.frameWidth, bigGame.frameHeight); //regenerate as a new random animal
 				it.add(setUniqueLocAnimal(copy));				
 			}
 		}
@@ -270,8 +271,9 @@ public class CrabCatcherGame implements java.io.Serializable{
 				super.paintComponent(g);
 				//draw background
 				g.drawImage(backgroundImage, 0, 0, null);
-				//draw animals
-				for (Animal animal : getAnimals()) {
+				//draw animals from newest to oldest (new animals will show behind ones)
+				for (int i = animals.size()-1; i >= 0; i--) {
+					Animal animal = animals.get(i);
 					if (animal.isVisible()){
 						g.drawImage(getAnimalImage(animal.getTypeOfAnimal()), animal.getXloc(), animal.getYloc(), null);
 					}
@@ -367,8 +369,6 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 */
 	public Animal makeRandomAnimal(){
 		Random r = new Random();
-		int xloc = r.nextInt(bigGame.frameWidth);
-		int yloc = r.nextInt(bigGame.frameHeight);
 		int duration = 7 - r.nextInt(5);
 		boolean visible = r.nextBoolean();
 		
@@ -387,6 +387,10 @@ public class CrabCatcherGame implements java.io.Serializable{
 			effect = fishScoreEffect;
 			img = fishImage;
 			}
+		
+		//keeps animals in frame
+		int xloc = r.nextInt(bigGame.frameWidth - img.getWidth(null));
+		int yloc = r.nextInt(bigGame.frameHeight - img.getHeight(null));
 		
 		Animal animal = new Animal(xloc, yloc, type, effect, duration, visible);
 		animal.setImage(img); //note: also sets image height and width
@@ -448,16 +452,23 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//if getAnimalClicked() returns an Animal,
 		//System.out.println("YOU CLICKED.");
 		Animal animal = getAnimalClicked(event.getX(), event.getY());
-		if (animal != null){
+		if (animal != null && animal.isVisible()){
 			//hide animal and add animal's scoreEffect to game score (not going below 0)
+			System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
 			animal.setVisible(false);
 			updateScore(animal.getScoreEffect());
 			updatePanel(); //repaint the frame and display score change
+			System.out.println("--> score changed by " + animal.getScoreEffect());
 			animals.remove(animal);
-			animal.regenerateAnimal(); //regenerate as a new random animal
+			animal.regenerateAnimal(bigGame.frameWidth, bigGame.frameHeight); //regenerate as a new random animal
 			animals.add(setUniqueLocAnimal(animal));
-			//System.out.println("score changed by " + animal.getScoreEffect());
+			
 			}
+		else{
+			System.out.println(".......you missed!");
+			System.out.println(animals);
+			System.out.println("click was at ("+ event.getX() + ", " + event.getY()+ ")");
+		}
 		
 	}
 	
@@ -476,20 +487,27 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 * @param y
 	 */
 	public void onClickTest(int x, int y){	
-		//does same as onClick, but for testing this just takes x and y
+		//if getAnimalClicked() returns an Animal,
+		//System.out.println("YOU CLICKED.");
 		Animal animal = getAnimalClicked(x, y);
-		if (animal != null){
+		if (animal != null && animal.isVisible()){
 			//hide animal and add animal's scoreEffect to game score (not going below 0)
+			System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
 			animal.setVisible(false);
 			updateScore(animal.getScoreEffect());
-			//animal.regenerateAnimal(); //regenerate as a new random animal
+			//updatePanel(); //repaint the frame and display score change
+			System.out.println("--> score changed by " + animal.getScoreEffect());
 			animals.remove(animal);
-			animal.regenerateAnimal();
+			animal.regenerateAnimal(800, 800); //regenerate as a new random animal
 			animals.add(setUniqueLocAnimal(animal));
 			
-			//System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
-			//System.out.println("score changed by " + animal.getScoreEffect());
+			}
+		else{
+			System.out.println(".......you missed!");
+			System.out.println(animals);
+			System.out.println("click was at ("+ x + ", " + y + ")");
 		}
+	
 	}
 	
 	/** checks whether there is an animal at the given x y coordinates
@@ -502,9 +520,10 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//add some kind of tolerance
 		Animal clicked = null;
 		//System.out.println("animals: " + animals);
-		for (Animal animal: animals){
+		//oldest Animals are drawn on top and in the front of the list
+		for (int i=0; i < animals.size(); i++){
 			//System.out.println("height: " + animal.getImageHeight() + ", width: " + animal.getImageWidth());
-			
+			Animal animal = animals.get(i);
 			if(x <= animal.getXloc() + animal.getImageWidth() && x >= animal.getXloc()
 					&& y <= animal.getYloc() + animal.getImageHeight()
 					&& y >= animal.getYloc()){

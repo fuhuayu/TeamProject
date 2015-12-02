@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  * @author Dwegrzyn
  * A class representing the animals that appear in the Crab Catcher game
  */
-public class Animal implements java.io.Serializable {
+public class AnimalMoveInProgress implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -32,6 +32,9 @@ public class Animal implements java.io.Serializable {
 	private int imageWidth = 250;
 	private int imageHeight = 200;
 	private boolean expired;
+	private int xdir;
+	private int ydir;
+	private int step;
 		
 	/**All-parameter constructor. Not used publicly.
 	 * @param xloc
@@ -46,7 +49,7 @@ public class Animal implements java.io.Serializable {
 	 * @param imageWidth
 	 * @param imageHeight
 	 */
-	private Animal(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
+	private AnimalMoveInProgress(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
 			double displayDuration, double timeLeftOnScreen, boolean visible,
 			JLabel label, Image image, int imageWidth, int imageHeight) {
 		super();
@@ -73,7 +76,7 @@ public class Animal implements java.io.Serializable {
 	 * @param displayDuration how long the animal should stay on screen
 	 * @param visible is true if the animal is visible
 	 */
-	public Animal(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
+	public AnimalMoveInProgress(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
 			double displayDuration, boolean visible) {
 		this.xloc = xloc;
 		this.yloc = yloc;
@@ -141,6 +144,19 @@ public class Animal implements java.io.Serializable {
 			//this.expired = true;
 		}
 		else {timeLeftOnScreen--;}
+	}
+	
+	public void move(CrabCatcherGame game){
+		//just move to the right for now
+		xdir = 1;
+		ydir = 0;
+		step = 5;
+		xloc += xdir*step;
+		yloc += ydir*step;
+		//if offscreen, regenerate
+		if (xloc > game.getBigGame().frameWidth + this.imageWidth){
+			this.regenerateAnimal(game.getBigGame().frameWidth, game.getBigGame().frameHeight);
+		}
 	}
 	
 	
@@ -281,3 +297,4 @@ public class Animal implements java.io.Serializable {
 	
 
 }
+
