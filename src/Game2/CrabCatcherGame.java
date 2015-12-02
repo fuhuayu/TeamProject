@@ -54,7 +54,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private ArrayList<Animal> animals; 
 	private int score;
 	private int lives = 3;
-	private double gameLength = 60; //how long is this game?
+	private double gameLength = 30; //how long is this game?
 	private MouseAdapter mouseListener;
 	private int maxAnimalsOnScreen = 10; 
 	private boolean gameOver = false;
