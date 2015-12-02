@@ -99,7 +99,7 @@ public class RipRapGame implements java.io.Serializable{
 	 * @param bigGame the overall lGame that consist of this game
 	 */
 	public RipRapGame(int time,OverallGame bigGame,JFrame frame) {
-		this.time = time;
+		this.time = time+10;
 		this.bigGame = bigGame;
 		this.starttime=System.currentTimeMillis();
 		this.frame=frame;

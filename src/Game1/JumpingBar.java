@@ -99,8 +99,8 @@ public class JumpingBar implements Serializable{
 	 */
 	public void clicked(){
 		if(this.barloc<this.stop1){
-			this.game.score-=200;
 			this.game.crab.clicked(0);
+
 		}
 		else if(this.barloc<(this.stop1+this.stop2)){
 			this.game.score+=100;
@@ -118,21 +118,25 @@ public class JumpingBar implements Serializable{
 	public void update(JPanel p){
 		int w=(int)(0.5*p.getWidth()/16);
 		int h=(int)(0.5*p.getHeight()/9);
+		int pd=100;
 		int distance=(int) ((this.game.getCrab().getPosition().distance(this.game.stone.getPosition()))/4);
-		if(distance<=0){
+		
+		pd=distance;
+		if(distance<=5){
 			if(passed==false){
 			this.game.stone.kicked();
-			this.game.score-=200;
-			this.game.crab.clicked(0);}
-			else{
-				passed=false;
+			this.game.score-=100;
+			this.game.crab.clicked(0);
 			}
+			
 		}
-		else if(distance>100){
+		
+		else if(distance>105){
 			this.barloc=100;
+			passed=false;
 		}
 		else{
-			this.barloc=distance;
+			this.barloc=distance-5;
 		}
 		System.out.println(distance);
 		bar.setBounds(w,h+h*this.barloc/12-2,w,3);
