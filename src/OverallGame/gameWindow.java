@@ -82,13 +82,8 @@ public class gameWindow implements Serializable{
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-<<<<<<< HEAD
 
 				//System.out.println("game runnin is " + bigGame.getGamesRunning());
-
-=======
-				//System.out.println("game runnin is " + bigGame.getGamesRunning());
->>>>>>> origin/master
 				if (bigGame.getGamesRunning() == 3) {
 					bigGame.getGame3().onClick(e);
 				}

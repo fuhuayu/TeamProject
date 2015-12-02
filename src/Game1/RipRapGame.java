@@ -29,6 +29,8 @@ import javax.swing.JPanel;
 
 import Game2.CrabCatcherGame;
 import OverallGame.OverallGame;
+import java.util.Random;
+
 
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
@@ -48,6 +50,7 @@ public class RipRapGame implements java.io.Serializable{
 	boolean ends;
 	long fps=30;
 	javax.swing.Timer timer;
+	javax.swing.Timer timer2;
 	JPanel bigpan;
 	JFrame frame;
 	JLabel TS;//time&score
@@ -81,6 +84,7 @@ public class RipRapGame implements java.io.Serializable{
 	Crab crab;
 	JumpingBar jumpingBar;
 	ArrayList<MovingObject> objects;
+	ArrayList<MovingObject> objects2;
 
 	//Constructor
 	/**
@@ -101,6 +105,7 @@ public class RipRapGame implements java.io.Serializable{
 		this.frame=frame;
 		this.jumpingBar=new JumpingBar(20, 30, this);
 		this.objects=new ArrayList<MovingObject>();
+		this.objects2=new ArrayList<MovingObject>();
 		initPanel();
 	}
 
@@ -122,7 +127,7 @@ public class RipRapGame implements java.io.Serializable{
 	public boolean initGame(){
 		stone=new Stone(this.panel.getWidth(),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
-		objects.add(stone);
+		objects2.add(stone);
 		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
 		crab.addItem(panel, "images/crab.png");
 		objects.add(crab);
@@ -191,12 +196,25 @@ public class RipRapGame implements java.io.Serializable{
 	    		updatePanel();
 	    		jumpingBar.update(panel);
 	    		updateMap();
+//	    		timer.setDelay(1);
+//	    		updateMap2();
+//	    		timer.setDelay(20);
 	    		if(getTime()<=0){
 	    			endGame();
-	    		}
-	    		
+	    		}		
 			}
 	    });
+	    timer2 = new javax.swing.Timer(timerTimeInMilliSeconds-10, new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+		updateMap2();
+			}
+	    });
+//	    if(){
+//	    	Random randomGenerator = new Random();
+//	          int randomInt = randomGenerator.nextInt(15);
+//	    	timer2.setDelay(randomInt+5);
+//	    }
+
 		return true;
 	}
 	public boolean firstRunPanel(){
@@ -226,6 +244,15 @@ public class RipRapGame implements java.io.Serializable{
 		}
 	}
 	
+	public void updateMap2(){
+		for(MovingObject m:objects2){
+			m.update();
+		}
+	}
+	
+
+
+	
 	/**
 	 * draw some MLG game stuff
 	 * @param frame
@@ -237,6 +264,7 @@ public class RipRapGame implements java.io.Serializable{
 		frame.setContentPane(this.panel);
 		firstRunPanel();
 		timer.start();
+		timer2.start();
 		
 	}
 	/**
