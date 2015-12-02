@@ -1,4 +1,7 @@
 package Game1;
+
+import java.util.Random;
+
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
  * @version 0.1
@@ -37,10 +40,15 @@ public class Stone extends MovingObject {
 		this.getLabel().setBounds(this.getPosition().x, this.getPosition().y, 
 				this.getLabel().getWidth(), this.getLabel().getHeight());
 		if(tick==0){
-			speed=-6;
+//			if(this.getLabel().getWidth()<0){
+//				Random randomGenerator = new Random();
+//		          int randomInt = randomGenerator.nextInt(15);
+//			speed=-(randomInt);
+			speed = -6;
 		}
 		
 	}
 	
 
+}
 }

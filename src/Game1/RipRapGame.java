@@ -204,7 +204,7 @@ public class RipRapGame implements java.io.Serializable{
 	    		}		
 			}
 	    });
-	    timer2 = new javax.swing.Timer(timerTimeInMilliSeconds-10, new ActionListener(){
+	    timer2 = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 		updateMap2();
 			}
