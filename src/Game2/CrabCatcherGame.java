@@ -205,7 +205,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 		while (it.hasNext()){
 			//tick all animals
 			Animal current = it.next();
-			current.onTick(this);
+			current.onTick(this); 
+			//current.move(this);
 			updatePanel();
 			//remove expired animals
 			if (current.getTimeLeftOnScreen() <= 0){
