@@ -1,4 +1,5 @@
 package Game3;
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -17,6 +18,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -24,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JProgressBar;
 
 import OverallGame.OverallGame;
 
@@ -58,8 +61,12 @@ public class Game3 implements java.io.Serializable{
 	private Timer timer;
 	private static Image background;
 	private JPopupMenu menu;
+	private JProgressBar timeBar;
+	private ArrayList<JLabel> coins;
+	private JLabel	totalCoin = null;
 	JMenuItem grass = new JMenuItem("Grass");
 	JMenuItem mangrove = new JMenuItem("Mangrove");
+	
 	
 	
 	/**
@@ -71,7 +78,7 @@ public class Game3 implements java.io.Serializable{
 	public Game3(OverallGame bigGame) {
 		this.time	=	50.0	;
 		this.score	=	0	;
-		this.money	=	100	;
+		this.money	=	1100	;
 		this.plants	=		new ArrayList<Plant>();
 		this.enemies	=	new ArrayList<Runoff>();
 		this.mussels	=	new ArrayList<Mussel>();
@@ -93,6 +100,8 @@ public class Game3 implements java.io.Serializable{
 		menu.add(grass);
 		menu.add(mangrove);
 		this.background = null;
+		this.coins = new ArrayList<JLabel>();
+		addMoney(0);
 		try {
 			this.background = ImageIO.read(new File("images/game3Background.png")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
 		} catch(IOException e) {
@@ -143,13 +152,23 @@ public class Game3 implements java.io.Serializable{
 				endGame();
 			}});
 		
-		gamePanel.add(Button);
 		
+		
+		gamePanel.add(Button);
 		timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
 		timeAndScore.setBounds(0,0,frame.getWidth(),30);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
 		gamePanel.add(timeAndScore);
 		final int timerInterval = 100;
+		
+		//time bar
+				timeBar = new JProgressBar(0, (int)(time*100));
+				timeBar.setValue((int)(time*100));
+				timeBar.setString("TIME");
+				timeBar.setStringPainted(true);
+				timeBar.setBounds(0, 30, bigGame.frameWidth/4, bigGame.frameHeight/20);
+				gamePanel.add(timeBar);
+		
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		setTime(getTime() - (double)(timerInterval)/1000);
@@ -158,6 +177,8 @@ public class Game3 implements java.io.Serializable{
 	    		setTickCount((getTickCount()+1)%500);
 			}
 	    });
+		
+		
 		gameFrame.setContentPane(gamePanel);
 		addRunoff();
 	}
@@ -167,6 +188,7 @@ public class Game3 implements java.io.Serializable{
 	 * This includes the time remaining, character actions and movement, and updating the score and money
 	 */
 	public void update() {
+		
 		if (getTime() % 10 < 0.1) {
 			addScore(10);
 		}
@@ -174,10 +196,11 @@ public class Game3 implements java.io.Serializable{
 			current.grow();
 		}
 		if (getTickCount() % 10 == 0) {
-			timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
+			timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "  Money:");
 			
 			
 		}
+		if (timeBar != null){timeBar.setValue((int) ((this.time*100) - this.tickCount));}
 		if (getTickCount() % 6 == 0) {
 			Random rand = new Random();
 			if (rand.nextInt(10) > 8) {
@@ -204,6 +227,9 @@ public class Game3 implements java.io.Serializable{
 	 * @param e - The location and nature of the user's click
 	 */
 	public void onClick(MouseEvent e) {
+		if (timer.isRunning() == false) {
+			timer.start();
+		}
 		int xLoc = e.getX();
 		int yLoc = e.getY();
 		System.out.println("xLocation: " + xLoc + "  yLocation: " + yLoc);
@@ -231,26 +257,34 @@ public class Game3 implements java.io.Serializable{
 			menu.show(e.getComponent(), xLoc, yLoc);
 			grass.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					if(getMoney()>=100){
-						addMoney(-100);
-						addPlant(row,col,"Grass");
-						timer.start();}
-					else{ timer.start();}
+					if(getTiles().get(7*row+col)instanceof Plant){
+						grass.removeActionListener(this);
+					}
+					else {
+						if(getMoney()>=100){
+							addMoney(-100);
+							addPlant(row,col,"Grass");
+							timer.start();}
+						else{ timer.start();}
+					}
 				}
 			});
 			mangrove.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					if(getMoney()>=100){
-						addMoney(-100);
-						addPlant(row,col,"Mangrove");
-						timer.start();}
-					else{ timer.start();}
-					
+					if (getTiles().get(7*row+col)instanceof Plant) {
+						mangrove.removeActionListener(this);
+					}
+					else {
+						if(getMoney()>=100){
+							addMoney(-100);
+							addPlant(row,col,"Mangrove");
+							timer.start();}
+						else{ timer.start();}
+					}
 				}
 			});
 			
 		}
-		
  	}
 	
 	/**
@@ -386,7 +420,54 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void addMoney(int amount) {
 		this.money += amount;
-		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
+		if (getMoney() <= 1000) {
+			totalCoin = null;
+			while (getMoney() / 100 > coins.size()) {
+				ImageIcon imi = new ImageIcon("images/coin.png");
+				JLabel jl = new JLabel(imi);
+				coins.add(jl);
+				jl.setBounds(xOffset+(coins.indexOf(jl))*scalor/3, 0, scalor/3, scalor/3);
+				gamePanel.add(jl);
+			}
+			while (getMoney() / 100 < coins.size() && coins.size() != 0) {
+				gamePanel.remove(coins.get(coins.size()-1));
+				coins.remove(coins.size() - 1);
+			}
+		}
+		else if (coins.size() == 10){
+			System.out.println("poo");
+			if (coins.size() != 0) {
+				for (JLabel current : coins) {
+					gamePanel.remove(current);
+					current.setVisible(false);
+				}
+				coins.removeAll(coins);
+			}
+			ImageIcon imi = new ImageIcon("images/coin.png");
+			JLabel jl = new JLabel(imi);
+			coins.add(jl);
+			jl.setBounds(xOffset+(coins.indexOf(jl))*scalor/3, 0, scalor/3, scalor/3);
+			gamePanel.add(jl);
+			totalCoin = new JLabel(" X" + getMoney()/100);
+			totalCoin.setBounds(((xOffset+scalor/3)+scalor/3),0,scalor/3,scalor/3);
+			totalCoin.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,14));
+			gamePanel.add(totalCoin);
+			
+		}
+		else {
+			if (totalCoin == null) {
+				System.out.println("r");
+				ImageIcon imi = new ImageIcon("images/coin.png");
+				JLabel jl = new JLabel(imi);
+				coins.add(jl);
+				jl.setBounds(xOffset+(coins.indexOf(jl))*scalor/3, 0, scalor/3, scalor/3);
+				gamePanel.add(jl);
+				
+			}
+			else {
+				totalCoin.setText(" X" + getMoney()/100);
+			}
+		}
 	}
 	
 	/**
