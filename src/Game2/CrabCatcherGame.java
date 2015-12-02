@@ -68,6 +68,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private Image mittencrabImage;
 	private Image fishImage;
 	private Image backgroundImage;
+	private Image netImage;
 	private static int mittencrabScoreEffect = 6;
 	private static int crabScoreEffect = -5;
 	private static int fishScoreEffect = -3;
@@ -170,6 +171,11 @@ public class CrabCatcherGame implements java.io.Serializable{
 		if (filename.equals("ocean_background.jpg")){
 			image = image.getScaledInstance(bigGame.frameWidth, bigGame.frameHeight, 0);
 		}
+		else if (filename.equals("net.png")){
+			int height = (int)(bigGame.frameHeight/3.6 + 10);
+			int width = (int) (height*1.25);
+			image = image.getScaledInstance(width, height, 0);
+		}
 		else{
 			//need to customize animal sizes
 			int height = (int)(bigGame.frameHeight/3.6);
@@ -184,6 +190,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 		fishImage = loadImage("fish.png");
 		crabImage = loadImage("crab.png");
 		backgroundImage = loadImage("ocean_background.jpg");
+		netImage = loadImage("net.png");
 		
 	}
 	
@@ -276,7 +283,13 @@ public class CrabCatcherGame implements java.io.Serializable{
 					Animal animal = animals.get(i);
 					if (animal.isVisible()){
 						g.drawImage(getAnimalImage(animal.getTypeOfAnimal()), animal.getXloc(), animal.getYloc(), null);
+						//if caught, draw net on top
+						if (animal.isCaught()){
+							g.drawImage(netImage, animal.getXloc(), animal.getYloc(), null);
+							reAddAnimal(animal);
+						}
 					}
+					
 				}	
 			}
 		};
@@ -455,21 +468,29 @@ public class CrabCatcherGame implements java.io.Serializable{
 		if (animal != null && animal.isVisible()){
 			//hide animal and add animal's scoreEffect to game score (not going below 0)
 			System.out.println("!!!you clicked on a " + animal.getTypeOfAnimal());
-			animal.setVisible(false);
+			animal.setCaught(true);
 			updateScore(animal.getScoreEffect());
 			updatePanel(); //repaint the frame and display score change
-			System.out.println("--> score changed by " + animal.getScoreEffect());
-			animals.remove(animal);
-			animal.regenerateAnimal(bigGame.frameWidth, bigGame.frameHeight); //regenerate as a new random animal
-			animals.add(setUniqueLocAnimal(animal));
-			
+			System.out.println("--> score changed by " + animal.getScoreEffect());	
 			}
+		
 		else{
 			System.out.println(".......you missed!");
 			System.out.println(animals);
 			System.out.println("click was at ("+ event.getX() + ", " + event.getY()+ ")");
 		}
 		
+	}
+	
+	/**removes animal from list and re-adds it in a new location
+	 * @param animal
+	 */
+	public void reAddAnimal(Animal animal){
+		animal.setVisible(false);
+		animals.remove(animal);
+		animal.regenerateAnimal(bigGame.frameWidth, bigGame.frameHeight); //regenerate as a new random animal
+		animal.setCaught(false);
+		animals.add(setUniqueLocAnimal(animal));
 	}
 	
 	/*public void makeOrRegenAnimal(Animal a){

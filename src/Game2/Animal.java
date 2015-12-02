@@ -31,7 +31,7 @@ public class Animal implements java.io.Serializable {
 	private Image image; //image of animal
 	private int imageWidth = 250;
 	private int imageHeight = 200;
-	private boolean expired;
+	private boolean caught = false;
 		
 	/**All-parameter constructor. Not used publicly.
 	 * @param xloc
@@ -82,7 +82,7 @@ public class Animal implements java.io.Serializable {
 		this.displayDuration = displayDuration;
 		this.timeLeftOnScreen = displayDuration;
 		this.visible = visible;
-		this.expired = false;
+		this.caught = false;
 	}
 	
 	//COPIER
@@ -271,12 +271,12 @@ public class Animal implements java.io.Serializable {
 		this.imageHeight = imageHeight;
 	}
 
-	public boolean isExpired() {
-		return expired;
+	public boolean isCaught() {
+		return caught;
 	}
 
-	public void setExpired(boolean expired) {
-		this.expired = expired;
+	public void setCaught(boolean caught) {
+		this.caught = caught;
 	}
 	
 
