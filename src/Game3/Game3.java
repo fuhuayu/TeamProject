@@ -78,7 +78,7 @@ public class Game3 implements java.io.Serializable{
 	public Game3(OverallGame bigGame) {
 		this.time	=	50.0	;
 		this.score	=	0	;
-		this.money	=	1100	;
+		this.money	=	900	;
 		this.plants	=		new ArrayList<Plant>();
 		this.enemies	=	new ArrayList<Runoff>();
 		this.mussels	=	new ArrayList<Mussel>();
@@ -196,7 +196,7 @@ public class Game3 implements java.io.Serializable{
 			current.grow();
 		}
 		if (getTickCount() % 10 == 0) {
-			timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "  Money:");
+			timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "   Money:");
 			
 			
 		}
@@ -421,7 +421,10 @@ public class Game3 implements java.io.Serializable{
 	public void addMoney(int amount) {
 		this.money += amount;
 		if (getMoney() <= 1000) {
-			totalCoin = null;
+			if(totalCoin != null) {
+				totalCoin.setVisible(false);
+				totalCoin = null;
+			}
 			while (getMoney() / 100 > coins.size()) {
 				ImageIcon imi = new ImageIcon("images/coin.png");
 				JLabel jl = new JLabel(imi);
@@ -488,7 +491,7 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void addScore(int score) {
 		this.score += score;
-		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
+		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:");
 	}
 	
 	/**
