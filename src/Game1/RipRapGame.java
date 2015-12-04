@@ -136,7 +136,7 @@ public class RipRapGame implements java.io.Serializable{
 			cloud.addItem(panel, "images/cloud"+i+".png");
 			objects.add(cloud);
 		}
-		Sun sun=new Sun(150);
+		Sun sun=new Sun(200);
 		sun.addItem(panel);
 		objects.add(sun);
 		return true;
@@ -196,6 +196,7 @@ public class RipRapGame implements java.io.Serializable{
 	    		updatePanel();
 	    		jumpingBar.update(panel);
 	    		updateMap();
+	    		updateMap2();
 //	    		timer.setDelay(1);
 //	    		updateMap2();
 //	    		timer.setDelay(20);
@@ -204,16 +205,6 @@ public class RipRapGame implements java.io.Serializable{
 	    		}		
 			}
 	    });
-	    timer2 = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
-	    	public void actionPerformed(ActionEvent e) {
-		updateMap2();
-			}
-	    });
-//	    if(){
-//	    	Random randomGenerator = new Random();
-//	          int randomInt = randomGenerator.nextInt(15);
-//	    	timer2.setDelay(randomInt+5);
-//	    }
 
 		return true;
 	}
@@ -264,7 +255,6 @@ public class RipRapGame implements java.io.Serializable{
 		frame.setContentPane(this.panel);
 		firstRunPanel();
 		timer.start();
-		timer2.start();
 		
 	}
 	/**
