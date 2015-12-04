@@ -24,7 +24,7 @@ public class Tile {
 		this.col = col;
 		this.image = null;
 		try {
-			this.image = ImageIO.read(new File("images/noPlant.png")).getScaledInstance(Game3.scalor, Game3.scalor, 1);
+			this.image = ImageIO.read(new File("images/sand.png")).getScaledInstance(Game3.scalor, Game3.scalor, 1);
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}

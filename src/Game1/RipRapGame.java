@@ -99,7 +99,7 @@ public class RipRapGame implements java.io.Serializable{
 	 * @param bigGame the overall lGame that consist of this game
 	 */
 	public RipRapGame(int time,OverallGame bigGame,JFrame frame) {
-		this.time = time;
+		this.time = time+10;
 		this.bigGame = bigGame;
 		this.starttime=System.currentTimeMillis();
 		this.frame=frame;
@@ -125,7 +125,7 @@ public class RipRapGame implements java.io.Serializable{
 	 * initialize the game with RipRap wall and obstacles randomly displaced
 	 */
 	public boolean initGame(){
-		stone=new Stone(this.panel.getWidth(),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
+		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
 		objects2.add(stone);
 		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
@@ -136,7 +136,7 @@ public class RipRapGame implements java.io.Serializable{
 			cloud.addItem(panel, "images/cloud"+i+".png");
 			objects.add(cloud);
 		}
-		Sun sun=new Sun(150);
+		Sun sun=new Sun(200);
 		sun.addItem(panel);
 		objects.add(sun);
 		return true;
@@ -155,13 +155,13 @@ public class RipRapGame implements java.io.Serializable{
 	                AffineTransform at = new AffineTransform();
 
 	                // 4. translate it to the center of the component
-	                at.translate(getWidth()-500, getHeight()+160);
+	                at.translate(getWidth()/2, getHeight()*1.14);
 
 	                // 3. do the actual rotation
-	                at.rotate(Math.PI/-30);
+	                at.rotate(Math.PI/-19);
 
 	                // 2. just a scale because this image is big
-	                at.scale(1, 1);
+	                at.scale(1.2, 1.2);
 
 	                // 1. translate the object so that you rotate it around the 
 	                //    center (easier :))
@@ -196,6 +196,7 @@ public class RipRapGame implements java.io.Serializable{
 	    		updatePanel();
 	    		jumpingBar.update(panel);
 	    		updateMap();
+	    		updateMap2();
 //	    		timer.setDelay(1);
 //	    		updateMap2();
 //	    		timer.setDelay(20);
@@ -204,16 +205,6 @@ public class RipRapGame implements java.io.Serializable{
 	    		}		
 			}
 	    });
-	    timer2 = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
-	    	public void actionPerformed(ActionEvent e) {
-		updateMap2();
-			}
-	    });
-//	    if(){
-//	    	Random randomGenerator = new Random();
-//	          int randomInt = randomGenerator.nextInt(15);
-//	    	timer2.setDelay(randomInt+5);
-//	    }
 
 		return true;
 	}
@@ -264,7 +255,6 @@ public class RipRapGame implements java.io.Serializable{
 		frame.setContentPane(this.panel);
 		firstRunPanel();
 		timer.start();
-		timer2.start();
 		
 	}
 	/**

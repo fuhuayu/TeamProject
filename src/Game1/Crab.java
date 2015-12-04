@@ -7,8 +7,7 @@ package Game1;
  */
 public class Crab extends MovingObject {
 	int mode;
-	int speed;
-	int height,currheight;
+	float currheight,speed;
 	
 	/**
 	 * Constructor of crab with x and y coordinate and size
@@ -19,7 +18,6 @@ public class Crab extends MovingObject {
 		// TODO Auto-generated constructor stub
 		this.mode=1;
 		this.speed=0;
-		this.height=200;
 		this.currheight=0;
 	}
 	/**
@@ -34,9 +32,6 @@ public class Crab extends MovingObject {
 	/**
 	 * Getter and Setter for speed
 	 */
-	public int getSpeed() {
-		return speed;
-	}
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
@@ -44,27 +39,22 @@ public class Crab extends MovingObject {
 	 * @see Game2.MovingObject#update()
 	 */
 	public void clicked(int i){
-		if(i==1)speed=-9;
+		if(i==1)speed=-15;
 		
 	}
 	public void update(){
-		if(speed!=0){
-			if(speed<0){
-				if(currheight+speed<height*-1){
-					speed*=-1;
-				}
-				currheight+=speed;
-			}
-			else{
-				if(currheight==0){
-					speed=0;
-				}
-				currheight+=speed;
-			}
+		if(speed!=0||currheight!=0){
+			currheight+=speed;
+			speed+=0.4;
+		}
+		if(currheight>0){
+			speed=0;
+			currheight=0;
 		}
 		
 		
-		this.getLabel().setBounds(this.getPosition().x, this.getPosition().y+currheight, 
+		
+		this.getLabel().setBounds(this.getPosition().x, this.getPosition().y+(int)currheight, 
 				this.getLabel().getWidth(), this.getLabel().getHeight());
 		
 	}
