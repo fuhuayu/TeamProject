@@ -3,6 +3,7 @@ package OverallGame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,6 +13,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Game2.CrabCatcherGame;
 import Game1.RipRapGame;
@@ -119,6 +123,55 @@ public class OverallGame implements Serializable{
 			}
 	    }
 		
+	}
+	
+	public void updateHighScores() {
+		String[] lines = getHighscores().split("\n");
+		boolean newScore = false ;
+		int insertLoc = 11 ;
+		for (int i = 0 ; i < lines.length ; i++) {
+			int score = Integer.parseInt(lines[i].split("\t")[1]);
+			if (getOverallScore() > score) {
+				insertLoc = i;
+				i = lines.length ;
+				newScore = true ;
+			}
+		}
+		if (newScore) {
+			JFrame frame	= getGameWindow().getFrame();
+			String name		= JOptionPane.showInputDialog(frame, "You Got a High Score", "Type Your Name Here!");
+			String hsLine	= name + ":\t" + getOverallScore() + "\n";
+			String swapLine	=	"";
+			for (int i = 0 ; i < lines.length ; i++) {
+				if (i == insertLoc) {
+					swapLine	=	lines[i];
+					lines[i]	=	hsLine;
+				}
+				if (swapLine != "") {
+					hsLine		=	lines[i];
+					lines[i]	=	swapLine;
+					swapLine	=	hsLine;
+				}
+			}
+			File scores	=	new File("highScores.txt");
+			FileOutputStream scoreOP	=	null;
+			try {
+				scoreOP	=	new FileOutputStream(scores, false);
+			}
+			catch (FileNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
+			try {
+				for (int i = 0 ; i < lines.length ; i++) {
+					scoreOP.write(lines[i].getBytes());
+				}
+				scoreOP.close();
+			}
+			catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+			initializeHighscores() ;
+		}
 	}
 
 	/**

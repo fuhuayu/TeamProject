@@ -1,6 +1,6 @@
 	High Scores!
 Brendan:	42069
-Danielle:	1337
 David:		666
 Zhanglong:	333
 Howard:		69
+Danielle:	0
