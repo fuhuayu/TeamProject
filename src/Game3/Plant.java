@@ -59,7 +59,7 @@ public class Plant extends Tile implements Serializable{
 			loadImage("Grass.png");
 		}
 		else {
-			loadImage("mangrove.jpg");
+			loadImage("mangrove.png");
 		}
 	}
 	

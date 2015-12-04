@@ -1,5 +1,6 @@
 package Game3;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -64,8 +65,8 @@ public class Game3 implements java.io.Serializable{
 	private JProgressBar timeBar;
 	private ArrayList<JLabel> coins;
 	private JLabel	totalCoin = null;
-	JMenuItem grass = new JMenuItem("Grass");
-	JMenuItem mangrove = new JMenuItem("Mangrove");
+	JMenuItem grass = new JMenuItem(new ImageIcon("images/GrassIcon.png"));
+	JMenuItem mangrove = new JMenuItem(new ImageIcon("images/mangroveIcon.png"));
 	
 	
 	
@@ -155,7 +156,7 @@ public class Game3 implements java.io.Serializable{
 		
 		
 		gamePanel.add(Button);
-		timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:"+getMoney());
+		timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore());
 		timeAndScore.setBounds(0,0,frame.getWidth(),30);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
 		gamePanel.add(timeAndScore);
@@ -196,7 +197,7 @@ public class Game3 implements java.io.Serializable{
 			current.grow();
 		}
 		if (getTickCount() % 10 == 0) {
-			timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "   Money:");
+			timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
 			
 			
 		}
@@ -275,8 +276,8 @@ public class Game3 implements java.io.Serializable{
 						mangrove.removeActionListener(this);
 					}
 					else {
-						if(getMoney()>=100){
-							addMoney(-100);
+						if(getMoney()>=200){
+							addMoney(-200);
 							addPlant(row,col,"Mangrove");
 							timer.start();}
 						else{ timer.start();}
@@ -284,8 +285,7 @@ public class Game3 implements java.io.Serializable{
 				}
 			});
 			
-		}
- 	}
+		}}
 	
 	/**
 	 * Adds a plant to the current game from a player choice in a menu screen
@@ -438,7 +438,6 @@ public class Game3 implements java.io.Serializable{
 			}
 		}
 		else if (coins.size() == 10){
-			System.out.println("poo");
 			if (coins.size() != 0) {
 				for (JLabel current : coins) {
 					gamePanel.remove(current);
@@ -459,7 +458,6 @@ public class Game3 implements java.io.Serializable{
 		}
 		else {
 			if (totalCoin == null) {
-				System.out.println("r");
 				ImageIcon imi = new ImageIcon("images/coin.png");
 				JLabel jl = new JLabel(imi);
 				coins.add(jl);
@@ -491,7 +489,7 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void addScore(int score) {
 		this.score += score;
-		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore() + "    Money:");
+		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
 	}
 	
 	/**
