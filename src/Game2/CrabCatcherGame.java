@@ -69,9 +69,9 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private Image fishImage;
 	private Image backgroundImage;
 	private Image netImage;
-	private static int mittencrabScoreEffect = 6;
-	private static int crabScoreEffect = -5;
-	private static int fishScoreEffect = -3;
+	private static int mittencrabScoreEffect = 100;
+	private static int crabScoreEffect = -75;
+	private static int fishScoreEffect = -50;
 	private JProgressBar timeBar;
 	private ArrayList<JButton> livesArray = new ArrayList<JButton>(lives);
 
@@ -333,7 +333,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	    		time += timerTimeInMilliSeconds;
 	    		updateGame();
 	    		updatePanel();
-	    		System.out.println("time: " + time);
+	    		//System.out.println("time: " + time);
 	    		//System.out.println("YOU'RE PLAYING CRAB CATCHER!!!");
 	    		
 	    		
@@ -411,11 +411,13 @@ public class CrabCatcherGame implements java.io.Serializable{
 			}
 		
 		//keeps animals in frame
-		int xloc = r.nextInt(bigGame.frameWidth - img.getWidth(null));
-		int yloc = r.nextInt(bigGame.frameHeight - img.getHeight(null));
+		//int xloc = r.nextInt(bigGame.frameWidth - img.getWidth(null));
+		//int yloc = r.nextInt(bigGame.frameHeight - img.getHeight(null));
 		
-		Animal animal = new Animal(xloc, yloc, type, effect, duration, visible);
+		Animal animal = new Animal(0, 0, type, effect, duration, visible);
 		animal.setImage(img); //note: also sets image height and width
+		animal.setRandomXDir();
+		setOffScreenLoc(animal);
 		return animal;
 	}
 	
@@ -469,10 +471,20 @@ public class CrabCatcherGame implements java.io.Serializable{
 	
 	
 	////////////////////////////////////////////////////////////////////
+	/**Sets the animal beyond the left or right border according to its xdir
+	 * @param newAnimal
+	 * @return
+	 */
 	public Animal setOffScreenLoc(Animal newAnimal){
 		Random r = new Random();
+		//default = moving right, put on left border
 		int xloc = 0 - newAnimal.imageWidth;
 		int yloc = r.nextInt(bigGame.frameHeight);
+		
+		//if moving left, put on right border
+		if (newAnimal.getXdir() == -1){
+			xloc = bigGame.frameWidth;
+		}
 		
 		newAnimal.setXloc(xloc);
 		newAnimal.setYloc(yloc);
@@ -513,20 +525,12 @@ public class CrabCatcherGame implements java.io.Serializable{
 		animals.remove(animal);
 		animal.regenerateAnimal(bigGame.frameWidth, bigGame.frameHeight); //regenerate as a new random animal
 		animal.setCaught(false);
-		//animals.add(setUniqueLocAnimal(animal));
 		animal.setOffScreen(false);
-		animals.add(setOffScreenLoc(animal));
+		animal.setRandomXDir();
+		animal = setOffScreenLoc(animal);
+		animals.add(animal);
 	}
 	
-	/*public void makeOrRegenAnimal(Animal a){
-		if (animals.remove(a)){
-			Animal b = makeRandomAnimal();
-			boolean added = false;
-			while(!added){
-				added = animals.add(b);
-			}
-		}
-	}*/
 	
 	/**Method for testing click events
 	 * @param x

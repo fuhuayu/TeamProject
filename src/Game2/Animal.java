@@ -33,7 +33,7 @@ public class Animal implements java.io.Serializable {
 	protected int imageHeight = 200;
 	protected boolean caught = false;
 	private boolean offScreen = false;
-	private int xdir;
+	private int xdir = 1;
 	private int ydir;
 	private int step;
 		
@@ -112,7 +112,7 @@ public class Animal implements java.io.Serializable {
 		//USE SCREEN WIDTH
 		xloc = r.nextInt(xbound - this.imageWidth);
 		yloc = r.nextInt(ybound);
-		visible = r.nextBoolean();
+		visible = true;
 		//reset timeLeftOnScreen to display duration
 		timeLeftOnScreen = displayDuration;
 	}
@@ -168,16 +168,10 @@ public class Animal implements java.io.Serializable {
 	}
 	
 	public void move(CrabCatcherGame game){
-		//just move to the right for now
-		xdir = 1;
 		ydir = 0;
 		step = 10;
 		xloc += xdir*step;
 		yloc += ydir*step;
-		//if offscreen, regenerate
-		//if (xloc > game.getBigGame().frameWidth + this.imageWidth){
-		//	this.regenerateAnimal(game.getBigGame().frameWidth, game.getBigGame().frameHeight);
-		//}
 	}
 	
 	/**returns true if the Animal is off screen (accounting for imageWidth)
@@ -192,23 +186,6 @@ public class Animal implements java.io.Serializable {
 	}
 
 	
-	
-	
-	
-	
-	/*public void setAnimalImages(){
-		BufferedImage crab = loadImage("crab.png");
-		BufferedImage mittencrab = loadImage("mittencrab.png");
-		BufferedImage fish = loadImage("fish.png");
-		
-		crab = (BufferedImage)image.getScaledInstance(imageWidth/2, imageHeight/2, 0);
-		mittencrab = (BufferedImage)image.getScaledInstance(imageWidth/2, imageHeight/2, 0);
-		fish = (BufferedImage)image.getScaledInstance(imageWidth/2, imageHeight/2, 0);		
-	}*/
-	
-	/*public String toString(){
-		return (typeOfAnimal + " " + timeLeftOnScreen);
-	}*/
 
 	
 	//GETTERS & SETTERS
@@ -223,6 +200,20 @@ public class Animal implements java.io.Serializable {
 				+ visible + "]";
 	}
 
+	/**
+	 * sets xdir to 1 or -1 randomly
+	 */
+	public void setRandomXDir(){
+		Random r = new Random();
+		boolean left = r.nextBoolean();
+		if(left){
+			setXdir(1);
+		}
+		else{
+			setXdir(-1);
+		}
+	}
+	
 	public void setXloc(int xloc) {
 		this.xloc = xloc;
 	}
@@ -323,6 +314,14 @@ public class Animal implements java.io.Serializable {
 
 	public void setOffScreen(boolean offScreen) {
 		this.offScreen = offScreen;
+	}
+
+	public int getXdir() {
+		return xdir;
+	}
+
+	public void setXdir(int xdir) {
+		this.xdir = xdir;
 	}
 	
 
