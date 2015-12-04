@@ -76,6 +76,52 @@ public class AnimalTest {
 		
 	}
 	
+	
+	@Test
+	public void offScreenDetectionTest(){
+		Animal mittencrab = new MovingAnimal(100, 10, "mittencrab", -3, 10, true);
+		mittencrab.setImageHeight(200);
+		mittencrab.setImageWidth(250);
+		
+		//crab still on 200x200 screen, but off 100x100 screen
+		assertFalse(mittencrab.offScreen(200, 200));
+		assertTrue(mittencrab.offScreen(100, 100));
+		
+		//0,0
+		mittencrab.setXloc(0);
+		mittencrab.setYloc(0);
+		assertFalse("0,0 is still on screen", mittencrab.offScreen(200, 200));
+		
+		//-5,0
+		mittencrab.setXloc(-5);
+		assertFalse("-5,0 is still partly on screen", mittencrab.offScreen(200, 200));
+		
+		//195,0
+		mittencrab.setXloc(195);
+		assertFalse("195,0 is still partly on screen", mittencrab.offScreen(200, 200));
+		
+		//195, 195
+		mittencrab.setYloc(195);
+		assertFalse("195,195 is still partly on screen", mittencrab.offScreen(200, 200));
+		
+		//left bound
+		mittencrab.setXloc(-250);
+		assertTrue(mittencrab.offScreen(200, 200));
+		
+		//right bound
+		mittencrab.setXloc(200);
+		assertTrue(mittencrab.offScreen(200, 200));
+		
+		//upper bound
+		mittencrab.setYloc(-200);
+		assertTrue(mittencrab.offScreen(200, 200));
+		
+		//lower bound
+		mittencrab.setYloc(200);
+		assertTrue(mittencrab.offScreen(200, 200));
+		
+	}
+	
 	@Test
 	public void regenerateTest(){
 		int oldx = crab.getXloc();

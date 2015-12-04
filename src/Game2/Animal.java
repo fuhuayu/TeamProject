@@ -20,18 +20,22 @@ public class Animal implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 201L;
 	//FIELDS
-	private int xloc;
-	private int yloc;
-	private String typeOfAnimal; //for now, "crab", "mittencrab", or "fish"
-	public int scoreEffect;
-	private double displayDuration; //length of time the animal should stay on screen (constant)
-	private double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
-	private boolean visible;
-	private JLabel label; //temporary probably
-	private Image image; //image of animal
-	private int imageWidth = 250;
-	private int imageHeight = 200;
-	private boolean caught = false;
+	protected int xloc;
+	protected int yloc;
+	protected String typeOfAnimal; //for now, "crab", "mittencrab", or "fish"
+	protected int scoreEffect;
+	protected double displayDuration; //length of time the animal should stay on screen (constant)
+	protected double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
+	protected boolean visible;
+	protected JLabel label; //temporary probably
+	protected Image image; //image of animal
+	protected int imageWidth = 250;
+	protected int imageHeight = 200;
+	protected boolean caught = false;
+	private boolean offScreen = false;
+	private int xdir;
+	private int ydir;
+	private int step;
 		
 	/**All-parameter constructor. Not used publicly.
 	 * @param xloc
@@ -132,7 +136,7 @@ public class Animal implements java.io.Serializable {
 	/**
 	 * updates animal's timed elements - decreases timeLeftOnScreen
 	 */
-	public void onTick(CrabCatcherGame game){
+	public void ORIGINALonTick(CrabCatcherGame game){
 		//decrease animal's timer; if timer is 0, regenerate animal
 		if (timeLeftOnScreen <= 0){
 			//game.getAnimals().remove(this);
@@ -156,6 +160,40 @@ public class Animal implements java.io.Serializable {
 		}
 		else {timeLeftOnScreen--;}
 	}
+	
+	//MOVING METHODS
+	public void onTick(CrabCatcherGame game){
+		this.move(game);
+		this.offScreen = offScreen(game.getBigGame().frameWidth, game.getBigGame().frameHeight);
+	}
+	
+	public void move(CrabCatcherGame game){
+		//just move to the right for now
+		xdir = 1;
+		ydir = 0;
+		step = 10;
+		xloc += xdir*step;
+		yloc += ydir*step;
+		//if offscreen, regenerate
+		//if (xloc > game.getBigGame().frameWidth + this.imageWidth){
+		//	this.regenerateAnimal(game.getBigGame().frameWidth, game.getBigGame().frameHeight);
+		//}
+	}
+	
+	/**returns true if the Animal is off screen (accounting for imageWidth)
+	 * @param frameWidth
+	 * @param frameHeight
+	 * @return
+	 */
+	public boolean offScreen(int frameWidth, int frameHeight){
+		 return (this.xloc + this.imageWidth <= 0 || this.xloc >= frameWidth
+				 || this.yloc >= frameHeight
+				 || this.yloc + this.imageHeight <= 0);
+	}
+
+	
+	
+	
 	
 	
 	/*public void setAnimalImages(){
@@ -277,6 +315,14 @@ public class Animal implements java.io.Serializable {
 
 	public void setCaught(boolean caught) {
 		this.caught = caught;
+	}
+
+	public boolean isOffScreen() {
+		return offScreen;
+	}
+
+	public void setOffScreen(boolean offScreen) {
+		this.offScreen = offScreen;
 	}
 	
 

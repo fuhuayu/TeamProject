@@ -133,6 +133,7 @@ public class CrabCatcherGameTest {
 		game1.generateAnimals();
 		for (int i=0; i < game1.getMaxAnimalsOnScreen(); i++){
 			assertTrue("generateAnimals: 3 animals should exist", !game1.getAnimals().isEmpty());
+			assertTrue(game1.getAnimals().get(i).getImageWidth() > 100);
 		}
 		
 	}
@@ -241,6 +242,14 @@ public class CrabCatcherGameTest {
 		System.out.println("489,250 clicked a " + game.getAnimalClicked(489, 250));
 		assertTrue(game.getAnimalClicked(489, 250).equals(problemCrab2));
 		System.out.println("problem crab2 was " + problemCrab2);
+		
+		Animal problemfish = new Animal(748, 306, "fish", -3, 10, true);
+		problemfish.setImageHeight(200);
+		problemfish.setImageWidth(250);
+		game.addAnimal(problemfish);
+		System.out.println("878, 454 clicked a " + game.getAnimalClicked(878, 454));
+		assertTrue(game.getAnimalClicked(878, 454).equals(problemfish));
+		System.out.println("problem fish was " + problemfish);
 	}
 	
 	
