@@ -6,6 +6,10 @@ package Game1;
  * Subclass of MovingObect, Stone in the game
  */
 public class Stone extends MovingObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 106L;
 	int mode;
 	int speed,acc;
 	int bx,by;

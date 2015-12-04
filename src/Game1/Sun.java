@@ -16,6 +16,10 @@ import javax.swing.JPanel;
  * Subclass of MovingObect, Sun in the game
  */
 public class Sun extends MovingObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 107L;
 	JLabel sun;
 	Point point;
 	Double angle;

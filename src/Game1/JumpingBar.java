@@ -17,6 +17,10 @@ import javax.swing.JPanel;
  * Jumping Bar in the game for player to click and to make the crab move.
  */
 public class JumpingBar implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 103L;
 	int currentValue,stop1,stop2;
 	int speed;
 	int barloc;
@@ -129,7 +133,8 @@ public class JumpingBar implements Serializable{
 			this.game.score-=100;
 			this.game.crab.clicked(0);
 			}
-			
+			this.barloc=Math.abs(distance);
+			if(this.barloc>100)this.barloc=100;
 		}
 		
 		else if(distance>100){

@@ -77,7 +77,7 @@ public class Game3 implements java.io.Serializable{
 	 * @param bigGame - The handler for the entire game
 	 */
 	public Game3(OverallGame bigGame) {
-		this.time	=	50.0	;
+		this.time	=	1.0	;
 		this.score	=	0	;
 		this.money	=	900	;
 		this.plants	=		new ArrayList<Plant>();
@@ -479,6 +479,8 @@ public class Game3 implements java.io.Serializable{
 		getBigGame().setOverallScore(getBigGame().getOverallScore() + getScore());
 		getBigGame().setGamesRunning(0);
 		timer.stop();
+		getBigGame().getGameWindow().getCurrentScore().setText("Overall Score: " + bigGame.getOverallScore());
+		getBigGame().updateHighScores();
 		gameFrame.setContentPane(bigGamePanel);
 		gameFrame.setVisible(true);
 	}

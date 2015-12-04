@@ -42,6 +42,10 @@ import java.util.Random;
 public class RipRapGame implements java.io.Serializable{
 	 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 105L;
 	Sun sun;
 	private OverallGame bigGame;
 	ArrayList<Stone> stones;
@@ -128,8 +132,8 @@ public class RipRapGame implements java.io.Serializable{
 		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
 		objects2.add(stone);
-		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
-		crab.addItem(panel, "images/crab.png");
+		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/8);
+		crab.addItem(panel, "images/crab1.png");
 		objects.add(crab);
 		for(int i=1;i<4;i++){
 			Cloud cloud = new Cloud(this.panel.getWidth()/10,this.panel.getWidth(),(int)(this.panel.getHeight()*0.2));
