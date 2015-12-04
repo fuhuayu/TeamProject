@@ -17,6 +17,10 @@ import javax.swing.JPanel;
  * Jumping Bar in the game for player to click and to make the crab move.
  */
 public class JumpingBar implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 103L;
 	int currentValue,stop1,stop2;
 	int speed;
 	int barloc;

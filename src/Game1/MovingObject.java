@@ -17,9 +17,13 @@ import javax.swing.JPanel;
  * Class of all moving object;
  */
 public class MovingObject implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 104L;
 private Point position;
 private int size,w,h;
-private JLabel label;
+protected JLabel label;
 
 /**Constructor
  * @param x Position in x

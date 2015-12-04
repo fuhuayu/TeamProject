@@ -17,6 +17,10 @@ import javax.swing.JPanel;
  * Subclass of MovingObect, Cloud in the game
  */
 public class Cloud extends MovingObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 101L;
 	int speed,bx,by;
 	public Cloud(int size, int bx,int by) {
 		super((int)(bx*Math.random()),(int)(by*Math.random()), size);
