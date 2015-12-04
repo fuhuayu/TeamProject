@@ -119,10 +119,11 @@ public class JumpingBar implements Serializable{
 		int w=(int)(0.5*p.getWidth()/16);
 		int h=(int)(0.5*p.getHeight()/9);
 		int pd=100;
-		int distance=(int) ((this.game.getCrab().getPosition().distance(this.game.stone.getPosition()))/4);
+		int distance=(int) ((this.game.stone.getPosition().getX()-this.game.getCrab().getPosition().getX())/5)
+				-this.game.stone.getSize()/4;
 		
 		pd=distance;
-		if(distance<=5){
+		if(distance<=0){
 			if(passed==false){
 			this.game.stone.kicked();
 			this.game.score-=100;
@@ -131,14 +132,13 @@ public class JumpingBar implements Serializable{
 			
 		}
 		
-		else if(distance>105){
+		else if(distance>100){
 			this.barloc=100;
 			passed=false;
 		}
 		else{
-			this.barloc=distance-5;
+			this.barloc=distance;
 		}
-		System.out.println(distance);
 		bar.setBounds(w,h+h*this.barloc/12-2,w,3);
 	}
 

@@ -125,7 +125,7 @@ public class RipRapGame implements java.io.Serializable{
 	 * initialize the game with RipRap wall and obstacles randomly displaced
 	 */
 	public boolean initGame(){
-		stone=new Stone(this.panel.getWidth(),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
+		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
 		objects2.add(stone);
 		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/15);
@@ -155,13 +155,13 @@ public class RipRapGame implements java.io.Serializable{
 	                AffineTransform at = new AffineTransform();
 
 	                // 4. translate it to the center of the component
-	                at.translate(getWidth()-500, getHeight()+160);
+	                at.translate(getWidth()/2, getHeight()*1.14);
 
 	                // 3. do the actual rotation
-	                at.rotate(Math.PI/-30);
+	                at.rotate(Math.PI/-19);
 
 	                // 2. just a scale because this image is big
-	                at.scale(1, 1);
+	                at.scale(1.2, 1.2);
 
 	                // 1. translate the object so that you rotate it around the 
 	                //    center (easier :))

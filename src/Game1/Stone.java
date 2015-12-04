@@ -7,8 +7,8 @@ package Game1;
  */
 public class Stone extends MovingObject {
 	int mode;
-	int speed;
-	int bx;
+	int speed,acc;
+	int bx,by;
 	int tick;
 	int orig_speed;
 	public Stone(int x, int y, int size) {
@@ -18,27 +18,27 @@ public class Stone extends MovingObject {
 		speed=-6;
 		orig_speed=-6;
 		bx=x;
+		by=y;
 		tick=0;
 	}
 	public void kicked(){
-		this.speed=15;
-		this.tick=30;
-		System.out.println("tick"+tick);
+		this.speed=orig_speed*-1*5;
+		this.acc=1*orig_speed/-6;
 	}
 	public void update(){
 		if(tick>0)tick-=1;
 		if(this.speed+this.getPosition().x<-this.getSize()/2){
-			this.getPosition().setLocation(bx+this.getSize()/2, this.getPosition().y);
+			this.getPosition().setLocation(bx+this.getSize()/2, by*0.6);
 			orig_speed-=1;
 		}
 		
 		else{
-			this.getPosition().setLocation(this.getPosition().x+speed,this.getPosition().y);
+			this.getPosition().setLocation(this.getPosition().x+speed,by*0.6+(by*0.4-this.getSize())*(bx-this.getPosition().x)/bx);
 		}
 		this.getLabel().setBounds(this.getPosition().x, this.getPosition().y, 
 				this.getLabel().getWidth(), this.getLabel().getHeight());
-		if(tick==0){
-			speed=orig_speed;
+		if(speed>orig_speed){
+			this.speed-=acc;
 		}
 		
 	}
