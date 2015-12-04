@@ -1,7 +1,10 @@
 package OverallGame;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -60,7 +64,7 @@ public class OverallGame implements Serializable{
 	 * @throws IOException 
 	 */
 	public OverallGame() {
-		this.overallScore = 0;
+		this.overallScore = 50;
 		this.gamesComplete = new boolean[3]; this.gamesComplete[0] = false ;
 		this.gamesComplete[1] = false ; this.gamesComplete[2] = false ;
 		this.gamesRunning = 0 ;
@@ -81,7 +85,6 @@ public class OverallGame implements Serializable{
 	public static void main(String [] args) throws IOException {
 		OverallGame testGame = new OverallGame() ;
 		testGame.setGameWindow(new gameWindow(testGame));
-		System.out.println(testGame);
 		//OverallGame.serialize(testGame, "testSerialize.ser");
 	}
 
@@ -128,9 +131,10 @@ public class OverallGame implements Serializable{
 	public void updateHighScores() {
 		String[] lines = getHighscores().split("\n");
 		boolean newScore = false ;
-		int insertLoc = 11 ;
+		int insertLoc = 6 ;
 		for (int i = 0 ; i < lines.length ; i++) {
 			int score = Integer.parseInt(lines[i].split("\t")[1]);
+			System.out.println(score);
 			if (getOverallScore() > score) {
 				insertLoc = i;
 				i = lines.length ;
@@ -143,15 +147,21 @@ public class OverallGame implements Serializable{
 			String hsLine	= name + ":\t" + getOverallScore() + "\n";
 			String swapLine	=	"";
 			for (int i = 0 ; i < lines.length ; i++) {
-				if (i == insertLoc) {
-					swapLine	=	lines[i];
-					lines[i]	=	hsLine;
-				}
+				lines[i] = lines[i] + "\n";
 				if (swapLine != "") {
 					hsLine		=	lines[i];
 					lines[i]	=	swapLine;
 					swapLine	=	hsLine;
 				}
+				if (i == insertLoc) {
+					swapLine	=	lines[i];
+					lines[i]	=	hsLine;
+				}
+				
+			}
+			String newScores	=	"";
+			for (int i = 0 ; i < lines.length ; i++) {
+				newScores = newScores+lines[i];
 			}
 			File scores	=	new File("highScores.txt");
 			FileOutputStream scoreOP	=	null;
@@ -170,7 +180,19 @@ public class OverallGame implements Serializable{
 			catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
-			initializeHighscores() ;
+			setHighscores(newScores);
+			JButton viewHighScores	=	new JButton("View High Scores");
+			viewHighScores.setBounds(0, 0, frame.getContentPane().getWidth()/3, 50);
+			viewHighScores.setFont(new Font("Serif", Font.PLAIN, 50));
+			frame.getContentPane().add(viewHighScores);
+			viewHighScores.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(null, getHighscores());
+				}
+			});
+			getGameWindow().getFrame().remove(getGameWindow().getViewHighScores());
+			getGameWindow().setViewHighScores(viewHighScores);
+			getGameWindow().getFrame().add(getGameWindow().getViewHighScores());
 		}
 	}
 

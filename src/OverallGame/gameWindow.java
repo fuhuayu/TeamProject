@@ -40,7 +40,8 @@ public class gameWindow implements Serializable{
 	private Image game1Button;
 	private Image game2Button;
 	private Image game3Button;
-
+	private JLabel currentScore;
+	private JButton viewHighScores;
 	/**
 	 * Launch the application.
 	 */
@@ -174,7 +175,7 @@ public class gameWindow implements Serializable{
 				bigGame.setGamesComplete(newComplete);
 			}
 		});
-		JButton viewHighScores = new JButton("View High Scores");
+		viewHighScores = new JButton("View High Scores");
 		viewHighScores.setBounds(0, 0, frame.getContentPane().getWidth()/3, 50);
 		viewHighScores.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(viewHighScores);
@@ -184,7 +185,7 @@ public class gameWindow implements Serializable{
 			}
 		});
 		
-		JLabel currentScore = new JLabel("Overall Score: " + bigGame.getOverallScore());
+		currentScore = new JLabel("Overall Score: " + bigGame.getOverallScore());
 		currentScore.setBounds(new Rectangle(frame.getContentPane().getWidth()/3,0,frame.getContentPane().getWidth()/3,50));
 		currentScore.setHorizontalAlignment((int)JPanel.CENTER_ALIGNMENT);
 		currentScore.setFont(new Font("Serif", Font.PLAIN, 50));
@@ -236,13 +237,21 @@ public class gameWindow implements Serializable{
 		}
 		return obj;
 	}
-	
-	public String toString() {
-		return "Frame: " + getFrame();
+
+	public OverallGame getBigGame() {
+		return bigGame;
 	}
-	
+
+	public void setBigGame(OverallGame bigGame) {
+		this.bigGame = bigGame;
+	}
+
 	public JFrame getFrame() {
 		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 
 	public Image getGame1Button() {
@@ -268,7 +277,26 @@ public class gameWindow implements Serializable{
 	public void setGame3Button(Image game3Button) {
 		this.game3Button = game3Button;
 	}
-	
-	
 
+	public JLabel getCurrentScore() {
+		return currentScore;
+	}
+
+	public void setCurrentScore(JLabel currentScore) {
+		this.currentScore = currentScore;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public JButton getViewHighScores() {
+		return viewHighScores;
+	}
+
+	public void setViewHighScores(JButton viewHighScores) {
+		this.viewHighScores = viewHighScores;
+	}
+	
+	
 }
