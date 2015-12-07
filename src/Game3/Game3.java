@@ -67,6 +67,8 @@ public class Game3 implements java.io.Serializable{
 	private JLabel	totalCoin = null;
 	JMenuItem grass = new JMenuItem(new ImageIcon("images/GrassIcon.png"));
 	JMenuItem mangrove = new JMenuItem(new ImageIcon("images/mangroveIcon.png"));
+	ActionListener grassListen	=	null;
+	ActionListener mangroveListen	=	null;
 	
 	
 	
@@ -77,7 +79,7 @@ public class Game3 implements java.io.Serializable{
 	 * @param bigGame - The handler for the entire game
 	 */
 	public Game3(OverallGame bigGame) {
-		this.time	=	1.0	;
+		this.time	=	40.0	;
 		this.score	=	0	;
 		this.money	=	900	;
 		this.plants	=		new ArrayList<Plant>();
@@ -250,13 +252,17 @@ public class Game3 implements java.io.Serializable{
 				getMussels().remove(removal);
 			}
 		}
-		else if (getMoney() >= 100){
+		else if (getMoney() >= 100 && xLoc < xOffset + 7*scalor && yLoc > yOffset && yLoc < yOffset + 4*scalor){
+			menuRegen();
 			final int row = (yLoc -	yOffset)	/scalor ;
 			final int col = (xLoc - xOffset)	/scalor	;
 			System.out.println("Row: " + row + "  Col: " + col);
 			timer.stop();
 			menu.show(e.getComponent(), xLoc, yLoc);
-			grass.addActionListener(new ActionListener(){
+			if(grassListen == null) {
+				grass.removeActionListener(grassListen);
+			}
+			grassListen	=	new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					if(getTiles().get(7*row+col)instanceof Plant){
 						grass.removeActionListener(this);
@@ -269,8 +275,12 @@ public class Game3 implements java.io.Serializable{
 						else{ timer.start();}
 					}
 				}
-			});
-			mangrove.addActionListener(new ActionListener(){
+			};
+			grass.addActionListener(grassListen);
+			if (mangroveListen != null) {
+				mangrove.removeActionListener(mangroveListen);
+			}
+			mangroveListen	=	new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					if (getTiles().get(7*row+col)instanceof Plant) {
 						mangrove.removeActionListener(this);
@@ -283,10 +293,24 @@ public class Game3 implements java.io.Serializable{
 						else{ timer.start();}
 					}
 				}
-			});
-			
-		}}
+			};
+			mangrove.addActionListener(mangroveListen);
+		}
+		else {
+			timer.start();
+		}
+	}
 	
+	
+	public  void menuRegen() {
+		menu.remove(grass);
+		menu.remove(mangrove);
+		grass = new JMenuItem(new ImageIcon("images/GrassIcon.png"));
+		mangrove = new JMenuItem(new ImageIcon("images/mangroveIcon.png"));
+		menu.add(grass);
+		menu.add(mangrove);
+		
+	}
 	/**
 	 * Adds a plant to the current game from a player choice in a menu screen
 	 * Plants can only be bought if the player has enough money
@@ -478,9 +502,10 @@ public class Game3 implements java.io.Serializable{
 	public void endGame() {
 		getBigGame().setOverallScore(getBigGame().getOverallScore() + getScore());
 		getBigGame().setGamesRunning(0);
+		getBigGame().getGamesComplete()[2]	=	true;
 		timer.stop();
 		getBigGame().getGameWindow().getCurrentScore().setText("Overall Score: " + bigGame.getOverallScore());
-		getBigGame().updateHighScores();
+		getBigGame().updateHighScores("highScores.txt");
 		gameFrame.setContentPane(bigGamePanel);
 		gameFrame.setVisible(true);
 	}
@@ -495,8 +520,16 @@ public class Game3 implements java.io.Serializable{
 	}
 	
 	/**
-	 * Getters And Setters 
+	 * Getters And Setters and toString
 	 */
+
+	
+	public String toString(){
+		return "Game3 [ Time: "+time+", Score: "+score+", Money: "+money+"\n"+plants.toString()+"\n"
+				+enemies.toString()+"\n"+mussels.toString()+"\n"+", Game Over: "+gameOver+", Big Game: "+bigGame
+				+", Timer"+timer+"]";
+	}
+
 	public double getTime() {
 		return time;
 	}
@@ -569,7 +602,7 @@ public class Game3 implements java.io.Serializable{
 		this.gameRunning = gameRunning;
 	}
 
-	public boolean getGameOver() {
+	public boolean isGameOver() {
 		return gameOver;
 	}
 
@@ -632,15 +665,93 @@ public class Game3 implements java.io.Serializable{
 	public void setTimer(Timer timer) {
 		this.timer = timer;
 	}
-	
+
 	public static Image getBackground() {
 		return background;
 	}
-	
-	public String toString(){
-		return "Game3 [ Time: "+time+", Score: "+score+", Money: "+money+"\n"+plants.toString()+"\n"
-				+enemies.toString()+"\n"+mussels.toString()+"\n"+", Game Over: "+gameOver+", Big Game: "+bigGame
-				+", Timer"+timer+"]";
+
+	public static void setBackground(Image background) {
+		Game3.background = background;
+	}
+
+	public JPopupMenu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(JPopupMenu menu) {
+		this.menu = menu;
+	}
+
+	public JProgressBar getTimeBar() {
+		return timeBar;
+	}
+
+	public void setTimeBar(JProgressBar timeBar) {
+		this.timeBar = timeBar;
+	}
+
+	public ArrayList<JLabel> getCoins() {
+		return coins;
+	}
+
+	public void setCoins(ArrayList<JLabel> coins) {
+		this.coins = coins;
+	}
+
+	public JLabel getTotalCoin() {
+		return totalCoin;
+	}
+
+	public void setTotalCoin(JLabel totalCoin) {
+		this.totalCoin = totalCoin;
+	}
+
+	public JMenuItem getGrass() {
+		return grass;
+	}
+
+	public void setGrass(JMenuItem grass) {
+		this.grass = grass;
+	}
+
+	public JMenuItem getMangrove() {
+		return mangrove;
+	}
+
+	public void setMangrove(JMenuItem mangrove) {
+		this.mangrove = mangrove;
+	}
+
+	public ActionListener getGrassListen() {
+		return grassListen;
+	}
+
+	public void setGrassListen(ActionListener grassListen) {
+		this.grassListen = grassListen;
+	}
+
+	public ActionListener getMangroveListen() {
+		return mangroveListen;
+	}
+
+	public void setMangroveListen(ActionListener mangroveListen) {
+		this.mangroveListen = mangroveListen;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static int getScalor() {
+		return scalor;
+	}
+
+	public static int getXoffset() {
+		return xOffset;
+	}
+
+	public static int getYoffset() {
+		return yOffset;
 	}
 
 	/**
