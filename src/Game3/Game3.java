@@ -65,6 +65,7 @@ public class Game3 implements java.io.Serializable{
 	private JProgressBar timeBar;
 	private ArrayList<JLabel> coins;
 	private JLabel	totalCoin = null;
+	private JLabel pipes = null;
 	JMenuItem grass = new JMenuItem(new ImageIcon("images/GrassIcon.png"));
 	JMenuItem mangrove = new JMenuItem(new ImageIcon("images/mangroveIcon.png"));
 	ActionListener grassListen	=	null;
@@ -163,6 +164,11 @@ public class Game3 implements java.io.Serializable{
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
 		gamePanel.add(timeAndScore);
 		final int timerInterval = 100;
+		
+		ImageIcon pipeic = new ImageIcon("images/pipes.png");
+		pipes = new JLabel(pipeic);
+		pipes.setBounds(bigGame.frameWidth-pipeic.getIconWidth(), 0, pipeic.getIconWidth() ,pipeic.getIconHeight());
+		gamePanel.add(pipes);
 		
 		//time bar
 				timeBar = new JProgressBar(0, (int)(time*100));
