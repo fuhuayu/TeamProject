@@ -1,5 +1,6 @@
 package OverallGame;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -9,13 +10,17 @@ import javax.swing.JLabel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.Timer;
+import javax.swing.border.EtchedBorder;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -72,9 +77,9 @@ public class gameWindow implements Serializable{
 	public gameWindow(OverallGame bigGame) {
 		this.bigGame = bigGame;
 		try {
-			this.game1Button = ImageIO.read(new File("images/game1Button.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight/4, 1);
-			this.game2Button = ImageIO.read(new File("images/game2Button.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight/3, 1);
-			this.game3Button = ImageIO.read(new File("images/game3Button.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight/3, 1);
+			this.game1Button = ImageIO.read(new File("images/Button1Map.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight, 1);
+			this.game2Button = ImageIO.read(new File("images/Button2Map.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight, 1);
+			this.game3Button = ImageIO.read(new File("images/Button3Map.png")).getScaledInstance(OverallGame.frameWidth/3, OverallGame.frameHeight, 1);
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
@@ -116,7 +121,7 @@ public class gameWindow implements Serializable{
 		btnStartGame.setIcon(imgGame1);
 		btnStartGame.setOpaque(false);
 		btnStartGame.setContentAreaFilled(false);
-		btnStartGame.setBorderPainted(false);
+		btnStartGame.setBorderPainted(true);
 		btnStartGame.setBounds(0, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		frame.getContentPane().add(btnStartGame);
 		btnStartGame.addActionListener(new ActionListener() {
@@ -132,7 +137,7 @@ public class gameWindow implements Serializable{
 		btnStartGame_1.setIcon(imgGame2);
 		btnStartGame_1.setOpaque(false);
 		btnStartGame_1.setContentAreaFilled(false);
-		btnStartGame_1.setBorderPainted(false);
+		btnStartGame_1.setBorderPainted(true);
 		btnStartGame_1.setBounds(frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
 		frame.getContentPane().add(btnStartGame_1);
 		btnStartGame_1.addActionListener(new ActionListener() {
@@ -147,13 +152,19 @@ public class gameWindow implements Serializable{
 			}
 		});
 		
+		
 		JButton btnStartGame_2 = new JButton();
 		ImageIcon imgGame3 = new ImageIcon(getGame3Button());
 		btnStartGame_2.setIcon(imgGame3);
 		btnStartGame_2.setOpaque(false);
 		btnStartGame_2.setContentAreaFilled(false);
-		btnStartGame_2.setBorderPainted(false);
-		btnStartGame_2.setBounds(2*frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
+		btnStartGame_2.setBorderPainted(true);
+		if(2*frame.getContentPane().getWidth()/3 > frame.getContentPane().getWidth()/3 +frame.getContentPane().getWidth()/3){
+			btnStartGame_2.setBounds(2*frame.getContentPane().getWidth()/3-1, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
+		}
+		else{
+			btnStartGame_2.setBounds(2*frame.getContentPane().getWidth()/3, 50, frame.getContentPane().getWidth()/3, frame.getContentPane().getHeight()-50);
+		}
 		btnStartGame_2.setFont(new Font("Serif", Font.PLAIN, 50));
 		frame.getContentPane().add(btnStartGame_2);
 		btnStartGame_2.addActionListener(new ActionListener() {
