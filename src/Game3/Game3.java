@@ -1,5 +1,6 @@
 package Game3;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -144,6 +145,8 @@ public class Game3 implements java.io.Serializable{
 						g.drawImage(current.getImages().get(i), current.getFront() + scalor*i, current.getRow()*(scalor) + yOffset, null);
 					}
 				}
+				g.setColor(Color.GREEN);
+				g.fillArc(scalor/4, scalor/4, scalor, scalor, 90, 360-360*(400-(int)(getTime()*10.0))/400);
 				
 			}
 		};
@@ -159,8 +162,8 @@ public class Game3 implements java.io.Serializable{
 		
 		
 		gamePanel.add(Button);
-		timeAndScore = new JLabel("Time:"+(int)getTime()+"    Score:"+getScore());
-		timeAndScore.setBounds(0,0,frame.getWidth(),30);
+		timeAndScore = new JLabel("			"+"    Score:"+getScore());
+		timeAndScore.setBounds(scalor,0,frame.getWidth(),30);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
 		gamePanel.add(timeAndScore);
 		final int timerInterval = 100;
@@ -169,14 +172,6 @@ public class Game3 implements java.io.Serializable{
 		pipes = new JLabel(pipeic);
 		pipes.setBounds(bigGame.frameWidth-pipeic.getIconWidth(), 0, pipeic.getIconWidth() ,pipeic.getIconHeight());
 		gamePanel.add(pipes);
-		
-		//time bar
-				timeBar = new JProgressBar(0, (int)(time*100));
-				timeBar.setValue((int)(time*100));
-				timeBar.setString("TIME");
-				timeBar.setStringPainted(true);
-				timeBar.setBounds(0, 30, bigGame.frameWidth/4, bigGame.frameHeight/20);
-				gamePanel.add(timeBar);
 		
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -205,7 +200,7 @@ public class Game3 implements java.io.Serializable{
 			current.grow();
 		}
 		if (getTickCount() % 10 == 0) {
-			timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
+			timeAndScore.setText("			"+"    Score:"+getScore());
 			
 			
 		}
@@ -521,7 +516,7 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void addScore(int score) {
 		this.score += score;
-		timeAndScore.setText("Time:"+(int)getTime()+"    Score:"+getScore());
+		timeAndScore.setText("			"+"    Score:"+getScore());
 	}
 	
 	/**
