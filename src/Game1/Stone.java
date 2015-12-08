@@ -33,7 +33,7 @@ public class Stone extends MovingObject {
 		if(tick>0)tick-=1;
 		if(this.speed+this.getPosition().x<-this.getSize()/2){
 			this.getPosition().setLocation(bx+this.getSize()/2, by*0.6);
-			orig_speed-=5;
+			orig_speed-=1;
 			speed=orig_speed;
 		}
 		

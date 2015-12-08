@@ -45,6 +45,7 @@ public class RipRapGame implements java.io.Serializable{
 	/**
 	 * 
 	 */
+	int nx2,mark,nx,x;
 	private static final long serialVersionUID = 105L;
 	Sun sun;
 	private OverallGame bigGame;
@@ -110,6 +111,9 @@ public class RipRapGame implements java.io.Serializable{
 		this.jumpingBar=new JumpingBar(20, 30, this);
 		this.objects=new ArrayList<MovingObject>();
 		this.objects2=new ArrayList<MovingObject>();
+		this.nx2 = (int) (this.frame.getWidth()*0.9);
+		this.mark = (int) (this.frame.getWidth()*0.9);
+		this.nx=0;
 		initPanel();
 	}
 
@@ -148,7 +152,8 @@ public class RipRapGame implements java.io.Serializable{
 	public boolean initPanel(){
 		try {
 			final BufferedImage image = ImageIO.read(new File("images/rockwall.jpg"));
-			final Image b = ImageIO.read(new File("images/game1background.jpg")).getScaledInstance(this.frame.getContentPane().getWidth(), this.frame.getContentPane().getHeight(), 1);
+			final BufferedImage a = ImageIO.read(new File("images/game1background.jpg"));
+			final Image b=a.getSubimage(0,0,a.getWidth(), a.getHeight()-100).getScaledInstance(this.frame.getContentPane().getHeight()*1280/620, this.frame.getContentPane().getHeight(), 1);
 			panel=new JPanel(){
 	            @Override
 	            
@@ -173,7 +178,8 @@ public class RipRapGame implements java.io.Serializable{
 
 	                // draw the image
 	                Graphics2D g2d = (Graphics2D) g;
-	                g2d.drawImage(b, 0,0, null);
+	                g2d.drawImage(b, mark-nx2,0, null);
+	                g2d.drawImage(b, mark-nx2+b.getWidth(null),0, null);
 	                g2d.drawImage(image, at, null);
 	            };
 			};
@@ -201,6 +207,8 @@ public class RipRapGame implements java.io.Serializable{
 	    		jumpingBar.update(panel);
 	    		updateMap();
 	    		updateMap2();
+	    		nx2+=1;
+	    		nx+=1;
 //	    		timer.setDelay(1);
 //	    		updateMap2();
 //	    		timer.setDelay(20);
