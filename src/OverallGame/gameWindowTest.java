@@ -38,7 +38,7 @@ public class gameWindowTest {
 		rob.mousePress(MouseEvent.BUTTON1_MASK);
 		rob.mouseRelease(MouseEvent.BUTTON1_MASK);
 		assertEquals(3, testGame.getGamesRunning());
-		testGame.getGame3().endGame();
+		testGame.getGame3().endGame("testHighScores.txt");
 		assertEquals(0, testGame.getGamesRunning());
 	}
 	

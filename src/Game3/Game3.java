@@ -1,6 +1,4 @@
 package Game3;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -101,11 +99,11 @@ public class Game3 implements java.io.Serializable{
 		this.menu = new JPopupMenu();
 		menu.add(grass);
 		menu.add(mangrove);
-		this.background = null;
+		background = null;
 		this.coins = new ArrayList<JLabel>();
 		addMoney(0);
 		try {
-			this.background = ImageIO.read(new File("images/game3Background.png")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
+			background = ImageIO.read(new File("images/game3Background.png")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
@@ -151,7 +149,7 @@ public class Game3 implements java.io.Serializable{
 		Button.setBounds(OverallGame.frameWidth-scalor, 0, scalor, scalor);
 		Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				endGame();
+				endGame("highScores.txt");
 			}});
 		
 		
@@ -165,7 +163,7 @@ public class Game3 implements java.io.Serializable{
 		
 		ImageIcon pipeic = new ImageIcon("images/pipes.png");
 		pipes = new JLabel(pipeic);
-		pipes.setBounds(bigGame.frameWidth-pipeic.getIconWidth(), 0, pipeic.getIconWidth() ,pipeic.getIconHeight());
+		pipes.setBounds(OverallGame.frameWidth-pipeic.getIconWidth(), 0, pipeic.getIconWidth() ,pipeic.getIconHeight());
 		gamePanel.add(pipes);
 		
 		//time bar
@@ -173,7 +171,7 @@ public class Game3 implements java.io.Serializable{
 				timeBar.setValue((int)(time*100));
 				timeBar.setString("TIME");
 				timeBar.setStringPainted(true);
-				timeBar.setBounds(0, 30, bigGame.frameWidth/4, bigGame.frameHeight/20);
+				timeBar.setBounds(0, 30, OverallGame.frameWidth/4, OverallGame.frameHeight/20);
 				gamePanel.add(timeBar);
 		
 		timer = new Timer(timerInterval, new ActionListener(){
@@ -217,7 +215,7 @@ public class Game3 implements java.io.Serializable{
 		gamePanel.repaint();
 		gameFrame.setVisible(true);
 		if(getTime()<=0){
-			endGame();
+			endGame("highScores.txt");
 		}
 		
 	    
@@ -481,12 +479,12 @@ public class Game3 implements java.io.Serializable{
 	 * If the game ends, passes the score to the overall score
 	 * And sets the overall shell to the running state and calls the update method on the overall shell
 	 */
-	public void endGame() {
+	public void endGame(String highScoreLoc) {
 		getBigGame().setOverallScore(getBigGame().getOverallScore() + getScore());
 		getBigGame().setGamesRunning(0);
 		timer.stop();
 		getBigGame().getGameWindow().getCurrentScore().setText("Overall Score: " + bigGame.getOverallScore());
-		getBigGame().updateHighScores();
+		getBigGame().updateHighScores(highScoreLoc);
 		gameFrame.setContentPane(bigGamePanel);
 		gameFrame.setVisible(true);
 	}
