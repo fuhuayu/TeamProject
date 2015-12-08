@@ -159,7 +159,7 @@ public class RipRapGame implements java.io.Serializable{
 	                AffineTransform at = new AffineTransform();
 
 	                // 4. translate it to the center of the component
-	                at.translate(getWidth()/2, getHeight()*1.14);
+	                at.translate(getWidth()/2, crab.getPosition().getY()*0.9+image.getHeight());
 
 	                // 3. do the actual rotation
 	                at.rotate(Math.PI/-19);
