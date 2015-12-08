@@ -63,8 +63,9 @@ public class Crab extends MovingObject {
 	/* (non-Javadoc)
 	 * @see Game2.MovingObject#update()
 	 */
+	int n=2;
 	public void clicked(int i){
-		if(i==1)speed=-15;
+		if(i==1){speed=-7*n;n+=1;};
 		
 	}
 	public void update(){
@@ -78,7 +79,7 @@ public class Crab extends MovingObject {
 		
 		if(speed!=0||currheight!=0){
 			currheight+=speed;
-			speed+=0.4;
+			speed+=n*n*0.05;
 		}
 		if(currheight>0){
 			speed=0;
