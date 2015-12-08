@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import Game1.RipRapGame;
 import Game2.CrabCatcherGame;
@@ -36,12 +38,17 @@ public class gameWindow implements Serializable{
 
 	private OverallGame bigGame;
 
-	private JFrame frame;
-	private Image game1Button;
-	private Image game2Button;
-	private Image game3Button;
-	private JLabel currentScore;
+	private JFrame	frame;
+	private Image	game1Button;
+	private Image	game2Button;
+	private Image	game3Button;
+	private JLabel	currentScore;
 	private JButton viewHighScores;
+	public	Timer	timer;
+	public	ArrayList<Image>	screens;
+	public	JLabel	currImage;
+	public 	int		time	=	0;
+	public JPanel	tempPanel;
 	/**
 	 * Launch the application.
 	 */
@@ -115,8 +122,7 @@ public class gameWindow implements Serializable{
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bigGame.setGamesRunning(1);
-				bigGame.setGame1(new RipRapGame(20, bigGame, frame));
-				bigGame.getGame1().run();
+				gameIntros();
 			}
 		});
 		
@@ -133,8 +139,7 @@ public class gameWindow implements Serializable{
 			public void actionPerformed(ActionEvent e) {
 				if (bigGame.getGamesComplete()[0] == true) {
 					bigGame.setGamesRunning(2);
-					bigGame.setGame2(new CrabCatcherGame(0, null, 0, 0, 0, null, 0, false, bigGame, frame));
-					bigGame.getGame2().startGame();
+					gameIntros();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Complete game 1 in order to play this game");
@@ -155,7 +160,7 @@ public class gameWindow implements Serializable{
 			public void actionPerformed(ActionEvent e) {
 				if (bigGame.getGamesComplete()[1] == true) {
 					bigGame.setGamesRunning(3);
-					bigGame.setGame3(new Game3(bigGame));
+					gameIntros();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Complete the other games to play  the final game");
@@ -191,8 +196,92 @@ public class gameWindow implements Serializable{
 		currentScore.setFont(new Font("Serif", Font.PLAIN, 50));
 		currentScore.setVisible(true);
 		frame.getContentPane().add(currentScore);
-		
 		frame.repaint();
+	}
+	public void gameIntros() {
+		screens	=	new	ArrayList<Image>();
+		if (bigGame.getGamesRunning() == 1) {
+			try	{
+				Image	img	=	ImageIO.read(new File("images/game3background.png")).getScaledInstance(OverallGame.frameWidth, OverallGame.frameHeight, 1);
+				Image	img2=	ImageIO.read(new File("images/ocean_background.jpg")).getScaledInstance(getFrame().getWidth(), getFrame().getHeight(), 1);
+				Image	img3=	ImageIO.read(new File("images/game3background.png")).getScaledInstance(getFrame().getWidth(), getFrame().getHeight(), 1);
+				screens.add(img);
+				screens.add(img2);
+				screens.add(img3);
+			}
+			catch(IOException e) {
+				System.out.println("Read Error: " + e.getMessage());
+			}
+		}
+		else if(bigGame.getGamesRunning() == 2) {
+			try	{
+				Image	img	=	ImageIO.read(new File("images/game3background.png")).getScaledInstance(OverallGame.frameWidth, OverallGame.frameHeight, 1);
+				Image	img2=	ImageIO.read(new File("images/ocean_background.jpg")).getScaledInstance(getFrame().getWidth(), getFrame().getHeight(), 1);
+				Image	img3=	ImageIO.read(new File("images/game3background.png")).getScaledInstance(getFrame().getWidth(), getFrame().getHeight(), 1);
+				screens.add(img);
+				screens.add(img2);
+				screens.add(img3);
+			}
+			catch(IOException e) {
+				System.out.println("Read Error: " + e.getMessage());
+			}
+		}
+		else {
+			try	{
+				Image	img	=	ImageIO.read(new File("images/game3background.png")).getScaledInstance(OverallGame.frameWidth, OverallGame.frameHeight, 1);
+				Image	img2=	ImageIO.read(new File("images/ocean_background.jpg")).getScaledInstance(getFrame().getWidth(), getFrame().getHeight(), 1);
+				Image	img3=	ImageIO.read(new File("images/game3background.png")).getScaledInstance(getFrame().getWidth(), getFrame().getHeight(), 1);
+				screens.add(img);
+				screens.add(img2);
+				screens.add(img3);
+			}
+			catch(IOException e) {
+				System.out.println("Read Error: " + e.getMessage());
+			}
+		}
+		if (screens.size()	>	0)	{
+			ActionListener animator	=	new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					gameAnim();
+				}};
+			timer	=	new Timer(100, animator);
+			tempPanel	=	(JPanel)getFrame().getContentPane();
+			tempPanel.setVisible(false);
+			getFrame().setContentPane(new JPanel());
+			currImage	=	new JLabel(new ImageIcon(screens.get(0)));
+			currImage.setBounds(0, 0, OverallGame.frameWidth, OverallGame.frameHeight);
+			getFrame().getContentPane().add(currImage);
+			getFrame().getContentPane().setVisible(true);
+			timer.start();
+		}
+	}
+	
+	public void gameAnim() {
+		time++;
+		if (time	%	12	==	0) {
+			if (time	%	36	==	0){
+				timer.stop();
+				time	=	0;
+				getFrame().setContentPane(tempPanel);
+				if (bigGame.getGamesRunning() == 1) {
+					bigGame.setGame1(new RipRapGame(20, bigGame, frame));
+					bigGame.getGame1().run();
+				}
+				else if (bigGame.getGamesRunning() == 2) {
+					bigGame.setGame2(new CrabCatcherGame(0, null, 0, 0, 0, null, 0, false, bigGame, frame));
+					bigGame.getGame2().startGame();
+				}
+				else {
+					bigGame.setGame3(new Game3(bigGame));
+				}
+			}
+			else	if	(screens.size()	>=	time/12){
+				currImage.setVisible(false);
+				currImage	=	new	JLabel(new	ImageIcon(screens.get(time/12)));
+				currImage.setVisible(true);
+				getFrame().add(currImage);
+			}
+		}
 	}
 	
 	/**
