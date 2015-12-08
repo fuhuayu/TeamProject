@@ -1,5 +1,5 @@
 Brendan:	42069
+null:	2990
 David:	666
 Zhanglong:	333
-Howard:	69
-Danielle:	0
+null:	90
