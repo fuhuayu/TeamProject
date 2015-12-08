@@ -132,7 +132,7 @@ public class RipRapGame implements java.io.Serializable{
 		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
 		objects2.add(stone);
-		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/8);
+		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.75),this.panel.getWidth()/8);
 		crab.addItem(panel, "images/crab1.png");
 		objects.add(crab);
 		for(int i=1;i<4;i++){
