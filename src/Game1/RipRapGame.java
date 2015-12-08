@@ -277,6 +277,9 @@ public class RipRapGame implements java.io.Serializable{
 	public void endGame(){
 		timer.stop();
 		frame.setContentPane(bigpan);
+		frame.getContentPane().setVisible(true);
+		this.bigGame.setOverallScore(this.bigGame.getOverallScore()+this.score);
+		this.bigGame.getGameWindow().getCurrentScore().setText("Overall Score: "+ this.bigGame.getOverallScore());
 		this.getBigGame().setGamesRunning(0);
 		
 	}
