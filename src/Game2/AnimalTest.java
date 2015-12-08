@@ -79,7 +79,7 @@ public class AnimalTest {
 	
 	@Test
 	public void offScreenDetectionTest(){
-		Animal mittencrab = new MovingAnimal(100, 10, "mittencrab", -3, 10, true);
+		Animal mittencrab = new Animal(100, 10, "mittencrab", -3, 10, true);
 		mittencrab.setImageHeight(200);
 		mittencrab.setImageWidth(250);
 		

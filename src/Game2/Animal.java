@@ -35,7 +35,8 @@ public class Animal implements java.io.Serializable {
 	private boolean offScreen = false;
 	private int xdir = 1;
 	private int ydir;
-	private int step;
+	private int step; //speed of animal
+	private static int maxSpeed = 10;
 		
 	/**All-parameter constructor. Not used publicly.
 	 * @param xloc
@@ -87,6 +88,8 @@ public class Animal implements java.io.Serializable {
 		this.timeLeftOnScreen = displayDuration;
 		this.visible = visible;
 		this.caught = false;
+		Random r = new Random();
+		this.step = (maxSpeed - r.nextInt(maxSpeed - 3));
 	}
 	
 	//COPIER
@@ -169,7 +172,6 @@ public class Animal implements java.io.Serializable {
 	
 	public void move(CrabCatcherGame game){
 		ydir = 0;
-		step = 10;
 		xloc += xdir*step;
 		yloc += ydir*step;
 	}
@@ -322,6 +324,14 @@ public class Animal implements java.io.Serializable {
 
 	public void setXdir(int xdir) {
 		this.xdir = xdir;
+	}
+
+	public int getStep() {
+		return step;
+	}
+
+	public void setStep(int step) {
+		this.step = step;
 	}
 	
 
