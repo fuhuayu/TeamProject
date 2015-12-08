@@ -296,7 +296,7 @@ public class RipRapGame implements java.io.Serializable{
 	        FileOutputStream fos = new FileOutputStream(fileName);
 	        ObjectOutputStream oos = new ObjectOutputStream(fos);
 	        oos.writeObject(obj);
-	        fos.close();
+	        fos.close(); 
 		}
 		catch (IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
