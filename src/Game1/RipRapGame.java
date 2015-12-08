@@ -113,7 +113,6 @@ public class RipRapGame implements java.io.Serializable{
 		this.objects2=new ArrayList<MovingObject>();
 		this.nx2 = (int) (this.frame.getWidth()*0.9);
 		this.mark = (int) (this.frame.getWidth()*0.9);
-		this.nx=0;
 		initPanel();
 	}
 
@@ -208,7 +207,6 @@ public class RipRapGame implements java.io.Serializable{
 	    		updateMap();
 	    		updateMap2();
 	    		nx2+=1;
-	    		nx+=1;
 //	    		timer.setDelay(1);
 //	    		updateMap2();
 //	    		timer.setDelay(20);
