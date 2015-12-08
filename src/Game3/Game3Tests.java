@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import OverallGame.OverallGame;
+import OverallGame.gameWindow;
 
 /**
  * @author Brendan, David, Danielle, Zhanglong and Huayu
@@ -25,17 +26,7 @@ public class Game3Tests {
 	 */
 	@Test
 	public void testUpdate() {
-		OverallGame testBigGame = new OverallGame();
-		testBigGame.setGamesRunning(3);
-		testBigGame.setGame3(new Game3(testBigGame));
-		testBigGame.getGame3().getTimer().stop();
-		assertEquals(0, testBigGame.getGame3().getMussels().get(0).getStage());
-		testBigGame.getGame3().update();
-		testBigGame.getGame3().update();
-		testBigGame.getGame3().update();
-		testBigGame.getGame3().update();
-		testBigGame.getGame3().update();
-		assertEquals(0, testBigGame.getGame3().getMussels().get(0).getStage());
+		
 	}
 
 	/**
@@ -44,37 +35,7 @@ public class Game3Tests {
 	 */
 	@Test
 	public void testOnClick() {
-		try {
-			rob = new Robot();
-		}
-		catch (AWTException e) {
-			e.printStackTrace();
-		}
-		OverallGame testBigGame = new OverallGame();
-		testBigGame.setGamesRunning(3);
-		testBigGame.setGame3(new Game3(testBigGame));
-		testBigGame.getGame3().getTimer().stop();
-		testBigGame.getGame3().addMoney(100);
-		//Simulate placing a plant at 1,1
-		rob.mouseMove(500, 250);
-		rob.mousePress(MouseEvent.BUTTON1_MASK);
-		rob.mouseRelease(MouseEvent.BUTTON1_MASK);
-		Plant testPlant = new Plant(1,1,"Grass")  ; 
-		ArrayList<Plant> testPlants = new ArrayList<Plant>();
-		testPlants.add(testPlant);
-		assertEquals(testBigGame.getGame3().getPlants(), testPlants);
-		//Simulate the addition of another plant at 2,1
-		rob.mouseMove(500, 480);
-		rob.mousePress(MouseEvent.BUTTON1_MASK);
-		rob.mouseRelease(MouseEvent.BUTTON1_MASK);
-		Plant testPlant2 = new Plant(2,1,"Grass")  ; 
-		testPlants.add(testPlant2);
-		assertEquals(testBigGame.getGame3().getPlants(), testPlants);
-		testBigGame.getGame3().getMussels().get(0).setStage(100);
-		rob.mouseMove(testBigGame.getGame3().getMussels().get(0).getXLoc()+20, testBigGame.getGame3().getMussels().get(0).getYLoc()+20);
-		rob.mousePress(MouseEvent.BUTTON1_MASK);
-		rob.mouseRelease(MouseEvent.BUTTON1_MASK);
-		assertEquals(100, testBigGame.getGame3().getMoney());
+		
 	}
 
 	/**
@@ -83,31 +44,7 @@ public class Game3Tests {
 	 */
 	@Test
 	public void testAddPlant() {
-		try {
-			rob = new Robot();
-		}
-		catch (AWTException e) {
-			e.printStackTrace();
-		}
-		OverallGame testBigGame = new OverallGame();
-		testBigGame.setGamesRunning(3);
-		testBigGame.setGame3(new Game3(testBigGame));
-		testBigGame.getGame3().getTimer().stop();
-		//Simulate placing a plant at 1,1
-		rob.mouseMove(500, 250);
-		rob.mousePress(MouseEvent.BUTTON1_MASK);
-		rob.mouseRelease(MouseEvent.BUTTON1_MASK);
-		Plant testPlant = new Plant(1,1,"Grass")  ; 
-		ArrayList<Plant> testPlants = new ArrayList<Plant>();
-		testPlants.add(testPlant);
-		assertEquals(testBigGame.getGame3().getPlants(), testPlants);
-		//Simulate the addition of another plant at 2,1
-		rob.mouseMove(500, 480);
-		rob.mousePress(MouseEvent.BUTTON1_MASK);
-		rob.mouseRelease(MouseEvent.BUTTON1_MASK);
-		Plant testPlant2 = new Plant(2,1,"Grass")  ; 
-		testPlants.add(testPlant2);
-		assertEquals(testBigGame.getGame3().getPlants(), testPlants);
+		
 	}
 	
 
@@ -116,16 +53,7 @@ public class Game3Tests {
 	 */
 	@Test
 	public void testAddRunoff() {
-		OverallGame testBigGame = new OverallGame();
-		testBigGame.setGamesRunning(3);
-		testBigGame.setGame3(new Game3(testBigGame));
-		testBigGame.getGame3().getTimer().stop();
-		testBigGame.getGame3().addRunoff() ;
-		boolean foundRunoff = false ;
-		for(Runoff current : testBigGame.getGame3().getEnemies()) {
-			foundRunoff = true;
-		}
-		assertEquals(true, foundRunoff);
+		
 		
 	}
 	
@@ -135,28 +63,6 @@ public class Game3Tests {
 	 */
 	@Test
 	public void testMoveRunoff() {
-		OverallGame testBigGame = new OverallGame();
-		testBigGame.setGamesRunning(3);
-		testBigGame.setGame3(new Game3(testBigGame));
-		testBigGame.getGame3().getTimer().stop();
-		testBigGame.getGame3().addRunoff() ;
-		boolean foundRunoff = false ;
-		for(Runoff current : testBigGame.getGame3().getEnemies()) {
-			if (current instanceof Runoff) {
-				foundRunoff = true;
-				((Runoff) current).setTicksSinceMoved(31);
-			}
-		}
-		assertEquals(true, foundRunoff);
-		testBigGame.getGame3().moveRunoff();
-		Runoff movedRunoff = null;
-		for(Runoff current : testBigGame.getGame3().getEnemies()) {
-			if (current instanceof Runoff) {
-				foundRunoff = true;
-				movedRunoff = (Runoff) current;
-			}
-		}
-		assertEquals(5,movedRunoff.getFront());
 		
 	}
 
@@ -167,65 +73,68 @@ public class Game3Tests {
 	 * Third time tests the death of the plant
 	 */
 	@Test
-	public void testBattle() {
-		OverallGame testBigGame = new OverallGame();
-		Game3 testGame = new Game3(testBigGame) ;
-		Plant testPlant = new Plant(1,1,"Grass") ;
-		Runoff testRunoff = new Runoff(1, 2);
-		testGame.battle(testPlant, testRunoff);
-		//We will check the health of both afterwards
-		assertEquals(testPlant.getHealth(), 8) ;
-		assertEquals(testRunoff.getHealth(), 7) ;
-		//Now we will kill the runoff
-		testGame.battle(testPlant, testRunoff);
-		testGame.battle(testPlant, testRunoff);
-		testGame.battle(testPlant, testRunoff);
-		assertEquals(testGame.getPlants().get(0).getHealth(), 2) ;
-		assertEquals(testGame.getEnemies(), new ArrayList<Runoff>(0)) ;
-		//Now we will kill the plant
-		testGame.addRunoff();
-		testGame.battle(testGame.getPlants().get(0), testGame.getEnemies().get(0));
-		assertEquals(testGame.getPlants(), new ArrayList<Plant>(0)) ;
-		assertEquals(testGame.getEnemies().get(0).getHealth(), 7)	;
-	}
-	
-	/**
-	 * Test 1: Tests the addition of runoff to a row and column
-	 * Followed by checking to see if the runoff moves a column to the left after the move function
-	 */
-	@Test
-	public void testAddMussel() {
-		OverallGame testBigGame = new OverallGame();
-		testBigGame.setGamesRunning(3);
-		testBigGame.setGame3(new Game3(testBigGame));
-		testBigGame.getGame3().getTimer().stop();
-		testBigGame.getGame3().addMussel();
-		assertEquals(5, testBigGame.getGame3().getMussels().size());
-		int xloc = testBigGame.getGame3().getMussels().get(4).getXLoc();
-		int yloc = testBigGame.getGame3().getMussels().get(4).getYLoc();
-		Rectangle newMussel = new Rectangle(xloc, yloc, 132, 80);
-		for (int i = 0 ; i < testBigGame.getGame3().getMussels().size() - 2 ; i++) {
-			Mussel current = testBigGame.getGame3().getMussels().get(i);
-			Rectangle curMussel = new Rectangle(current.getXLoc(), current.getYLoc(), 132, 80);
-			assertFalse(newMussel.intersects(curMussel));
-		}
+	public	void	testBattle()	{
 		
 	}
 	
 	/**
-	 * Tests the passing of the score to the overall game
-	 * Tests that the function alerts the big game that this game was completed
-	 * Tests that the function makes the big game start running
+	 * 
+	 * 
 	 */
 	@Test
-	public void testEndGame() {
-		OverallGame testBigGame = new OverallGame();
-		Game3 testGame = new Game3(testBigGame) ;
-		testGame.addScore(100);
-		testGame.endGame();
-		boolean [] winLastGame = {false, false, true};
-		assertEquals(testBigGame.getGamesComplete(),  winLastGame);
-		assertEquals(testBigGame.getOverallScore(), 100);
-		assertEquals(testBigGame.getGamesRunning(), 0);
+	public	void	testAddMussel()	{
+		OverallGame testGame	=	new	OverallGame();
+		testGame.setGameWindow(new	gameWindow(testGame));
+
+		Game3		testGame3	=	new	Game3(testGame);
+		
+	}
+	
+	/**
+	 * First Test:	Make sure initialization has worked
+	 * Second Test: Tests adding the money and adding coins to the images
+	 * Third Test:	Tests the addition of an additional coin, which changes
+	 * 				the format from a list to a stack with a number
+	 * Fourth Test:	Tests taking money away and thus changing the format back
+	 * 				into the list of coins
+	 */
+	@Test
+	public	void	testAddMoney()	{
+		OverallGame testGame	=	new	OverallGame();
+		testGame.setGameWindow(new	gameWindow(testGame));
+
+		Game3		testGame3	=	new	Game3(testGame);
+		assertEquals(testGame3.getMoney()/100,testGame3.getCoins().size());
+		testGame3.setMoney(900);
+		testGame3.addMoney(100);
+		assertEquals(1000,testGame3.getMoney());
+		assertEquals(10,testGame3.getCoins().size());
+		testGame3.addMoney(100);
+		assertEquals(1,testGame3.getCoins().size());
+		assertEquals(" X11",testGame3.getTotalCoin().getText());
+		testGame3.addMoney(-200);
+		assertEquals(9,testGame3.getCoins().size());
+	}
+	
+	/**
+	 * First Assert Equals are there to test that the values have 
+	 * initialized properly and no false positives can be read
+	 * 
+	 * Second set checks to see if endGame() correctly affected 
+	 * the overall game
+	 */
+	@Test
+	public	void	testEndGame()	{
+		OverallGame testGame	=	new	OverallGame();
+		testGame.setGameWindow(new	gameWindow(testGame));
+
+		Game3		testGame3	=	new	Game3(testGame);
+		assertEquals(0,testGame.getOverallScore());
+		assertEquals(false,testGame.getGamesComplete()[2]);
+		testGame3.setScore(-500);	//Don't want the game to affect the actual high scores
+		testGame3.endGame();
+		assertEquals(-500,testGame.getOverallScore());
+		assertEquals(true,testGame.getGamesComplete()[2]);
+		
 	}
 }

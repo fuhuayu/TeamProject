@@ -64,7 +64,7 @@ public class OverallGame implements Serializable{
 	 * @throws IOException 
 	 */
 	public OverallGame() {
-		this.overallScore = 50;
+		this.overallScore = 0;
 		this.gamesComplete = new boolean[3]; this.gamesComplete[0] = false ;
 		this.gamesComplete[1] = false ; this.gamesComplete[2] = false ;
 		this.gamesRunning = 0 ;
@@ -73,7 +73,7 @@ public class OverallGame implements Serializable{
 		this.game2 = null;
 		this.game3 = null;
 		this.frame = null ;
-		this.highscores = initializeHighscores();
+		this.highscores = initializeHighscores("highScores.txt");
 	
 	} ;
 	
@@ -94,10 +94,10 @@ public class OverallGame implements Serializable{
 	 * Reads in the high scores from the file "highScores.txt" located in the main folder
 	 * @return The string of high scores for this game
 	 */
-	private static String initializeHighscores() {
+	public String initializeHighscores(String fileName) {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader("highScores.txt"));
+			br = new BufferedReader(new FileReader(fileName));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -128,7 +128,7 @@ public class OverallGame implements Serializable{
 		
 	}
 	
-	public void updateHighScores() {
+	public void updateHighScores(String fileName) {
 		String[] lines = getHighscores().split("\n");
 		boolean newScore = false ;
 		int insertLoc = 6 ;
@@ -144,55 +144,57 @@ public class OverallGame implements Serializable{
 		if (newScore) {
 			JFrame frame	= getGameWindow().getFrame();
 			String name		= JOptionPane.showInputDialog(frame, "You Got a High Score", "Type Your Name Here!");
-			String hsLine	= name + ":\t" + getOverallScore() + "\n";
-			String swapLine	=	"";
-			for (int i = 0 ; i < lines.length ; i++) {
-				lines[i] = lines[i] + "\n";
-				if (swapLine != "") {
-					hsLine		=	lines[i];
-					lines[i]	=	swapLine;
-					swapLine	=	hsLine;
-				}
-				if (i == insertLoc) {
-					swapLine	=	lines[i];
-					lines[i]	=	hsLine;
-				}
-				
-			}
-			String newScores	=	"";
-			for (int i = 0 ; i < lines.length ; i++) {
-				newScores = newScores+lines[i];
-			}
-			File scores	=	new File("highScores.txt");
-			FileOutputStream scoreOP	=	null;
-			try {
-				scoreOP	=	new FileOutputStream(scores, false);
-			}
-			catch (FileNotFoundException e) {
-				System.out.println(e.getMessage());
-			}
-			try {
+			if (name != null) {
+				String hsLine	= name + ":\t" + getOverallScore() + "\n";
+				String swapLine	=	"";
 				for (int i = 0 ; i < lines.length ; i++) {
-					scoreOP.write(lines[i].getBytes());
+					lines[i] = lines[i] + "\n";
+					if (swapLine != "") {
+						hsLine		=	lines[i];
+						lines[i]	=	swapLine;
+						swapLine	=	hsLine;
+					}
+					if (i == insertLoc) {
+						swapLine	=	lines[i];
+						lines[i]	=	hsLine;
+					}
+					
 				}
-				scoreOP.close();
-			}
-			catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
-			setHighscores(newScores);
-			JButton viewHighScores	=	new JButton("View High Scores");
-			viewHighScores.setBounds(0, 0, frame.getContentPane().getWidth()/3, 50);
-			viewHighScores.setFont(new Font("Serif", Font.PLAIN, 50));
-			frame.getContentPane().add(viewHighScores);
-			viewHighScores.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(null, getHighscores());
+				String newScores	=	"";
+				for (int i = 0 ; i < lines.length ; i++) {
+					newScores = newScores+lines[i];
 				}
-			});
-			getGameWindow().getFrame().remove(getGameWindow().getViewHighScores());
-			getGameWindow().setViewHighScores(viewHighScores);
-			getGameWindow().getFrame().add(getGameWindow().getViewHighScores());
+				File scores	=	new File(fileName);
+				FileOutputStream scoreOP	=	null;
+				try {
+					scoreOP	=	new FileOutputStream(scores, false);
+				}
+				catch (FileNotFoundException e) {
+					System.out.println(e.getMessage());
+				}
+				try {
+					for (int i = 0 ; i < lines.length ; i++) {
+						scoreOP.write(lines[i].getBytes());
+					}
+					scoreOP.close();
+				}
+				catch (IOException e) {
+					System.out.println(e.getMessage());
+				}
+				setHighscores(newScores);
+				JButton viewHighScores	=	new JButton("View High Scores");
+				viewHighScores.setBounds(0, 0, frame.getContentPane().getWidth()/3, 50);
+				viewHighScores.setFont(new Font("Serif", Font.PLAIN, 50));
+				frame.getContentPane().add(viewHighScores);
+				viewHighScores.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						JOptionPane.showMessageDialog(null, getHighscores());
+					}
+				});
+				getGameWindow().getFrame().remove(getGameWindow().getViewHighScores());
+				getGameWindow().setViewHighScores(viewHighScores);
+				getGameWindow().getFrame().add(getGameWindow().getViewHighScores());
+			}
 		}
 	}
 

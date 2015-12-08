@@ -22,5 +22,27 @@ public class OverallGameTest {
 		OverallGame loadedGame = (OverallGame)OverallGame.deserialize("testOutput.ser");
 		assertEquals(loadedGame.toString(), testGame.toString());
 	}
+	
+	@Test
+	public void initializeHighscoresTest() {
+		OverallGame	testGame	=	new OverallGame();
+		testGame.setHighscores(testGame.initializeHighscores("testHighScores.txt"));
+		String	highScores1	=	testGame.getHighscores();
+		testGame.setHighscores(testGame.initializeHighscores("highScores.txt"));
+		String	highScores2	=	testGame.getHighscores();
+		testGame.setHighscores(testGame.initializeHighscores("testHighScores2.txt"));
+		String	highScores3	=	testGame.getHighscores();
+		String	highScores4	=	"Brendan:	42069\nDavid:	666\nHuayu:	350\nZhanglong:	333\nDanielle:	0\n";
+		assertEquals(highScores1,highScores2);
+		assertFalse(highScores1.equals(highScores3));
+		assertEquals(highScores1,highScores4);
+	}
+	
+	@Test
+	public void updateHighScoresTest() {
+		OverallGame	testGame	=	new	OverallGame();
+		
+	}
+	
 
 }
