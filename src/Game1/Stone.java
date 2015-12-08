@@ -26,7 +26,7 @@ public class Stone extends MovingObject {
 		tick=0;
 	}
 	public void kicked(){
-		this.speed=orig_speed*-1*5;
+		this.speed=(int) (Math.sqrt(orig_speed*-1)*12);
 		this.acc=1*orig_speed/-6;
 	}
 	public void update(){
@@ -34,6 +34,7 @@ public class Stone extends MovingObject {
 		if(this.speed+this.getPosition().x<-this.getSize()/2){
 			this.getPosition().setLocation(bx+this.getSize()/2, by*0.6);
 			orig_speed-=1;
+			speed=orig_speed;
 		}
 		
 		else{
@@ -43,6 +44,9 @@ public class Stone extends MovingObject {
 				this.getLabel().getWidth(), this.getLabel().getHeight());
 		if(speed>orig_speed){
 			this.speed-=acc;
+		}
+		else{
+			speed=orig_speed;
 		}
 		
 	}

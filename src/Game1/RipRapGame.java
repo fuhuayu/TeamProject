@@ -45,6 +45,7 @@ public class RipRapGame implements java.io.Serializable{
 	/**
 	 * 
 	 */
+	int nx2,mark,nx,x;
 	private static final long serialVersionUID = 105L;
 	Sun sun;
 	private OverallGame bigGame;
@@ -110,6 +111,8 @@ public class RipRapGame implements java.io.Serializable{
 		this.jumpingBar=new JumpingBar(20, 30, this);
 		this.objects=new ArrayList<MovingObject>();
 		this.objects2=new ArrayList<MovingObject>();
+		this.nx2 = (int) (this.frame.getWidth()*0.9);
+		this.mark = (int) (this.frame.getWidth()*0.9);
 		initPanel();
 	}
 
@@ -132,7 +135,7 @@ public class RipRapGame implements java.io.Serializable{
 		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
 		objects2.add(stone);
-		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.9-100),this.panel.getWidth()/8);
+		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.75),this.panel.getWidth()/8);
 		crab.addItem(panel, "images/crab1.png");
 		objects.add(crab);
 		for(int i=1;i<4;i++){
@@ -148,7 +151,8 @@ public class RipRapGame implements java.io.Serializable{
 	public boolean initPanel(){
 		try {
 			final BufferedImage image = ImageIO.read(new File("images/rockwall.jpg"));
-			final Image b = ImageIO.read(new File("images/game1background.jpg")).getScaledInstance(this.frame.getContentPane().getWidth(), this.frame.getContentPane().getHeight(), 1);
+			final BufferedImage a = ImageIO.read(new File("images/game1background.jpg"));
+			final Image b=a.getSubimage(0,0,a.getWidth(), a.getHeight()-100).getScaledInstance(this.frame.getContentPane().getHeight()*1280/620, this.frame.getContentPane().getHeight(), 1);
 			panel=new JPanel(){
 	            @Override
 	            
@@ -159,7 +163,7 @@ public class RipRapGame implements java.io.Serializable{
 	                AffineTransform at = new AffineTransform();
 
 	                // 4. translate it to the center of the component
-	                at.translate(getWidth()/2, getHeight()*1.14);
+	                at.translate(getWidth()/2, crab.getPosition().getY()*0.9+image.getHeight());
 
 	                // 3. do the actual rotation
 	                at.rotate(Math.PI/-19);
@@ -173,7 +177,8 @@ public class RipRapGame implements java.io.Serializable{
 
 	                // draw the image
 	                Graphics2D g2d = (Graphics2D) g;
-	                g2d.drawImage(b, 0,0, null);
+	                g2d.drawImage(b, mark-nx2,0, null);
+	                g2d.drawImage(b, mark-nx2+b.getWidth(null),0, null);
 	                g2d.drawImage(image, at, null);
 	            };
 			};
@@ -201,6 +206,7 @@ public class RipRapGame implements java.io.Serializable{
 	    		jumpingBar.update(panel);
 	    		updateMap();
 	    		updateMap2();
+	    		nx2+=1;
 //	    		timer.setDelay(1);
 //	    		updateMap2();
 //	    		timer.setDelay(20);
@@ -296,7 +302,7 @@ public class RipRapGame implements java.io.Serializable{
 	        FileOutputStream fos = new FileOutputStream(fileName);
 	        ObjectOutputStream oos = new ObjectOutputStream(fos);
 	        oos.writeObject(obj);
-	        fos.close(); 
+	        fos.close();
 		}
 		catch (IOException e) {
 			System.out.println("Read Error: " + e.getMessage());

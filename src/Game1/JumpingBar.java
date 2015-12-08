@@ -122,11 +122,9 @@ public class JumpingBar implements Serializable{
 	public void update(JPanel p){
 		int w=(int)(0.5*p.getWidth()/16);
 		int h=(int)(0.5*p.getHeight()/9);
-		int pd=100;
 		int distance=(int) ((this.game.stone.getPosition().getX()-this.game.getCrab().getPosition().getX())/5)
 				-this.game.stone.getSize()/4;
 		
-		pd=distance;
 		if(distance<=0){
 			if(passed==false){
 			this.game.stone.kicked();
