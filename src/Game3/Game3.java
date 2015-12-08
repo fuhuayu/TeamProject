@@ -299,30 +299,14 @@ public class Game3 implements java.io.Serializable{
 						else{ timer.start();}
 					}
 				}
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-			});
-			
-		}
-	}
-=======
->>>>>>> Stashed changes
-			};
-			mangrove.addActionListener(mangroveListen);
+			};	
 		}
 		else {
 			timer.start();
 		}
+		mangrove.addActionListener(mangroveListen);
+		
 	}
-<<<<<<< Updated upstream
-	
-	
-=======
-	
->>>>>>> origin/master
-	
->>>>>>> Stashed changes
 	public  void menuRegen() {
 		menu.remove(grass);
 		menu.remove(mangrove);
@@ -544,27 +528,13 @@ public class Game3 implements java.io.Serializable{
 	 * Getters And Setters and toString
 	 */
 
-<<<<<<< Updated upstream
-	
-=======
-<<<<<<< HEAD
-=======
-	
->>>>>>> origin/master
->>>>>>> Stashed changes
+
 	public String toString(){
 		return "Game3 [ Time: "+time+", Score: "+score+", Money: "+money+"\n"+plants.toString()+"\n"
 				+enemies.toString()+"\n"+mussels.toString()+"\n"+", Game Over: "+gameOver+", Big Game: "+bigGame
 				+", Timer"+timer+"]";
 	}
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-	
-	
-=======
->>>>>>> origin/master
->>>>>>> Stashed changes
+
 
 	public double getTime() {
 		return time;
@@ -742,9 +712,7 @@ public class Game3 implements java.io.Serializable{
 		this.totalCoin = totalCoin;
 	}
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
+
 	public JLabel getPipes() {
 		return pipes;
 	}
@@ -753,9 +721,7 @@ public class Game3 implements java.io.Serializable{
 		this.pipes = pipes;
 	}
 
-=======
->>>>>>> origin/master
->>>>>>> Stashed changes
+
 	public JMenuItem getGrass() {
 		return grass;
 	}
@@ -772,11 +738,7 @@ public class Game3 implements java.io.Serializable{
 		this.mangrove = mangrove;
 	}
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
+
 	public ActionListener getGrassListen() {
 		return grassListen;
 	}
@@ -793,10 +755,7 @@ public class Game3 implements java.io.Serializable{
 		this.mangroveListen = mangroveListen;
 	}
 
-<<<<<<< Updated upstream
-=======
->>>>>>> origin/master
->>>>>>> Stashed changes
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
