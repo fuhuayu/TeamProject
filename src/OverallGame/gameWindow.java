@@ -239,9 +239,9 @@ public class gameWindow implements Serializable{
 		}
 		else {
 			try	{
-				Image	img	=	ImageIO.read(new File("images/game3background.png")).getScaledInstance(OverallGame.frameWidth, OverallGame.frameHeight, 1);
-				Image	img2=	ImageIO.read(new File("images/ocean_background.jpg")).getScaledInstance(getFrame().getWidth(), getFrame().getHeight(), 1);
-				Image	img3=	ImageIO.read(new File("images/game3background.png")).getScaledInstance(getFrame().getWidth(), getFrame().getHeight(), 1);
+				Image	img	=	ImageIO.read(new File("images/g3Opening1.png")).getScaledInstance(OverallGame.frameWidth, OverallGame.frameHeight, 1);
+				Image	img2=	ImageIO.read(new File("images/g3Opening2.png")).getScaledInstance(OverallGame.frameWidth, OverallGame.frameHeight, 1);
+				Image	img3=	ImageIO.read(new File("images/g3Opening3.png")).getScaledInstance(OverallGame.frameWidth, OverallGame.frameHeight, 1);
 				screens.add(img);
 				screens.add(img2);
 				screens.add(img3);
