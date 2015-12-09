@@ -168,10 +168,11 @@ public class Game3 implements java.io.Serializable{
 		gamePanel.add(timeAndScore);
 		final int timerInterval = 100;
 		
-		ImageIcon pipeic = new ImageIcon("images/pipes.png");
+		for(int i=1;i<5;i++){
+		ImageIcon pipeic = new ImageIcon("images/Pipe.png");
 		pipes = new JLabel(pipeic);
-		pipes.setBounds(bigGame.frameWidth-pipeic.getIconWidth(), 0, pipeic.getIconWidth() ,pipeic.getIconHeight());
-		gamePanel.add(pipes);
+		pipes.setBounds(bigGame.frameWidth-pipeic.getIconWidth(),i*scalor, pipeic.getIconWidth() ,pipeic.getIconHeight());
+		gamePanel.add(pipes);}
 		
 		timer = new Timer(timerInterval, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
