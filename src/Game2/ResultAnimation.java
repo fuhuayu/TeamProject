@@ -13,7 +13,6 @@ public class ResultAnimation {
 	private boolean positiveResult; //whether the result is positive or negative
 	private String filePrefix;
 	private int picNum = 0;
-	private int currentImage;
 	//private int timeInMilliseconds = 400;
 	//private int interval = 2;
 	private int loops = 0;

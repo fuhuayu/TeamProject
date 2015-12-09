@@ -67,10 +67,10 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private Timer timer;
 	private JPanel bigpan;
 	private JLabel TS;
-	private Image crabImage;
-	private Image mittencrabImage;
-	private Image fishImageRight;
-	private Image fishImageLeft;
+	private Image[] crabImages;
+	private Image[] mittencrabImages;
+	private Image[] fishImagesRight;
+	private Image[] fishImagesLeft;
 	private Image backgroundImage;
 	private Image netImage;
 	private static int mittencrabScoreEffect = 100;
@@ -104,8 +104,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 			int score, int lives, double gameLength,
 			MouseAdapter mouseListener, int maxAnimalsOnScreen,
 			boolean gameOver, OverallGame bigGame, JFrame frame, JPanel panel,
-			Timer timer, JPanel bigpan, JLabel tS, Image crabImage,
-			Image mittencrabImage, Image fishImage) {
+			Timer timer, JPanel bigpan, JLabel tS, Image[] crabImage,
+			Image[] mittencrabImage, Image[] fishImage) {
 		super();
 		this.time = time;
 		this.speed = speed;
@@ -122,9 +122,9 @@ public class CrabCatcherGame implements java.io.Serializable{
 		this.timer = timer;
 		this.bigpan = bigpan;
 		TS = tS;
-		this.crabImage = crabImage;
-		this.mittencrabImage = mittencrabImage;
-		this.fishImageRight = fishImage;
+		this.crabImages = crabImage;
+		this.mittencrabImages = mittencrabImage;
+		this.fishImagesRight = fishImage;
 	}
 
 
@@ -192,10 +192,23 @@ public class CrabCatcherGame implements java.io.Serializable{
 	}
 	
 	public void loadAnimalImages(){
-		mittencrabImage = loadImage("mittencrab.png");
-		fishImageRight = loadImage("fish.png");
-		fishImageLeft = loadImage("fish_left.png");
-		crabImage = loadImage("crab.png");
+		mittencrabImages = new Image[2];
+		mittencrabImages[0] = loadImage("mittencrab1.png");	
+		mittencrabImages[1] = loadImage("mittencrab2.png");	
+		
+		crabImages = new Image[2];
+		crabImages[0] = loadImage("maincrab1.png");	
+		crabImages[1] = loadImage("maincrab2.png");	
+		
+		fishImagesRight = new Image[2];
+		fishImagesRight[0] = loadImage("fish.png");
+		fishImagesRight[1] = loadImage("fish.png");
+		
+		
+		fishImagesLeft = new Image[2];
+		fishImagesLeft[0] = loadImage("fish_left.png");
+		fishImagesLeft[1] = loadImage("fish_left.png");
+		
 		backgroundImage = loadImage("ocean_background.jpg");
 		netImage = loadImage("net.png");
 		
@@ -256,15 +269,17 @@ public class CrabCatcherGame implements java.io.Serializable{
 		System.out.println("--game length: " + this.gameLengthInMilliseconds);
 		//initialize panel
 		initPanel();	
-		
+		System.out.println("panel initialized");
 		//sets content to this game's panel
 		bigpan=(JPanel) frame.getContentPane();
 		frame.setContentPane(this.panel);
 		frame.setVisible(true);
-		timer.start();		
+		System.out.println("--panel set to visible");
+		timer.start();	
+		System.out.println("timer started");
 	}
 	
-	public Image getAnimalImage(String type, int direction){
+	/*public Image getAnimalImage(String type, int direction){
 		if(type.equals("crab")){
 			return crabImage;
 		}
@@ -278,7 +293,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 			else{return fishImageRight;}
 		}
 		else return null;
-	}
+	}*/
 	
 	/**initializes the game's JPanel and layout
 	 * establishes the paintComponent method to be later called in repaint()
@@ -295,15 +310,14 @@ public class CrabCatcherGame implements java.io.Serializable{
 				//draw animals from newest to oldest (new animals will show behind ones)
 				for (int i = animals.size()-1; i >= 0; i--) {
 					Animal animal = animals.get(i);
-					//if (animal.isVisible()){ //*****changed this//
-						g.drawImage(getAnimalImage(animal.getTypeOfAnimal(), animal.getXdir()), animal.getXloc(), animal.getYloc(), null);
+						g.drawImage(animal.getImage(), animal.getXloc(), animal.getYloc(), null);
 						//if caught, draw net on top
 						if (animal.isCaught()){
 							g.drawImage(netImage, animal.getXloc(), animal.getYloc(), null);
-							reAddAnimal(animal);
-					//	}
+							reAddAnimal(animal);		
 					}										
 				}
+				
 				//Remove completed animations
 				Iterator<ResultAnimation> it = resultAnims.iterator();
 				while(it.hasNext()){
@@ -313,8 +327,14 @@ public class CrabCatcherGame implements java.io.Serializable{
 						g.drawImage(current.getCurrentImage(), current.getXloc(), current.getYloc(), null);
 					}
 				}
+				
+				//draw timer
+				g.setColor(Color.GREEN);
+				g.fillArc(0, 0, OverallGame.frameWidth/8, OverallGame.frameWidth/8, 90, 360-(int)(360.0*getTime()/getGameLength()));
+				
 			}
 		};
+		
 		panel.setLayout(null);
 		//return button
 		JButton Button = new JButton("Return");
@@ -326,7 +346,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 		panel.add(Button);
 		
 		
-		//time/score/lives
+		//Score
 		TS = new JLabel("Score: "+this.score);
 		TS.setBounds(0,0,bigGame.frameWidth,30);
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -340,16 +360,18 @@ public class CrabCatcherGame implements java.io.Serializable{
 		timeBar.setStringPainted(true);
 		timeBar.setBounds(0, 30, bigGame.frameWidth/4, bigGame.frameHeight/10);
 		panel.add(timeBar);
+
 		
 		//declare timer
 		//int timerTimeInMilliSeconds = 1000;
 		final int timerTimeInMilliSeconds = 33;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
+	    		System.out.println("-------timer called");
 	    		time += timerTimeInMilliSeconds;
 	    		updateGame();
 	    		updatePanel();
-	    		//System.out.println("time: " + time);
+	    		System.out.println("time: " + time);
 	    		//System.out.println("YOU'RE PLAYING CRAB CATCHER!!!");
 	    		
 	    		
@@ -415,18 +437,18 @@ public class CrabCatcherGame implements java.io.Serializable{
 		int typenum = r.nextInt(100);
 		String type = "crab";
 		int effect = crabScoreEffect;
-		Image img = crabImage;	
+		Image[] img = crabImages;	
 		
 		if (typenum >= 0 && typenum <= 55){
 			type = "mittencrab"; 
 			effect = mittencrabScoreEffect; 
-			img = mittencrabImage;
+			img = mittencrabImages;
 			}
 		
 		else if (typenum < 75){
 			type = "fish"; 
 			effect = fishScoreEffect;
-			img = fishImageRight;
+			img = fishImagesRight;
 			}
 		
 		//keeps animals in frame
@@ -434,8 +456,12 @@ public class CrabCatcherGame implements java.io.Serializable{
 		//int yloc = r.nextInt(bigGame.frameHeight - img.getHeight(null));
 		
 		Animal animal = new Animal(0, 0, type, effect, duration, visible);
-		animal.setImage(img); //note: also sets image height and width
+		animal.setImages(img); //note: also sets image height and width
 		animal.setRandomXDir();
+		//make sure fish goes in correct direction
+		if(animal.getXdir() == -1 && animal.getTypeOfAnimal().equals("fish")){
+			animal.setImages(fishImagesLeft);
+		}
 		//animal.setStep(50 - r.nextInt(30));
 		setOffScreenLoc(animal);
 		return animal;
@@ -549,6 +575,12 @@ public class CrabCatcherGame implements java.io.Serializable{
 		animal.setCaught(false);
 		animal.setOffScreen(false);
 		animal.setRandomXDir();
+		if(animal.getTypeOfAnimal().equals("fish")){
+			if(animal.getXdir() == 1){
+				animal.setImages(fishImagesRight);
+			}
+			else{animal.setImages(fishImagesLeft);}
+		}
 		animal = setOffScreenLoc(animal);
 		animals.add(animal);
 	}

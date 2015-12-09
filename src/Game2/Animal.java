@@ -28,7 +28,7 @@ public class Animal implements java.io.Serializable {
 	protected double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
 	protected boolean visible;
 	protected JLabel label; //temporary probably
-	protected Image image; //image of animal
+	protected Image[] images; //image of animal
 	protected int imageWidth = 250;
 	protected int imageHeight = 200;
 	protected boolean caught = false;
@@ -37,6 +37,7 @@ public class Animal implements java.io.Serializable {
 	private int ydir;
 	private int step; //speed of animal
 	private static int maxSpeed = 10;
+	private int picNum = 0;
 		
 	/**All-parameter constructor. Not used publicly.
 	 * @param xloc
@@ -53,7 +54,7 @@ public class Animal implements java.io.Serializable {
 	 */
 	private Animal(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
 			double displayDuration, double timeLeftOnScreen, boolean visible,
-			JLabel label, Image image, int imageWidth, int imageHeight) {
+			JLabel label, Image[] images, int imageWidth, int imageHeight) {
 		super();
 		this.xloc = xloc;
 		this.yloc = yloc;
@@ -63,7 +64,7 @@ public class Animal implements java.io.Serializable {
 		this.timeLeftOnScreen = timeLeftOnScreen;
 		this.visible = visible;
 		this.label = label;
-		this.image = image;
+		this.images = images;
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
 	}
@@ -90,6 +91,7 @@ public class Animal implements java.io.Serializable {
 		this.caught = false;
 		Random r = new Random();
 		this.step = (maxSpeed - r.nextInt(maxSpeed - 3));
+		this.images = new Image[2];
 	}
 	
 	//COPIER
@@ -98,7 +100,7 @@ public class Animal implements java.io.Serializable {
 	 */
 	public Animal copy(){
 		Animal copy = new Animal(xloc, yloc, typeOfAnimal, scoreEffect, displayDuration, visible);
-		copy.setImage(image); //note: also sets image height and width
+		copy.setImages(images); //note: also sets image height and width
 		return copy;
 	}
 	
@@ -114,8 +116,9 @@ public class Animal implements java.io.Serializable {
 		Random r = new Random();
 		//USE SCREEN WIDTH
 		xloc = r.nextInt(xbound - this.imageWidth);
-		yloc = r.nextInt(ybound);
+		yloc = r.nextInt(ybound - this.imageHeight);
 		visible = true;
+		picNum = 0;
 		//reset timeLeftOnScreen to display duration
 		timeLeftOnScreen = displayDuration;
 	}
@@ -167,6 +170,7 @@ public class Animal implements java.io.Serializable {
 	//MOVING METHODS
 	public void onTick(CrabCatcherGame game){
 		this.move(game);
+		this.updateAnimation((int)game.getTime());
 		this.offScreen = offScreen(game.getBigGame().frameWidth, game.getBigGame().frameHeight);
 	}
 	
@@ -188,6 +192,11 @@ public class Animal implements java.io.Serializable {
 	}
 
 	
+	public void updateAnimation(int time){
+		if(time % 5 == 0){
+			picNum = (picNum + 1) % images.length;
+		}
+	}
 
 	
 	//GETTERS & SETTERS
@@ -277,13 +286,13 @@ public class Animal implements java.io.Serializable {
 	}
 
 	public Image getImage() {
-		return image;
+		return images[picNum];
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
-		this.imageHeight = image.getHeight(null);
-		this.imageWidth = image.getWidth(null);
+	public void setImages(Image[] images) {
+		this.images = images;
+		this.imageHeight = this.images[0].getHeight(null);
+		this.imageWidth = this.images[0].getWidth(null);
 	}
 
 	public int getImageWidth() {
