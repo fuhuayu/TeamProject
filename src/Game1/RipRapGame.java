@@ -2,6 +2,7 @@ package Game1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,9 +27,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.plaf.ProgressBarUI;
 
 import Game2.CrabCatcherGame;
 import OverallGame.OverallGame;
+
 import java.util.Random;
 
 
@@ -45,6 +49,7 @@ public class RipRapGame implements java.io.Serializable{
 	/**
 	 * 
 	 */
+	public  static final int scalor = (OverallGame.frameHeight < OverallGame.frameWidth) ? OverallGame.frameHeight/8 : OverallGame.frameWidth/8;
 	int nx2,mark,nx,x;
 	private static final long serialVersionUID = 105L;
 	Sun sun;
@@ -90,6 +95,7 @@ public class RipRapGame implements java.io.Serializable{
 	JumpingBar jumpingBar;
 	ArrayList<MovingObject> objects;
 	ArrayList<MovingObject> objects2;
+	private JProgressBar timeBar;
 
 	//Constructor
 	/**
@@ -180,6 +186,9 @@ public class RipRapGame implements java.io.Serializable{
 	                g2d.drawImage(b, mark-nx2,0, null);
 	                g2d.drawImage(b, mark-nx2+b.getWidth(null),0, null);
 	                g2d.drawImage(image, at, null);
+	                g2d.setColor(Color.GREEN);
+					g2d.fillArc(scalor/1, scalor/2, scalor, scalor, 90, 360-360*(300-(int)(getTime()*10.0))/300);
+
 	            };
 			};
 		} catch(IOException e) {
@@ -197,6 +206,14 @@ public class RipRapGame implements java.io.Serializable{
 			}});
 		panel.add(Button);
 		
+//		//time bar
+//				timeBar = new JProgressBar(0, this.time);
+//				timeBar.setValue(this.time);
+//				timeBar.setString("");
+//				timeBar.setStringPainted(true);
+//				timeBar.setBounds(0, 0, this.frame.getWidth(), 6);
+//				
+//				panel.add(timeBar);
 		
 		int timerTimeInMilliSeconds = 20;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
@@ -207,9 +224,7 @@ public class RipRapGame implements java.io.Serializable{
 	    		updateMap();
 	    		updateMap2();
 	    		nx2+=1;
-//	    		timer.setDelay(1);
-//	    		updateMap2();
-//	    		timer.setDelay(20);
+	    		
 	    		if(getTime()<=0){
 	    			endGame();
 	    		}		
@@ -219,8 +234,9 @@ public class RipRapGame implements java.io.Serializable{
 		return true;
 	}
 	public boolean firstRunPanel(){
-		TS = new JLabel("Time:"+this.currtime+"    Score:"+this.score);
-		TS.setBounds(0,0,frame.getWidth(),30);
+		TS = new JLabel("Score:"+this.score);
+		//Time:"+this.currtime+"    
+		TS.setBounds(0,10,frame.getWidth(),30);
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
 		panel.add(TS);
 		jumpingBar.makeLabels(panel);
@@ -230,7 +246,8 @@ public class RipRapGame implements java.io.Serializable{
 		return true;
 	}
 	public boolean updatePanel(){
-		TS.setText("Time:"+this.currtime+"    Score:"+this.score);
+		TS.setText("Score:"+this.score);
+		//"Time:"+this.currtime+"    
 		return true;
 		
 	}
@@ -249,7 +266,10 @@ public class RipRapGame implements java.io.Serializable{
 		for(MovingObject m:objects2){
 			m.update();
 		}
+
 	}
+	
+
 	
 
 
