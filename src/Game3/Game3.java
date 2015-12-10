@@ -69,6 +69,7 @@ public class Game3 implements java.io.Serializable{
 	private ArrayList<JLabel> coins;
 	private JLabel	totalCoin = null;
 	private JLabel pipes = null;
+	public	Image	endImage;
 	JMenuItem grass = new JMenuItem(new ImageIcon("images/GrassIcon.png"));
 	JMenuItem mangrove = new JMenuItem(new ImageIcon("images/mangroveIcon.png"));
 	ActionListener grassListen	=	null;
@@ -83,7 +84,7 @@ public class Game3 implements java.io.Serializable{
 	 * @param bigGame - The handler for the entire game
 	 */
 	public Game3(OverallGame bigGame) {
-		this.time	=	40.0	;
+		this.time	=	5.0	;
 		this.score	=	0	;
 		this.money	=	900	;
 		this.plants	=		new ArrayList<Plant>();
@@ -114,7 +115,11 @@ public class Game3 implements java.io.Serializable{
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
-		
+		try {
+			this.endImage = ImageIO.read(new File("images/game1background.jpg")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
+		} catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
 		
 		
 	}
@@ -149,11 +154,14 @@ public class Game3 implements java.io.Serializable{
 				}
 				double x = 100.0 * ((400.0-10.0*getTime())/400.0);
 				float green   = (float) (x > 50 ? 1-2 * (x-50)/100.0 : 1.0);
+				if (green<0) {green=0;}
 				float red = (float) (x > 50 ? 1.0 : 2 * x/100.0);
 				Color timerColor = new Color(red, green, 0);
 				g.setColor(timerColor);
 				g.fillArc(scalor/4, scalor/4, scalor, scalor, 90, 360-360*(400-(int)(getTime()*10.0))/400);
-				
+				if (getTime() < 0) {
+					g.drawImage(endImage, 0, 0, OverallGame.frameWidth, OverallGame.frameHeight, getGameFrame());
+				}
 			}
 		};
 		gamePanel.setLayout(null);
@@ -189,8 +197,10 @@ public class Game3 implements java.io.Serializable{
 	    	public void actionPerformed(ActionEvent e) {
 	    		setTime(getTime() - (double)(timerInterval)/1000);
 	    		update();
-	    		moveRunoff();
-	    		setTickCount((getTickCount()+1)%500);
+	    		if (getTime() > 0) {
+		    		moveRunoff();
+		    		setTickCount((getTickCount()+1)%500);
+	    		}
 			}
 	    });
 		
@@ -204,27 +214,28 @@ public class Game3 implements java.io.Serializable{
 	 * This includes the time remaining, character actions and movement, and updating the score and money
 	 */
 	public void update() {
-		
-		if (getTime() % 10 < 0.1) {
-			addScore(10);
-		}
-		for (Mussel current : getMussels()) {
-			current.grow();
-		}
-		if (getTickCount() % 10 == 0) {
-			timeAndScore.setText("Score:"+getScore());
-			
-			
-		}
-		if (getTickCount() % 6 == 0) {
-			Random rand = new Random();
-			if (rand.nextInt(10) > 8) {
-				addRunoff();
+		if (getTime() > 0) {
+			if (getTime() % 10 < 0.1) {
+				addScore(10);
+			}
+			for (Mussel current : getMussels()) {
+				current.grow();
+			}
+			if (getTickCount() % 10 == 0) {
+				timeAndScore.setText("Score:"+getScore());
+				
+				
+			}
+			if (getTickCount() % 6 == 0) {
+				Random rand = new Random();
+				if (rand.nextInt(10) > 8) {
+					addRunoff();
+				}
 			}
 		}
 		gamePanel.repaint();
 		gameFrame.setVisible(true);
-		if(getTime()<=0){
+		if(getTime()<=-3){
 			endGame();
 		}
 		
