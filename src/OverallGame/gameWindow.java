@@ -199,7 +199,7 @@ public class gameWindow implements Serializable{
 		currentScore = new JLabel("Overall Score: " + bigGame.getOverallScore());
 		currentScore.setBounds(new Rectangle(frame.getContentPane().getWidth()/3,0,frame.getContentPane().getWidth()/3,50));
 		currentScore.setHorizontalAlignment((int)JPanel.CENTER_ALIGNMENT);
-		currentScore.setFont(new Font("Serif", Font.PLAIN, 50));
+		currentScore.setFont(new Font("Serif", Font.PLAIN, 35));
 		currentScore.setVisible(true);
 		frame.getContentPane().add(currentScore);
 		frame.repaint();
@@ -264,8 +264,8 @@ public class gameWindow implements Serializable{
 	
 	public void gameAnim() {
 		time++;
-		if (time	%	12	==	0) {
-			if (time	%	36	==	0){
+		if (time	%	35	==	0) {
+			if (time	%	105	==	0){
 				timer.stop();
 				time	=	0;
 				getFrame().setContentPane(tempPanel);
@@ -281,9 +281,9 @@ public class gameWindow implements Serializable{
 					bigGame.setGame3(new Game3(bigGame));
 				}
 			}
-			else	if	(screens.size()	>=	time/12){
+			else	if	(screens.size()	>=	time/35){
 				currImage.setVisible(false);
-				currImage	=	new	JLabel(new	ImageIcon(screens.get(time/12)));
+				currImage	=	new	JLabel(new	ImageIcon(screens.get(time/35)));
 				currImage.setVisible(true);
 				getFrame().add(currImage);
 			}

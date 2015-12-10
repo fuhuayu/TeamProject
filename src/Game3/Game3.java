@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,6 +30,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JProgressBar;
+import javax.swing.border.Border;
 
 import OverallGame.OverallGame;
 
@@ -145,7 +147,11 @@ public class Game3 implements java.io.Serializable{
 						g.drawImage(current.getImages().get(i), current.getFront() + scalor*i, current.getRow()*(scalor) + yOffset, null);
 					}
 				}
-				g.setColor(Color.GREEN);
+				double x = 100.0 * ((400.0-10.0*getTime())/400.0);
+				float green   = (float) (x > 50 ? 1-2 * (x-50)/100.0 : 1.0);
+				float red = (float) (x > 50 ? 1.0 : 2 * x/100.0);
+				Color timerColor = new Color(red, green, 0);
+				g.setColor(timerColor);
 				g.fillArc(scalor/4, scalor/4, scalor, scalor, 90, 360-360*(400-(int)(getTime()*10.0))/400);
 				
 			}
@@ -162,9 +168,14 @@ public class Game3 implements java.io.Serializable{
 		
 		
 		gamePanel.add(Button);
-		timeAndScore = new JLabel("			"+"    Score:"+getScore());
-		timeAndScore.setBounds(scalor,0,frame.getWidth(),30);
+		timeAndScore = new JLabel("Score:"+getScore());
+		timeAndScore.setBounds(4*scalor/3,0,2*scalor,scalor);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
+		timeAndScore.setBackground(new Color(223, 196, 99));
+		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+		timeAndScore.setBorder(BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
+		timeAndScore.setOpaque(true);
 		gamePanel.add(timeAndScore);
 		final int timerInterval = 33;
 		
@@ -201,7 +212,7 @@ public class Game3 implements java.io.Serializable{
 			current.grow();
 		}
 		if (getTickCount() % 10 == 0) {
-			timeAndScore.setText("			"+"    Score:"+getScore());
+			timeAndScore.setText("Score:"+getScore());
 			
 			
 		}
@@ -475,8 +486,8 @@ public class Game3 implements java.io.Serializable{
 			jl.setBounds(xOffset+(coins.indexOf(jl))*scalor/3, 0, scalor/3, scalor/3);
 			gamePanel.add(jl);
 			totalCoin = new JLabel(" X" + getMoney()/100);
-			totalCoin.setBounds(((xOffset+scalor/3)+scalor/3),0,scalor/3,scalor/3);
-			totalCoin.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,14));
+			totalCoin.setBounds(((xOffset+scalor/3)+scalor/3),0,scalor,scalor/3);
+			totalCoin.setFont(new Font(Font.SANS_SERIF,Font.BOLD,30));
 			gamePanel.add(totalCoin);
 			
 		}
@@ -516,7 +527,7 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void addScore(int score) {
 		this.score += score;
-		timeAndScore.setText("			"+"    Score:"+getScore());
+		timeAndScore.setText("Score:"+getScore());
 	}
 	
 	/**
