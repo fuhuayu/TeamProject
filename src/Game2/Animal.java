@@ -169,11 +169,8 @@ public class Animal implements java.io.Serializable {
 	
 	//MOVING METHODS
 	public void onTick(CrabCatcherGame game){
-		System.out.println("onTick Animal");
 		this.move(game);
-		System.out.println("--moved, about to update anim");
 		this.updateAnimation((int)game.getTime());
-		System.out.println("--updated Animation");
 		this.offScreen = offScreen(game.getBigGame().frameWidth, game.getBigGame().frameHeight);
 	}
 	
@@ -181,7 +178,6 @@ public class Animal implements java.io.Serializable {
 		ydir = 0;
 		xloc += xdir*step;
 		yloc += ydir*step;
-		//System.out.println("moooooooooooooooooooooooovin'");
 	}
 	
 	/**returns true if the Animal is off screen (accounting for imageWidth)

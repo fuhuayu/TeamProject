@@ -25,6 +25,7 @@ import java.util.ListIterator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,7 +33,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.border.Border;
 
 import Game3.Mussel;
 import OverallGame.OverallGame;
@@ -230,14 +233,13 @@ public class CrabCatcherGame implements java.io.Serializable{
 			current.onTick(this);
 			if (current.isOffScreen()){
 				reAddAnimal(current);
-				System.out.println("An offscreen animal was re-added");
+				//System.out.println("An offscreen animal was re-added");
 			}
 		}
 		
 		//update anims
 		Iterator<ResultAnimation> it = resultAnims.iterator();
 		while(it.hasNext()){
-			//System.out.println("updating animation");
 			it.next().update((int)time);
 		}
 	}
@@ -264,27 +266,12 @@ public class CrabCatcherGame implements java.io.Serializable{
 		System.out.println("timer started");
 	}
 	
-	/*public Image getAnimalImage(String type, int direction){
-		if(type.equals("crab")){
-			return crabImage;
-		}
-		else if (type.equals("mittencrab")){
-			return mittencrabImage;
-		}
-		else if (type.equals("fish")){
-			if(direction == -1){
-				return fishImageLeft;
-			}
-			else{return fishImageRight;}
-		}
-		else return null;
-	}*/
-	
 	/**initializes the game's JPanel and layout
 	 * establishes the paintComponent method to be later called in repaint()
 	 * @return
 	 */
 	public boolean initPanel(){
+		
 		//layout and draw things
 		panel = new JPanel(){
 			@Override
@@ -314,7 +301,11 @@ public class CrabCatcherGame implements java.io.Serializable{
 				}
 				
 				//draw timer
-				g.setColor(Color.GREEN);
+				double x = 100 * getTime()/getGameLength();
+				float green   = (float) (x > 50 ? 1-2 * (x-50)/100.0 : 1.0);
+				float red = (float) (x > 50 ? 1.0 : 2 * x/100.0);
+				Color timerColor = new Color(red, green, 0);
+				g.setColor(timerColor);
 				g.fillArc(0, 0, OverallGame.frameWidth/8, OverallGame.frameWidth/8, 90, 360-(int)(360.0*getTime()/getGameLength()));
 				
 			}
@@ -332,34 +323,27 @@ public class CrabCatcherGame implements java.io.Serializable{
 		
 		
 		//Score
-		TS = new JLabel("Score: "+this.score);
-		TS.setBounds(0,0,bigGame.frameWidth,30);
+		TS = new JLabel("Score: "+this.score, SwingConstants.CENTER);
+		TS.setOpaque(true);
+		TS.setBackground(new Color(223, 196, 99));
+		TS.setBounds((int)(OverallGame.frameWidth/7), 0, (int)(bigGame.frameWidth/7), (int)(bigGame.frameWidth/16));
 		TS.setFont(new Font("Serif", Font.PLAIN, 30));
+		
+		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+		TS.setBorder(BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
 		panel.add(TS);
 		
-		
-		//time bar
-		timeBar = new JProgressBar(0, (int)gameLengthInMilliseconds);
-		timeBar.setValue((int)gameLengthInMilliseconds);
-		timeBar.setString("TIME");
-		timeBar.setStringPainted(true);
-		timeBar.setBounds(0, 30, bigGame.frameWidth/4, bigGame.frameHeight/10);
-		panel.add(timeBar);
-
-		
+	
 		//declare timer
 		//int timerTimeInMilliSeconds = 1000;
 		final int timerTimeInMilliSeconds = 33;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
-	    		System.out.println("-------timer called");
 	    		time += timerTimeInMilliSeconds;
 	    		updateGame();
 	    		updatePanel();
-	    		System.out.println("time: " + time);
-	    		//System.out.println("YOU'RE PLAYING CRAB CATCHER!!!");
-	    		
-	    		
+	    		//System.out.println("time: " + time);
 			}
 	    });
 		
@@ -567,7 +551,6 @@ public class CrabCatcherGame implements java.io.Serializable{
 		}
 		animal = setOffScreenLoc(animal);
 		animals.add(animal);
-		System.out.println("An animal was re-added");
 	}
 	
 	
