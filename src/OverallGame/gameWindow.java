@@ -89,30 +89,32 @@ public class gameWindow implements Serializable{
 		frame.setBounds(100, 100, OverallGame.frameWidth, OverallGame.frameHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		gameStartAndEnd();
-		timer = new Timer(1000, new ActionListener(){
-	    	public void actionPerformed(ActionEvent e) {
-	    		time++;
-	    		if (time > 4) {
-	    			System.out.println("yo");
-	    			time	=	0;
-	    			openImage = null;
-		    		initialize();
-		    		timer.stop();
-	    		}
-	    		else {
-	    			gameStartAndEnd();
-	    		}
-			}
-	    });
-		timer.start();
+//		gameStartAndEnd();
+//		timer = new Timer(1000, new ActionListener(){
+//	    	public void actionPerformed(ActionEvent e) {
+//	    		time++;
+//	    		if (time > 4) {
+//	    			System.out.println("yo");
+//	    			time	=	0;
+//	    			openImage = null;
+//		    		initialize();
+//		    		timer.stop();
+//	    		}
+//	    		else {
+//	    			gameStartAndEnd();
+//	    		}
+//			}
+//	    });
+//		timer.start();
+		initialize();
+		
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
+		frame.setVisible(true);
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -133,16 +135,16 @@ public class gameWindow implements Serializable{
 				}
 			}
 		});
-		ImageIcon titleIcon	=	null;
-		try {
-			Image	titleImg = ImageIO.read(new File("images/Title.png")).getScaledInstance(OverallGame.frameWidth/2, OverallGame.frameHeight/7, 1);
-			titleIcon	=	new ImageIcon(titleImg);
-		} catch(IOException e) {
-			System.out.println("Read Error: " + e.getMessage());
-		}
-		JLabel	title	=	new JLabel(titleIcon);
-		getFrame().getContentPane().add(title);
-		title.setBounds(OverallGame.frameWidth*3/10, 50, OverallGame.frameWidth/2, OverallGame.frameHeight/7);
+//		ImageIcon titleIcon	=	null;
+//		try {
+//			Image	titleImg = ImageIO.read(new File("images/Title.png")).getScaledInstance(OverallGame.frameWidth/2, OverallGame.frameHeight/7, 1);
+//			titleIcon	=	new ImageIcon(titleImg);
+//		} catch(IOException e) {
+//			System.out.println("Read Error: " + e.getMessage());
+//		}
+//		JLabel	title	=	new JLabel(titleIcon);
+//		getFrame().getContentPane().add(title);
+//		title.setBounds(OverallGame.frameWidth*3/10, 50, OverallGame.frameWidth/2, OverallGame.frameHeight/7);
 		
 		JButton btnStartGame = new JButton();	
 		ImageIcon imgGame1 = new ImageIcon(getGame1Button());
