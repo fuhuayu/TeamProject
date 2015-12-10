@@ -22,7 +22,7 @@ public class Crab extends MovingObject {
 	int mode;
 	float currheight,speed;
 	int picNum = 0;
-	ImageIcon[] icons = new ImageIcon[6];
+	ImageIcon[] icons = new ImageIcon[2];
 	int tick=0;
 
 	
@@ -37,8 +37,8 @@ public class Crab extends MovingObject {
 		this.speed=0;
 		this.currheight=0;
 		try {
-			for(int i=1;i<7;i++){
-			icons[i-1] = new ImageIcon(ImageIO.read(new File("images/crab"+i+".png")).getScaledInstance(this.getSize(), this.getSize(), 1));
+			for(int i=1;i<3;i++){
+			icons[i-1] = new ImageIcon(ImageIO.read(new File("images/maincrab"+i+".png")).getScaledInstance(this.getSize()*500/322, this.getSize(), 1));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -70,7 +70,7 @@ public class Crab extends MovingObject {
 	}
 	public void update(){
 		if(tick > 5){
-			picNum = (picNum + 1) % 6;
+			picNum = (picNum + 1) % 2;
 			label.setIcon(icons[picNum]);
 			tick =0;
 			}
