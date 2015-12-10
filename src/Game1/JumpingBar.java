@@ -128,7 +128,7 @@ public class JumpingBar implements Serializable{
 		if(distance<=0){
 			if(passed==false){
 			this.game.stone.kicked();
-			this.game.score-=100;
+			if(this.game.score>0)this.game.score-=100;
 			this.game.crab.clicked(0);
 			}
 			this.barloc=Math.abs(distance);
