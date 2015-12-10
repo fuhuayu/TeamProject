@@ -219,33 +219,18 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 */
 	public void updateGame(){
 		//check if lives == 0, or time = gameLength, which cause gameOver
-		if (lives == 0 || time >= gameLengthInMilliseconds){
+		if (time >= gameLengthInMilliseconds){
     		//System.out.println("time is " + time + ">= " + gameLength);
 			endGame();
 		}
-		//updates game's timed aspects - call animal.onTick() for all animals
-		//(remove animals whose times have expired, randomly add animals by making invisible animals visible)
-//		for (Animal each: animals){
-//			//each.onTick(this);
-//		}
-		//ListIterator<Animal> it = animals.listIterator(); //****changed this
-		//while (it.hasNext()){ 
 			
 		for (int i = animals.size()-1; i >= 0; i--) {
 		Animal current = animals.get(i);	
 			//tick all animals
-			//Animal current = it.next();
 			current.onTick(this);
-			updatePanel();
-			//remove expired animals or remove animals that have gone offscreen
-			//if (current.getTimeLeftOnScreen() <= 0){ //*****changed this//
 			if (current.isOffScreen()){
-				/*Animal copy = current.copy();
-				it.remove();
-				updatePanel();
-				copy.regenerateAnimal(bigGame.frameWidth, bigGame.frameHeight); //regenerate as a new random animal
-				it.add(setUniqueLocAnimal(copy));*/
 				reAddAnimal(current);
+				System.out.println("An offscreen animal was re-added");
 			}
 		}
 		
@@ -386,7 +371,6 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 */
 	public boolean updatePanel(){
 		//visual updates
-		if (timeBar != null){timeBar.setValue((int) (this.gameLengthInMilliseconds - this.time));}
 		TS.setText("Score: "+this.score);	
 		frame.repaint();
 		
@@ -583,6 +567,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 		}
 		animal = setOffScreenLoc(animal);
 		animals.add(animal);
+		System.out.println("An animal was re-added");
 	}
 	
 	
