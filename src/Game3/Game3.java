@@ -116,7 +116,7 @@ public class Game3 implements java.io.Serializable{
 			System.out.println("Read Error: " + e.getMessage());
 		}
 		try {
-			this.endImage = ImageIO.read(new File("images/game1background.jpg")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
+			this.endImage = ImageIO.read(new File("images/Ending.png")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
@@ -160,6 +160,11 @@ public class Game3 implements java.io.Serializable{
 				g.setColor(timerColor);
 				g.fillArc(scalor/4, scalor/4, scalor, scalor, 90, 360-360*(400-(int)(getTime()*10.0))/400);
 				if (getTime() < 0) {
+					timeAndScore.setVisible(false);
+					if(totalCoin != null) {
+						totalCoin.setVisible(false);
+					}
+					pipes.setVisible(false);
 					g.drawImage(endImage, 0, 0, OverallGame.frameWidth, OverallGame.frameHeight, getGameFrame());
 				}
 			}
@@ -235,7 +240,7 @@ public class Game3 implements java.io.Serializable{
 		}
 		gamePanel.repaint();
 		gameFrame.setVisible(true);
-		if(getTime()<=-3){
+		if(getTime()<=-5){
 			endGame();
 		}
 		

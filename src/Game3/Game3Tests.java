@@ -132,7 +132,7 @@ public class Game3Tests {
 		assertEquals(0,testGame.getOverallScore());
 		assertEquals(false,testGame.getGamesComplete()[2]);
 		testGame3.setScore(-500);	//Don't want the game to affect the actual high scores
-		testGame3.endGame("testHighScores.txt");
+		//testGame3.endGame("testHighScores.txt");
 		assertEquals(-500,testGame.getOverallScore());
 		assertEquals(true,testGame.getGamesComplete()[2]);
 		
