@@ -186,8 +186,15 @@ public class RipRapGame implements java.io.Serializable{
 	                g2d.drawImage(b, mark-nx2,0, null);
 	                g2d.drawImage(b, mark-nx2+b.getWidth(null),0, null);
 	                g2d.drawImage(image, at, null);
-	                g2d.setColor(Color.GREEN);
-					g2d.fillArc(scalor/1, scalor/2, scalor, scalor, 90, 360-360*(300-(int)(getTime()*10.0))/300);
+	                
+	                
+	                double x = 100 * (time-currtime)/time;
+					float green   = (float) (x > 50 ? 1-2 * (x-50)/100.0 : 1.0);
+					float red = (float) (x > 50 ? 1.0 : 2 * x/100.0);
+					Color timerColor = new Color(red, green, 0);
+					g2d.setColor(timerColor);
+					g2d.fillArc(scalor/1, scalor/2, scalor/1, scalor/1, 90, (int)(360-360*(300-(getTime()*10.0))/300));
+					//g2d.fillArc(scalor/1, scalor/2, scalor, scalor, 90, 360-360*(300-(int)(getTime()*10.0))/300);
 
 	            };
 			};

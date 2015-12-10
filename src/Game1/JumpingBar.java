@@ -66,7 +66,7 @@ public class JumpingBar implements Serializable{
 		p.add(whitebox);
 		p.add(greenbox);
 		
-		JButton jumpButton = new JButton("MOVE");
+		JButton jumpButton = new JButton("JUMP");
 		jumpButton.setBounds((int) (w*0.5), h+h*(100)/12, w*2, h*2);
 		jumpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
