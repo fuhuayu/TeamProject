@@ -76,9 +76,9 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private Image[] fishImagesLeft;
 	private Image backgroundImage;
 	private Image netImage;
-	private static int mittencrabScoreEffect = 100;
-	private static int crabScoreEffect = -75;
-	private static int fishScoreEffect = -50;
+	private static int mittencrabScoreEffect = 20;
+	private static int crabScoreEffect = -15;
+	private static int fishScoreEffect = -10;
 	private JProgressBar timeBar;
 	private int resultSize = 100;// CHANGE THIS TO SET IN GAME
 	private static int frameRate = 500; //frames per interval in milliseconds
@@ -375,6 +375,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 		timer.stop();
 		//set big game running to true
 		bigGame.setGamesRunning(0);
+		bigGame.getGamesComplete()[1] = true;
 		//return to big game
 		frame.setContentPane(bigpan);
 		frame.getContentPane().setVisible(true);
