@@ -141,8 +141,8 @@ public class RipRapGame implements java.io.Serializable{
 		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
 		objects2.add(stone);
-		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.75),this.panel.getWidth()/8);
-		crab.addItem(panel, "images/crab1.png");
+		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.8),this.panel.getWidth()/13);
+		crab.addItem(panel, "images/maincrab1.png");
 		objects.add(crab);
 		for(int i=1;i<4;i++){
 			Cloud cloud = new Cloud(this.panel.getWidth()/10,this.panel.getWidth(),(int)(this.panel.getHeight()*0.2));
@@ -169,7 +169,7 @@ public class RipRapGame implements java.io.Serializable{
 	                AffineTransform at = new AffineTransform();
 
 	                // 4. translate it to the center of the component
-	                at.translate(getWidth()/2, crab.getPosition().getY()*0.9+image.getHeight());
+	                at.translate(getWidth()/2, crab.getPosition().getY()*0.8+image.getHeight());
 
 	                // 3. do the actual rotation
 	                at.rotate(Math.PI/-19);
