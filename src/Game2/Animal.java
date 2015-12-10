@@ -27,7 +27,6 @@ public class Animal implements java.io.Serializable {
 	protected double displayDuration; //length of time the animal should stay on screen (constant)
 	protected double timeLeftOnScreen; //how long the animal has left on screen (decreases with time); default is displayDuration
 	protected boolean visible;
-	protected JLabel label; //temporary probably
 	protected Image[] images; //image of animal
 	protected int imageWidth = 250;
 	protected int imageHeight = 200;
@@ -53,8 +52,7 @@ public class Animal implements java.io.Serializable {
 	 * @param imageHeight
 	 */
 	private Animal(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
-			double displayDuration, double timeLeftOnScreen, boolean visible,
-			JLabel label, Image[] images, int imageWidth, int imageHeight) {
+			double displayDuration, double timeLeftOnScreen, boolean visible, Image[] images, int imageWidth, int imageHeight) {
 		super();
 		this.xloc = xloc;
 		this.yloc = yloc;
@@ -63,7 +61,6 @@ public class Animal implements java.io.Serializable {
 		this.displayDuration = displayDuration;
 		this.timeLeftOnScreen = timeLeftOnScreen;
 		this.visible = visible;
-		this.label = label;
 		this.images = images;
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
@@ -95,7 +92,9 @@ public class Animal implements java.io.Serializable {
 	}
 	
 	//COPIER
-	/**returns a copy of the animal
+	/**returns a copy of the animal that shares the major values:
+	 * [location, type, scoreEffect, displayDuration, visibility, image]
+	 * 
 	 * @return
 	 */
 	public Animal copy(){
@@ -107,7 +106,7 @@ public class Animal implements java.io.Serializable {
 	//METHODS
 	/**
 	 * Call this method to regenerate animal after it is caught or time on screen expires
-	 * makes the animal invisible, resets its timeLeftOnScreen to display duration, and sets location randomly
+	 * makes the animal invisible, resets its timeLeftOnScreen, and sets offscreen location randomly
 	 */
 	public void regenerateAnimal(int xbound, int ybound){
 		//sets animal visibility to false (could use an animation here)
@@ -121,36 +120,6 @@ public class Animal implements java.io.Serializable {
 		picNum = 0;
 		//reset timeLeftOnScreen to display duration
 		timeLeftOnScreen = displayDuration;
-	}
-	
-	
-
-
-	/**Returns true if the objects' image rectangles intersect
-	 * @param obj MUST be an object with x, y loc and imageWidth/Height getters
-	 * @return
-	 */
-	public boolean overlapsWith(Object obj){
-		Animal other = (Animal)(obj);
-		if (other == null){return false;}		
-		else{
-		Rectangle thisRect = new Rectangle(xloc, yloc, imageWidth, imageHeight);
-		Rectangle otherRect = new Rectangle(other.getXloc(), other.getYloc(), other.getImageWidth(), other.getImageHeight());
-		return (thisRect.intersects(otherRect));}
-	}
-	
-	/**
-	 * updates animal's timed elements - decreases timeLeftOnScreen
-	 */
-	public void ORIGINALonTick(CrabCatcherGame game){
-		//decrease animal's timer; if timer is 0, regenerate animal
-		if (timeLeftOnScreen <= 0){
-			//game.getAnimals().remove(this);
-			//regenerateAnimal(); //regenerate as a new random animal
-			//game.addUniqueLocAnimal(this);
-			//this.expired = true;
-		}
-		else {timeLeftOnScreen--;}
 	}
 	
 	
@@ -168,12 +137,18 @@ public class Animal implements java.io.Serializable {
 	}
 	
 	//MOVING METHODS
+	/** updates animal's timed elements (movement, animation, and offScreen check)
+	 * @param game - the game to update
+	 */
 	public void onTick(CrabCatcherGame game){
 		this.move(game);
 		this.updateAnimation((int)game.getTime());
 		this.offScreen = offScreen(game.getBigGame().frameWidth, game.getBigGame().frameHeight);
 	}
 	
+	/** increases animal's location based on xdir and ydir (horizontal only)
+	 * @param game - game to update
+	 */
 	public void move(CrabCatcherGame game){
 		ydir = 0;
 		xloc += xdir*step;
@@ -193,6 +168,9 @@ public class Animal implements java.io.Serializable {
 
 
 	
+	/** updates PicNum (current animation frame)
+	 * @param time - the current game time in milliseconds
+	 */
 	public void updateAnimation(int time){
 		if(time % 5 == 0){
 			picNum = (picNum + 1) % images.length;
@@ -276,14 +254,6 @@ public class Animal implements java.io.Serializable {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
-	}
-
-	public JLabel getLabel() {
-		return label;
-	}
-
-	public void setLabel(JLabel label) {
-		this.label = label;
 	}
 
 	public Image getImage() {
