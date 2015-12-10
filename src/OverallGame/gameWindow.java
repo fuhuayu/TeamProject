@@ -111,7 +111,10 @@ public class gameWindow implements Serializable{
 				}
 			}
 		});
-		
+		frame.setBounds(100, 100, OverallGame.frameWidth, OverallGame.frameHeight);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
 		
 			
 		
