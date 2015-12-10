@@ -10,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
-import OverallGame.OverallGame;
 
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong
@@ -25,7 +24,7 @@ public class Plant extends Tile implements Serializable{
 	int 	strength ;
 	int 	health 	 ;
 	String 	type ;
-	Image   image;
+	Image	[]   image;
 	
 	/**
 	 * Constructor
@@ -40,26 +39,39 @@ public class Plant extends Tile implements Serializable{
 		this.row = row ;
 		this.col = col ;
 		this.type	=	type	;
-		this.strength	=	(type.equals("Grass"))	?	4	:	2	;
-		this.health		=	(type.equals("Grass"))	?	250	:	400	;
-		this.image=null;
+		this.strength	=	(type.equals("Grass"))	?	3	:	5	;
+		this.health		=	(type.equals("Grass"))	?	80	:	80	;
+		this.image= new Image[3];
 		loadPlantImages();}
 	
-	public Image loadImage(String filename) {
+	public Image[] loadImage(String [] filename) {
 		try {
-			this.image = ImageIO.read(new File("images/" + filename)).getScaledInstance(Game3.scalor,Game3.scalor,1);
+			Image	img1 = ImageIO.read(new File("images/" + filename[0])).getScaledInstance(Game3.scalor,Game3.scalor,1);
+			Image	img2 = ImageIO.read(new File("images/" + filename[1])).getScaledInstance(Game3.scalor,Game3.scalor,1);
+			Image	img3 = ImageIO.read(new File("images/" + filename[2])).getScaledInstance(Game3.scalor,Game3.scalor,1);
+			image[0]	=	img1;
+			image[1]	=	img2;
+			image[2]	=	img3;
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
+		
 		return image;
 	}
 	
 	public void loadPlantImages(){
+		String	[]	file	=	new String[3];
 		if(type=="Grass"){
-			loadImage("Grass.png");
+			file[0]	=	"Grass.png";
+			file[1]	=	"Grass2.png";
+			file[2]	=	"Grass3.png";
+			loadImage(file);
 		}
 		else {
-			loadImage("mangrove.png");
+			file[0]	=	"mangrove.png";
+			file[1]	=	"mangrove2.png";
+			file[2]	=	"mangrove3.png";
+			loadImage(file);
 		}
 	}
 	
@@ -114,7 +126,15 @@ public class Plant extends Tile implements Serializable{
 		this.type = type;
 	}
 	public Image getImage() {
-		return image;
+		if (getHealth() > 80*2/3) {
+			return image[0];
+		}
+		if (getHealth() > 80/3) {
+			return image[1];
+		}
+		else {
+			return image[2];
+		}
 	}
 	public String toString(){
 		return "Plants [ Row: "+row+", Col: "+col+", Strength: "+strength+", Health: "+health+", Type: "+type+"]";
@@ -164,7 +184,7 @@ public class Plant extends Tile implements Serializable{
 	}
 
 	public Plant(int row, int col, int row2, int col2, int strength,
-			int health, String type, Image image) {
+			int health, String type, Image[] image) {
 		super(row, col);
 		row = row2;
 		col = col2;

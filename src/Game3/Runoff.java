@@ -28,6 +28,7 @@ public class Runoff implements java.io.Serializable{
 	ArrayList<Integer> health ;
 	int ticksSinceMoved ;
 	ArrayList<Image> images;
+	public boolean hasDied	=	false;
 	
 	/**
 	 * Constructor
@@ -40,8 +41,8 @@ public class Runoff implements java.io.Serializable{
 		this.row = row ;
 		this.front = front ;
 		this.length = 1 ;
-		this.strength	=	2	;
-		this.health		=	new ArrayList<Integer>()	; health.add(250);
+		this.strength	=	1	;
+		this.health		=	new ArrayList<Integer>()	; health.add(50);
 		this.ticksSinceMoved = 0;
 		this.images = new ArrayList<Image>();
 		try {
@@ -60,7 +61,7 @@ public class Runoff implements java.io.Serializable{
 		return (row == other.getRow() && front == other.getFront());
 	}
 	public void grow() {
-		if (getLength() < 5 && getHealth().get(0) > 0) {
+		if (getLength() < 5 && getHealth().get(0) > 0 && hasDied == false) {
 			setLength(getLength()+1) ;
 			getHealth().add(150);
 			try {
@@ -77,6 +78,7 @@ public class Runoff implements java.io.Serializable{
 		setLength(getLength()-1);
 		getImages().remove(0);
 		setFront(getFront()+Game3.scalor);
+		hasDied	=	true;
 	}
 
 	/**

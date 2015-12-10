@@ -166,7 +166,7 @@ public class Game3 implements java.io.Serializable{
 		timeAndScore.setBounds(scalor,0,frame.getWidth(),30);
 		timeAndScore.setFont(new Font("Serif", Font.PLAIN, 30));
 		gamePanel.add(timeAndScore);
-		final int timerInterval = 100;
+		final int timerInterval = 33;
 		
 		for(int i=1;i<5;i++){
 		ImageIcon pipeic = new ImageIcon("images/Pipe.png");
@@ -205,7 +205,6 @@ public class Game3 implements java.io.Serializable{
 			
 			
 		}
-		if (timeBar != null){timeBar.setValue((int) ((this.time*100) - this.tickCount));}
 		if (getTickCount() % 6 == 0) {
 			Random rand = new Random();
 			if (rand.nextInt(10) > 8) {

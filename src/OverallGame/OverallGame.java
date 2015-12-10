@@ -134,7 +134,6 @@ public class OverallGame implements Serializable{
 		int insertLoc = 6 ;
 		for (int i = 0 ; i < lines.length ; i++) {
 			int score = Integer.parseInt(lines[i].split("\t")[1]);
-			System.out.println(score);
 			if (getOverallScore() > score) {
 				insertLoc = i;
 				i = lines.length ;
