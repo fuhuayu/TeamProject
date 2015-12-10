@@ -27,6 +27,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import Game1.RipRapGame;
 import Game2.CrabCatcherGame;
@@ -49,6 +50,9 @@ public class gameWindow implements Serializable{
 	public	JLabel	currImage;
 	public 	int		time	=	0;
 	public JPanel	tempPanel;
+	public	JLabel	openImage;
+	public	Image	closedImage;
+	public boolean hasBeenShown	=	false;
 	/**
 	 * Launch the application.
 	 */
@@ -107,10 +111,10 @@ public class gameWindow implements Serializable{
 				}
 			}
 		});
-		frame.setBounds(100, 100, OverallGame.frameWidth, OverallGame.frameHeight);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		frame.setVisible(true);
+		
+		
+			
+		
 		JButton btnStartGame = new JButton();	
 		ImageIcon imgGame1 = new ImageIcon(getGame1Button());
 		btnStartGame.setIcon(imgGame1);
@@ -202,8 +206,38 @@ public class gameWindow implements Serializable{
 		currentScore.setFont(new Font("Serif", Font.PLAIN, 35));
 		currentScore.setVisible(true);
 		frame.getContentPane().add(currentScore);
+		
 		frame.repaint();
 	}
+	
+	public void gameStartAndEnd() {
+		frame = new JFrame();
+		frame.setResizable(false);
+		frame.setBounds(100, 100, OverallGame.frameWidth, OverallGame.frameHeight);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
+		frame.setContentPane(new JPanel());
+		if (bigGame.getGamesComplete()[2] == true) {
+			
+		}
+		else if (hasBeenShown	==	false){
+			hasBeenShown	=	true;
+			openImage	=	new JLabel();
+			try {
+				Image openImageIcon	=	ImageIO.read(new File("images/g1b1.png")).getScaledInstance(OverallGame.frameWidth, OverallGame.frameHeight, 1);
+				openImage.setIcon(new ImageIcon(openImageIcon));
+			}
+			catch(IOException e) {
+				System.out.println("Read Error: " + e.getMessage());
+			}
+			openImage.setBounds(0, 0, OverallGame.frameWidth, OverallGame.frameHeight);
+			openImage.setVisible(true);
+			getFrame().getContentPane().add(openImage);
+			getFrame().getContentPane().setVisible(true);
+		}
+					
+		}
 	public void gameIntros() {
 		screens	=	new	ArrayList<Image>();
 		if (bigGame.getGamesRunning() == 1) {
