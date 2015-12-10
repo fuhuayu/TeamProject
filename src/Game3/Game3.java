@@ -243,7 +243,7 @@ public class Game3 implements java.io.Serializable{
 				if (current.getStage() ==  100) {
 					if ((xLoc > current.getXLoc() && xLoc < current.getXLoc() + (18/5)*scalor) &&
 						(yLoc > current.getYLoc() && yLoc < current.getYLoc() + 2*scalor)) {
-						addScore(50); addMoney(100);
+						addScore(100); addMoney(100);
 						removal = current;
 					}
 				}
@@ -405,6 +405,7 @@ public class Game3 implements java.io.Serializable{
 		runoff.getHealth().set(0, runoff.getHealth().get(0) - plant.getStrength());
 		if(runoff.getHealth().get(0) < 0) {
 			runoff.removeFront();
+			addScore(100);
 		}
 	}
 	
