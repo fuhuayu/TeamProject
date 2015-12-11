@@ -34,6 +34,12 @@ import Game1.RipRapGame;
 import Game2.CrabCatcherGame;
 import Game3.Game3;
 
+/**
+ * This class is the main view handler for all of the games
+ * as such it won't be tested extensively
+ * @author Brendan
+ *
+ */
 public class gameWindow implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

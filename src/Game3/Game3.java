@@ -126,6 +126,7 @@ public class Game3 implements java.io.Serializable{
 
 	/**
 	 * Creates the game panel and sets up the timer
+	 * Won't be tested as this is basically the view method plus a constructor
 	 * @param frame
 	 */
 	public void initPanel(JFrame frame) {
@@ -175,7 +176,7 @@ public class Game3 implements java.io.Serializable{
 		Button.setBounds(OverallGame.frameWidth-scalor, 0, scalor, scalor);
 		Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				endGame();
+				endGame("highScores.txt");
 			}});
 		
 		
@@ -241,7 +242,7 @@ public class Game3 implements java.io.Serializable{
 		gamePanel.repaint();
 		gameFrame.setVisible(true);
 		if(getTime()<=-5){
-			endGame();
+			endGame("highScores.txt");
 		}
 		
 	    
@@ -258,12 +259,12 @@ public class Game3 implements java.io.Serializable{
 	 * @param e - The location and nature of the user's click
 	 */
 	public void onClick(MouseEvent e) {
+		System.out.println("yooooo");
 		if (timer.isRunning() == false) {
 			timer.start();
 		}
 		int xLoc = e.getX();
 		int yLoc = e.getY();
-		System.out.println("xLocation: " + xLoc + "  yLocation: " + yLoc);
 		Mussel removal = null;
 		if (xLoc < xOffset) {
 			for (Mussel current : getMussels()) {
@@ -329,6 +330,11 @@ public class Game3 implements java.io.Serializable{
 		mangrove.addActionListener(mangroveListen);
 		
 	}
+	/**
+	 * Regenerates the Menu for buying plants once a new click has been made
+	 * wUsed to handle errors received previously involving planting
+	 * plants in every clicked location 
+	 */
 	public  void menuRegen() {
 		menu.remove(grass);
 		menu.remove(mangrove);
@@ -361,13 +367,12 @@ public class Game3 implements java.io.Serializable{
 	 */
 	public void addRunoff() {
 		if	(getEnemies().size()	<	4)	{
-			System.out.println(getEnemies().size());
 			Random rand = new Random() ;
 			int row = rand.nextInt(4);
 			for (int i = 0 ; i < getEnemies().size() ; i++) {
 				if (row == getEnemies().get(i).getRow()) {
 					row = rand.nextInt(4);
-					i = 0;
+					i = -1;
 				}
 			}
 			enemies.add(new Runoff(row, 6*scalor + xOffset)) ;
@@ -392,13 +397,7 @@ public class Game3 implements java.io.Serializable{
 				if (getTiles().get(7*row+col) instanceof Plant) {
 					Plant plant = (Plant)getTiles().get(7*row+col);
 					battle((Plant)getTiles().get(7*row+col), current);
-					if (current.getHealth().size() == 0) {
-						removal = current;
-					}
-					if (plant.getHealth() <= 0) {
-						getPlants().remove(plant);
-						getTiles().set(plant.getRow()*7 +plant.getCol(), new Tile(plant.getRow(), plant.getCol()));
-					}
+					
 				}
 				else {
 					if (col != (current.getFront()-1 - xOffset)/scalor) {
@@ -430,8 +429,12 @@ public class Game3 implements java.io.Serializable{
 	public void battle(Plant plant, Runoff runoff) {
 		plant.setHealth(plant.getHealth() - runoff.getStrength());
 		runoff.getHealth().set(0, runoff.getHealth().get(0) - plant.getStrength());
-		if(runoff.getHealth().get(0) < 0) {
+		if(runoff.getHealth().get(0) <= 0) {
 			runoff.removeFront();
+		}
+		if (plant.getHealth() <= 0) {
+			getPlants().remove(plant);
+			getTiles().set(plant.getRow()*7 +plant.getCol(), new Tile(plant.getRow(), plant.getCol()));
 		}
 	}
 	
@@ -461,7 +464,9 @@ public class Game3 implements java.io.Serializable{
 				i = getMussels().size();
 			}
 		}
-		getMussels().add(new Mussel(xLoc, yLoc));
+		if (tooManyTries < 50) {
+			getMussels().add(new Mussel(xLoc, yLoc));
+		}
 	}
 	
 	/**
@@ -526,13 +531,13 @@ public class Game3 implements java.io.Serializable{
 	 * If the game ends, passes the score to the overall score
 	 * And sets the overall shell to the running state and calls the update method on the overall shell
 	 */
-	public void endGame() {
+	public void endGame(String highScoreLoc) {
 		getBigGame().setOverallScore(getBigGame().getOverallScore() + getScore());
 		getBigGame().setGamesRunning(0);
 		getBigGame().getGamesComplete()[2]	=	true;
 		timer.stop();
 		getBigGame().getGameWindow().getCurrentScore().setText("Overall Score: " + bigGame.getOverallScore());
-		getBigGame().updateHighScores("highScores.txt");
+		getBigGame().updateHighScores(highScoreLoc);
 		gameFrame.setContentPane(bigGamePanel);
 		gameFrame.getContentPane().setVisible(true);
 	}
@@ -544,6 +549,85 @@ public class Game3 implements java.io.Serializable{
 	public void addScore(int score) {
 		this.score += score;
 		timeAndScore.setText("Score:"+getScore());
+	}
+	
+	/**
+	 * This method is used for testing the onClick method without
+	 * simulating clicks. the method is a duplicate of onclick so that method 
+	 * won't have to be tested
+	 * @param y
+	 * @param x
+	 */
+	public void onClickForTesting(int y, int x) {
+		if (timer.isRunning() == false) {
+			timer.start();
+		}
+		int xLoc = x;
+		int yLoc = y;
+		Mussel removal = null;
+		if (xLoc < xOffset) {
+			for (Mussel current : getMussels()) {
+				if (current.getStage() ==  100) {
+					if ((xLoc > current.getXLoc() && xLoc < current.getXLoc() + (18/5)*scalor) &&
+						(yLoc > current.getYLoc() && yLoc < current.getYLoc() + 2*scalor)) {
+						addScore(50); addMoney(100);
+						removal = current;
+					}
+				}
+			}
+			if (removal != null) {
+				addMussel();
+				getMussels().remove(removal);
+			}
+		}
+		else if (getMoney() >= 100 && xLoc < xOffset + 7*scalor && yLoc > yOffset && yLoc < yOffset + 4*scalor){
+			menuRegen();
+			final int row = (yLoc -	yOffset)	/scalor ;
+			final int col = (xLoc - xOffset)	/scalor	;
+			System.out.println("Row: " + row + "  Col: " + col);
+			timer.stop();
+			menu.show(null, xLoc, yLoc);
+			if(grassListen == null) {
+				grass.removeActionListener(grassListen);
+			}
+			grassListen	=	new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					if(getTiles().get(7*row+col)instanceof Plant){
+						grass.removeActionListener(this);
+					}
+					else {
+						if(getMoney()>=100){
+							addMoney(-100);
+							addPlant(row,col,"Grass");
+							timer.start();}
+						else{ timer.start();}
+					}
+				}
+			};
+			grass.addActionListener(grassListen);
+			if (mangroveListen != null) {
+				mangrove.removeActionListener(mangroveListen);
+			}
+			mangroveListen	=	new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					if (getTiles().get(7*row+col)instanceof Plant) {
+						mangrove.removeActionListener(this);
+					}
+					else {
+						if(getMoney()>=200){
+							addMoney(-200);
+							addPlant(row,col,"Mangrove");
+							timer.start();}
+						else{ timer.start();}
+					}
+				}
+			};	
+		}
+		else {
+			timer.start();
+		}
+		mangrove.addActionListener(mangroveListen);
+		
 	}
 	
 	/**

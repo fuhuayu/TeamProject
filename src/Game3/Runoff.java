@@ -61,14 +61,16 @@ public class Runoff implements java.io.Serializable{
 		return (row == other.getRow() && front == other.getFront());
 	}
 	public void grow() {
-		if (getLength() < 5 && getHealth().get(0) > 0 && hasDied == false) {
-			setLength(getLength()+1) ;
-			getHealth().add(150);
-			try {
-				this.images.add(ImageIO.read(new File("images/runoff.png")).getScaledInstance(Game3.scalor, Game3.scalor, 1));
-				
-			} catch(IOException e) {
-				System.out.println("Read Error: " + e.getMessage());
+		if (getLength() < 5 && getLength() !=0){
+			if (getHealth().get(0) > 0 && hasDied == false) {
+				setLength(getLength()+1) ;
+				getHealth().add(150);
+				try {
+					this.images.add(ImageIO.read(new File("images/runoff.png")).getScaledInstance(Game3.scalor, Game3.scalor, 1));
+					
+				} catch(IOException e) {
+					System.out.println("Read Error: " + e.getMessage());
+				}
 			}
 		}
 	}
