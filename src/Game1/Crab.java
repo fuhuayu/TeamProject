@@ -33,7 +33,6 @@ public class Crab extends MovingObject {
 	public Crab(int x, int y, int size) {
 		super(x, y, size);
 		// TODO Auto-generated constructor stub
-		this.mode=1;
 		this.speed=0;
 		this.currheight=0;
 		try {
@@ -45,15 +44,7 @@ public class Crab extends MovingObject {
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * Getter and Setter for mode
-	 */
-	public int getMode() {
-		return mode;
-	}
-	public void setMode(int mode) {
-		this.mode = mode;
-	}
+
 	/**
 	 * Getter and Setter for speed
 	 */
@@ -84,7 +75,6 @@ public class Crab extends MovingObject {
 		if(currheight>0){
 			speed=0;
 			currheight=0;
-
 		}
 		
 		

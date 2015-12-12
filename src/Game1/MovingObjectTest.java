@@ -24,11 +24,7 @@ public class MovingObjectTest {
 	public void testCrab(){
 		Crab c=new Crab(0, 0, 0);
 		c.update();
-		assertEquals(new Point(1,1),c.getPosition());
-		c.setMode(2);
-		assertEquals(new Point(1,1),c.getPosition());
-		c.setMode(3);
-		assertEquals(new Point(3,3),c.getPosition());
+		assertEquals(new Point(0,0),c.getPosition());
 	}
 	
 }

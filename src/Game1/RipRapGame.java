@@ -94,7 +94,6 @@ public class RipRapGame implements java.io.Serializable{
 	Crab crab;
 	JumpingBar jumpingBar;
 	ArrayList<MovingObject> objects;
-	ArrayList<MovingObject> objects2;
 	private JProgressBar timeBar;
 
 	//Constructor
@@ -116,7 +115,6 @@ public class RipRapGame implements java.io.Serializable{
 		this.frame=frame;
 		this.jumpingBar=new JumpingBar(20, 30, this);
 		this.objects=new ArrayList<MovingObject>();
-		this.objects2=new ArrayList<MovingObject>();
 		this.nx2 = (int) (this.frame.getWidth()*0.9);
 		this.mark = (int) (this.frame.getWidth()*0.9);
 		initPanel();
@@ -140,7 +138,7 @@ public class RipRapGame implements java.io.Serializable{
 	public boolean initGame(){
 		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
-		objects2.add(stone);
+		objects.add(stone);
 		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.8),this.panel.getWidth()/13);
 		crab.addItem(panel, "images/maincrab1.png");
 		objects.add(crab);
@@ -229,7 +227,6 @@ public class RipRapGame implements java.io.Serializable{
 	    		updatePanel();
 	    		jumpingBar.update(panel);
 	    		updateMap();
-	    		updateMap2();
 	    		nx2+=1;
 	    		
 	    		if(getTime()<=0){
@@ -269,12 +266,7 @@ public class RipRapGame implements java.io.Serializable{
 		}
 	}
 	
-	public void updateMap2(){
-		for(MovingObject m:objects2){
-			m.update();
-		}
 
-	}
 	
 
 	
