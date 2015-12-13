@@ -48,6 +48,7 @@ public class Mussel implements java.io.Serializable{
 	public void grow() {
 		if (getStage() < 100) {
 			setStage(getStage() + 1);
+			
 		}
 	}
 	

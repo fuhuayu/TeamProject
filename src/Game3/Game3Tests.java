@@ -59,6 +59,7 @@ public class Game3Tests {
 		testGame3.setTime(-6.0);
 		testGame3.update();
 		assertEquals(true,testGame.getGamesComplete()[2]);
+		
 	}
 
 	/**
@@ -69,9 +70,8 @@ public class Game3Tests {
 	 * Third	Test:	Will Click on a tile and show that it pulls up a menu
 	 * Fourth	Test:	Will Click away from the menu to show that the menu
 	 * will go away
-	 * Fifth	Test:	Will Click on a menu and select a plant
-	 * Sixth	Test:	Will Click outside of the tiles and show that a menu
-	 * doesn't show up
+	 * Testing for adding a plant via a menu isn't possible with the way the methods are arranged
+	 * Several Tests also test whether the timer startting and stopping works correctly
 	 */
 	@Test
 	public void testOnClick() {
@@ -89,7 +89,7 @@ public class Game3Tests {
 		testGame3.getTimer().stop();
 		int	musselX	=	testGame3.getMussels().get(0).getXLoc()+30;
 		int	musselY	=	testGame3.getMussels().get(0).getYLoc()+30;
-		//First	Test
+		//First		Test
 		assertEquals(testGame3.getMussels().get(0).getXLoc(),musselX-30);
 		assertEquals(testGame3.getMussels().get(0).getYLoc(),musselY-30);
 		testGame3.onClickForTesting(musselY, musselX); testGame3.getTimer().stop();
@@ -100,9 +100,14 @@ public class Game3Tests {
 		testGame3.onClickForTesting(musselY, musselX); testGame3.getTimer().stop();
 		assertFalse(testGame3.getMussels().get(0).getXLoc()==musselX-30);
 		assertFalse(testGame3.getMussels().get(0).getYLoc()==musselY-30);
-		testGame3.onClickForTesting(Game3.xOffset+2*Game3.scalor, Game3.yOffset+2*Game3.scalor);
-		assertTrue(testGame3.getMenu().getLocation().getY()==Game3.yOffset+2*Game3.scalor);
-		assertTrue(testGame3.getMenu().getLocation().getX()==Game3.xOffset+2*Game3.scalor);
+		//Third		Test
+		testGame3.onClickForTesting(Game3.yOffset+2*Game3.scalor, Game3.xOffset+2*Game3.scalor);
+		assertEquals(true,testGame3.getMenu().isShowing());
+		assertEquals(false,testGame3.getTimer().isRunning());
+		//Fourth	Test
+		testGame3.onClickForTesting(10, Game3.xOffset);
+		assertEquals(false,testGame3.getMenu().isVisible());
+		assertEquals(true,testGame3.getTimer().isRunning());
 		testGame3.getTimer().stop();
 		
 	}
