@@ -138,7 +138,6 @@ public class OverallGame implements Serializable{
 				insertLoc = i;
 				i = lines.length ;
 				newScore = true ;
-				
 			}
 		}
 		if (newScore) {

@@ -1,5 +1,0 @@
-Brendan:	100
-David:	99
-Danielle:	98
-Zhanglong:	97
-Huayu:	96

@@ -1,9 +1,6 @@
 package OverallGame;
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 
@@ -35,7 +32,7 @@ public class OverallGameTest {
 		String	highScores2	=	testGame.getHighscores();
 		testGame.setHighscores(testGame.initializeHighscores("testHighScores2.txt"));
 		String	highScores3	=	testGame.getHighscores();
-		String	highScores4	=	"Brendan:	42000\nDanielle:	3915\nDavid:	666\nHuayu:	350\nZhanglong:	333\n";
+		String	highScores4	=	"Brendan:	42069\nDavid:	666\nHuayu:	350\nZhanglong:	333\nDanielle:	0\n";
 		assertEquals(highScores1,highScores2);
 		assertFalse(highScores1.equals(highScores3));
 		assertEquals(highScores1,highScores4);
@@ -44,32 +41,7 @@ public class OverallGameTest {
 	@Test
 	public void updateHighScoresTest() {
 		OverallGame	testGame	=	new	OverallGame();
-		testGame.setGameWindow(new gameWindow(testGame));
-		testGame.setOverallScore(95);
-		testGame.setHighscores(testGame.initializeHighscores("testHighScoreUpdate.txt"));
-		testGame.updateHighScores("testHighScoreUpdate.txt");
-		String originalScores	=	"Brendan:	100\nDavid:	99\nDanielle:	98\nZhanglong:	97\nHuayu:	96\n";
-		assertTrue(testGame.getHighscores().equals(originalScores));
-		testGame.setOverallScore(1000);
-		//USER MUST TYPE "Brendan" At This point for the test to work
-		testGame.updateHighScores("testHighScoreUpdate.txt");
-		String newScores	=	"Brendan:	1000\nBrendan:	100\nDavid:	99\nDanielle:	98\nZhanglong:	97\n";
-		assertFalse(testGame.getHighscores().equals(originalScores));
-		assertTrue(testGame.getHighscores().equals(newScores));
-		File resetScores	=	new File("testHighScoreUpdate.txt");
-		FileOutputStream	resetScoresOP	=	null;
-		try {
-			resetScoresOP	=	new FileOutputStream(resetScores, false);
-		}	catch	(FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			resetScoresOP.write(originalScores.getBytes());
-			resetScoresOP.close();
-		}
-		catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
+		
 	}
 	
 

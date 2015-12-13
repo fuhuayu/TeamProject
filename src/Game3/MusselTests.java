@@ -7,7 +7,7 @@ import org.junit.Test;
 public class MusselTests {
 	
 	/**
-	 * Mussels should grow until they reach the final stage (set at 100)
+	 * Mussels should grow until they reach the final stage (tentatively set at 3)
 	 */
 	@Test
 	
@@ -21,10 +21,7 @@ public class MusselTests {
 		testMussel.grow() ;
 		assertEquals(testMussel.getStage(), 3) ;
 		testMussel.grow() ;
-		for (int i = 0 ; i< 100 ; i++) {
-			testMussel.grow();
-		}
-		assertEquals(testMussel.getStage(), 100) ;
+		assertEquals(testMussel.getStage(), 3) ;
 	}
 	
 	public void testDraw() {
