@@ -99,6 +99,7 @@ public class CrabCatcherGameTest {
 		testGame.setTimer(null);
 		testGame.setScore(100);
 		testGame.addAnimal(new Animal(5, 5, "crab", -10, 1, false));
+		testGame.getResultAnims().add(new ResultAnimation(20, true, 0, 0));
 		
 		CrabCatcherGame.serialize(testGame, "game2TestOutput.ser");
 		System.out.println("test game: " + testGame.toString());

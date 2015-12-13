@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 
 public class ResultAnimation implements Serializable{
 	private static final long serialVersionUID = 202L;	
-	private Image[] images;
+	transient private Image[] images;
 	private int size;
 	private boolean positiveResult; //whether the result is positive or negative
 	private String filePrefix;
