@@ -1,9 +1,13 @@
 package Game2;
 import static org.junit.Assert.*;
 
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
+
 import javax.swing.Timer;
 
 import javax.swing.JFrame;
@@ -44,9 +48,9 @@ public class CrabCatcherGameTest {
 		bigGame.setOverallScore(bigGame.getOverallScore() + g.getScore());
 		//stop timer
 		g.getTimer().stop();
-		//set big game running to true
+		//set big game running to true and mark this game as complete
 		bigGame.setGamesRunning(0);
-		
+		bigGame.getGamesComplete()[1] = true;
 	}
 	
 	/**updates game without panel/visual settings
@@ -59,8 +63,16 @@ public class CrabCatcherGameTest {
 			fakeEndGame(g);
 		}
 		//updates game's timed aspects - call animal.onTick() for all animals
-		for (Animal each : g.getAnimals()) {
-			if(each != null){each.onTickTest();}
+		for (int i = g.getAnimals().size()-1; i >= 0; i--) {
+			Animal each = g.getAnimals().get(i);
+			if(each != null){each.onTickTest(100, g.getBigGame().frameWidth, g.getBigGame().frameHeight);}
+			if(each.isOffScreen()){g.reAddAnimal(each);}
+		}
+		
+		//update anims
+		Iterator<ResultAnimation> it = g.getResultAnims().iterator();
+		while(it.hasNext()){
+			it.next().update((int)g.getTime());
 		}
 	}
 	
@@ -85,36 +97,44 @@ public class CrabCatcherGameTest {
 		ArrayList<Animal> animals = new ArrayList<Animal>();
 		CrabCatcherGame game = new CrabCatcherGame(0, animals, 0, 3, 10, null, 5, false, bigGame, frame);
 		Animal crab = new Animal(0, 0, "crab", 5, 3, true);
+		crab.setXdir(-1);
+		crab.setXloc(-90);
+		crab.setImageWidth(100);
+		crab.setStep(5);
 		game.addAnimal(crab);
 		game.setTimer(new Timer(0, null));
 		
 		//check if game timer increases
-		//check if crab time remaining decreases
+		//check if crab location decreases
+		fakeUpdateGame(game);
+		assertEquals("crab should move 5 to the left", -95, game.getAnimals().get(0).getXloc());
+		assertEquals("on tick: game time should increase from 0 to 1", 1, game.getTime(), 0);
+		System.out.println("animal listttttttt ---- " + game.getAnimals());
+			
 		fakeUpdateGame(game);
 		
-		assertEquals("on tick: game time should increase from 0 to 1", 1, game.getTime(), 0);
-		assertTrue("on tick: lives = 0 should trigger gameOver", game.isGameOver());
-		assertEquals("on tick: crab time remaining should decrease from 3 to 2", 2, crab.getTimeLeftOnScreen(), 0);
-		
+		//check if offscreen crab is regenerated
+		//(note: crab.isOffscreen will reset to false when it is regenerated, so test location instead)
+		assertTrue("crab should move offscreen", game.getAnimals().get(0).getXloc() == -100 || game.getAnimals().get(0).getXloc() == bigGame.frameWidth);
+		//check if offscreen crab moves back onscreen
+		fakeUpdateGame(game);
+		assertFalse(game.getAnimals().get(0).isOffScreen());
+		assertTrue("crab should move onscreen", game.getAnimals().get(0).getXloc() > -100 || game.getAnimals().get(0).getXloc() < bigGame.frameWidth);		
+	
 		//check if gameOver is triggered by time = end time
+		//check endGame() effects
 		game.setGameOver(false);
+		game.setScore(100);
+		game.getBigGame().setOverallScore(100);
 		game.setTime(game.getGameLength());
+		
 		fakeUpdateGame(game);
 		assertTrue("on tick: time = gameLength should trigger gameOver", game.isGameOver());
 		
-		//check if expired crab is regenerated
-		game.setGameOver(false);
-		game.setTime(0);
-		crab.setTimeLeftOnScreen(1);
+		assertTrue(game.getBigGame().getGamesComplete()[1]);
+		assertEquals(200, game.getBigGame().getOverallScore());
+		assertEquals(0, game.getBigGame().getGamesRunning());
 		
-		int x = crab.getXloc();
-		int y = crab.getYloc();
-		fakeUpdateGame(game);//crab time = 0
-		fakeUpdateGame(game);//process expired crab
-		
-		assertEquals("on tick: expired crab time remaining should reset to 3", 3, crab.getTimeLeftOnScreen(), 0);
-		//assertTrue("on tick: regenerated crab visibility should reset to false", !crab.isVisible());
-		assertTrue("crab location should change", (crab.getXloc() != x || crab.getYloc() != y));
 	}
 	
 	/**
@@ -122,16 +142,22 @@ public class CrabCatcherGameTest {
 	 */
 	@Test
 	public void setupTest(){
-		//HashSet<Animal> animals = new HashSet<Animal>();
-		//CrabCatcherGame game1 = new CrabCatcherGame(0, animals, 0, 3, 10, null, 3, false,  new OverallGame(), null);
+		//ArrayList<Animal> animals = new ArrayList<Animal>();
 		CrabCatcherGame game1 = makeTestCrabGame();	
 		
 		//check if generate animals generates 3 animals
 		game1.generateAnimals();
+		assertTrue("generateAnimals: 3 animals should exist", !game1.getAnimals().isEmpty());
+		
+		//check if animal images were assigned correctly
 		for (int i=0; i < game1.getMaxAnimalsOnScreen(); i++){
-			assertTrue("generateAnimals: 3 animals should exist", !game1.getAnimals().isEmpty());
-			assertTrue(game1.getAnimals().get(i).getImageWidth() > 100);
+			Animal testAnimal = game1.getAnimals().get(i);		
+			assertTrue("animal image width should be initialized", testAnimal.getImageWidth() > 0);
+			assertTrue(testAnimal.getImages()[0] != null);
+			assertTrue(testAnimal.getImages()[0] != null);
 		}
+		
+
 		
 	}
 	
@@ -154,17 +180,6 @@ public class CrabCatcherGameTest {
 		gamet.setAnimals(animals1);
 		System.out.println("animal list ---- " + gamet.getAnimals());
 	
-		/*for (Animal a: gamet.getAnimals()){
-			a.setImageWidth(250);
-			a.setImageHeight(200);
-			if(a.overlapsWith(fish3)){
-				System.out.println("Overlap detected with: " + a.toString());
-			}
-			if(a.overlapsWith(fish3)){
-				System.out.println("Overlap detected with: " + a.toString());
-			}
-		}*/
-		
 		System.out.println("animal listNOW ---- " + gamet.getAnimals());
 		System.out.println("starting hereeee");
 		//assertTrue("fish 3 should have a unique location", gamet.uniqueLocation(fish3));
@@ -183,10 +198,13 @@ public class CrabCatcherGameTest {
 		CrabCatcherGame game = makeTestCrabGame();
 		Animal crab = new Animal(100, 100, "crab", -5, 30, true);
 		Animal fish = new Animal(500, 500, "fish", -3, 30, true);
-		Animal mittencrab = new Animal(800, 800, "mittencrab", 5, 30, true);
+		Animal mittencrab1 = new Animal(800, 800, "mittencrab", 5, 30, true);
+		Animal mittencrab2 = new Animal(800, 800, "mittencrab", 5, 15, true); 
 		game.setAnimals(new ArrayList<Animal>());
+		//animal list goes from oldest (on top) to youngest (on bottom)
 		game.addAnimal(crab);
-		game.addAnimal(mittencrab);
+		game.addAnimal(mittencrab2);//this crab will be drawn on top of mc1
+		game.addAnimal(mittencrab1);
 		game.addAnimal(fish);
 
 		
@@ -195,7 +213,7 @@ public class CrabCatcherGameTest {
 		assertEquals("get animal clicked: should be fish", fish, game.getAnimalClicked(500, 500));
 		System.out.println("clicking on 800, 800....");
 		game.getAnimalClicked(800, 800);
-		assertEquals("get animal clicked: should be mittencrab", mittencrab, game.getAnimalClicked(800, 800));
+		assertEquals("get animal clicked: should be mcrab ON TOP (mittencrab2)", mittencrab2, game.getAnimalClicked(800, 800));
 		assertEquals("get animal clicked: should be nothing", null, game.getAnimalClicked(0, 0));
 		
 		
@@ -212,13 +230,15 @@ public class CrabCatcherGameTest {
 		game.onClickTest(100,100);
 		assertEquals("on click crab: game score should decrease to 0 (non-negative)", 0, game.getScore());
 		
-		//mitten crab increase by 5
+		//crab decrease by 5
 		game.setScore(10);
 		crab.setXloc(100);
 		crab.setYloc(100);
 		crab.setVisible(true);
+		crab.setCaught(false);
 		game.onClickTest(100 + crab.getImageWidth()/2, 100+crab.getImageHeight()/2);
 		assertEquals("on click crab: game score should decrease by 5", 5, game.getScore());	
+		assertTrue(crab.isCaught());
 		
 		//click nothing
 		game.onClickTest(0,0);
@@ -229,60 +249,31 @@ public class CrabCatcherGameTest {
 		game.addAnimal(problemCrab);
 		problemCrab.setImageHeight(200);
 		problemCrab.setImageWidth(250);
-		System.out.println("535,409 clicked a " + game.getAnimalClicked(535, 409));
+		//System.out.println("535,409 clicked a " + game.getAnimalClicked(535, 409));
 		assertTrue(game.getAnimalClicked(535, 409).equals(problemCrab));
-		System.out.println("problem crab was " + problemCrab);
+		//System.out.println("problem crab was " + problemCrab);
 		
 		Animal problemCrab2 = new Animal(381, 57, "crab", -3, 10, true);
 		problemCrab2.setImageHeight(200);
 		problemCrab2.setImageWidth(250);
 		game.addAnimal(problemCrab2);
-		System.out.println("489,250 clicked a " + game.getAnimalClicked(489, 250));
+		//System.out.println("489,250 clicked a " + game.getAnimalClicked(489, 250));
 		assertTrue(game.getAnimalClicked(489, 250).equals(problemCrab2));
-		System.out.println("problem crab2 was " + problemCrab2);
+		//System.out.println("problem crab2 was " + problemCrab2);
 		
 		Animal problemfish = new Animal(748, 306, "fish", -3, 10, true);
 		problemfish.setImageHeight(200);
 		problemfish.setImageWidth(250);
 		game.addAnimal(problemfish);
-		System.out.println("878, 454 clicked a " + game.getAnimalClicked(878, 454));
+		//System.out.println("878, 454 clicked a " + game.getAnimalClicked(878, 454));
 		assertTrue(game.getAnimalClicked(878, 454).equals(problemfish));
-		System.out.println("problem fish was " + problemfish);
+		//System.out.println("problem fish was " + problemfish);
 	}
-	
-	
-	
-	/*
-	 *[Animal mittencrab [location=(1039, 353), scoreEffect=6, timeLeft=5.0, visible=false], 
-	 *Animal mittencrab [location=(540, 90), scoreEffect=6, timeLeft=5.0, visible=false], 
-	 *Animal mittencrab [location=(247, 116), scoreEffect=6, timeLeft=7.0, visible=false], 
-	 *Animal crab [location=(253, 145), scoreEffect=-5, timeLeft=3.0, visible=true], 
-	 *Animal crab [location=(911, 324), scoreEffect=-5, timeLeft=4.0, visible=true], 
-	 *Animal fish [location=(602, 16), scoreEffect=-3, timeLeft=7.0, visible=false], 
-	 *Animal mittencrab [location=(836, 572), scoreEffect=6, timeLeft=4.0, visible=true], 
-	 *Animal crab [location=(566, 332), scoreEffect=-5, timeLeft=6.0, visible=false], 
-	 *Animal crab [location=(427, 319), scoreEffect=-5, timeLeft=4.0, visible=false], 
-	 *Animal crab [location=(417, 251), scoreEffect=-5, timeLeft=3.0, visible=true]]
-	 *click was at (535, 409) should have clicked a crab
-	 * */
-	
-	/*
-	 * [Animal mittencrab [location=(250, 13), scoreEffect=6, timeLeft=6.0, visible=false],
-	 *  Animal mittencrab [location=(644, 154), scoreEffect=6, timeLeft=6.0, visible=false],
-	 *   Animal crab [location=(1083, 152), scoreEffect=-5, timeLeft=2.0, visible=true],
-	 *    Animal mittencrab [location=(3, 167), scoreEffect=6, timeLeft=5.0, visible=false],
-	 *     Animal mittencrab [location=(338, 64), scoreEffect=6, timeLeft=4.0, visible=false],
-	 *      Animal mittencrab [location=(75, 555), scoreEffect=6, timeLeft=2.0, visible=true], 
-	 *      Animal mittencrab [location=(1129, 355), scoreEffect=6, timeLeft=4.0, visible=false],
-	 *       Animal crab [location=(381, 57), scoreEffect=-5, timeLeft=2.0, visible=true], 
-	 *       Animal mittencrab [location=(912, 201), scoreEffect=6, timeLeft=5.0, visible=true], 
-	 *       Animal mittencrab [location=(867, 703), scoreEffect=6, timeLeft=3.0, visible=false]]
-		click was at (489, 250)
-	 */
 	 
 	
-	
-	
+	/**
+	 * test effects of endGame()
+	 */
 	@Test
 	public void endGameEffectTest(){
 		CrabCatcherGame game = makeTestCrabGame();
@@ -292,6 +283,45 @@ public class CrabCatcherGameTest {
 		fakeEndGame(game);
 		assertEquals("big game score should increase to 100", 100, bigGame.getOverallScore());	
 		assertEquals("big game game running should be 0", 0, bigGame.getGamesRunning());	
+	}
+	
+	/**
+	 * test sending an animal offscreen
+	 */
+	@Test
+	public void setOffScreenLocTest(){
+		CrabCatcherGame game = makeTestCrabGame();
+		Animal crab = new Animal(100, 100, "crab", -5, 30, true);
+		crab.setImageWidth(100);
+		crab.setImageHeight(100);
+		crab.setXdir(-1);
+		game.addAnimal(crab);
+		
+		assertFalse(game.getAnimals().get(0).offScreen(bigGame.frameWidth, bigGame.frameHeight));
+		game.setOffScreenLoc(game.getAnimals().get(0));
+		
+		assertTrue("if moving left should be sent to right border", game.getAnimals().get(0).getXloc() >= bigGame.frameWidth);
+		
+		game.getAnimals().get(0).setXdir(1);
+		game.setOffScreenLoc(game.getAnimals().get(0));
+		assertTrue("if moving right should be sent to left border", game.getAnimals().get(0).getXloc() <= -100);	
+	}
+	
+	@Test
+	public void updateScoreTest(){
+		CrabCatcherGame game = makeTestCrabGame();
+		game.setScore(100);
+		game.updateScore(10);
+		assertEquals(110, game.getScore());
+		
+		game.updateScore(-20);
+		assertEquals(90, game.getScore());
+		
+		game.updateScore(-100);
+		assertEquals("score should not go negative", 0, game.getScore());
+		
+		game.updateScore(-1);
+		assertEquals("score should not go negative", 0, game.getScore());
 	}
 		
 

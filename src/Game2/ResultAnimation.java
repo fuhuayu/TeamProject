@@ -39,11 +39,7 @@ public class ResultAnimation {
 		try {
 			
 			Image i1 = ImageIO.read(new File("images/" + filePrefix + "1.png")).getScaledInstance(this.getSize(), this.getSize(), 1);
-			Image i2 = ImageIO.read(new File("images/" + filePrefix + "2.png")).getScaledInstance(this.getSize(), this.getSize(), 1);
-			//Image i1 = ImageIO.read(new File("images/anim_pos_result1.png")).getScaledInstance(100, 100, 1);
-			//Image i2 = ImageIO.read(new File("images/anim_pos_result2.png")).getScaledInstance(this.getSize(), this.getSize(), 1);
-			
-			
+			Image i2 = ImageIO.read(new File("images/" + filePrefix + "2.png")).getScaledInstance(this.getSize(), this.getSize(), 1);			
 			images[0]=i1;
 			images[1]=i2;
 		} catch (IOException e) {
@@ -55,11 +51,11 @@ public class ResultAnimation {
 	
 	public void update(int time){
 		if(time % 5 == 0){
-			if (picNum < images.length){loops++;}
-			if (loops > 4){complete = true; 
+			if (getPicNum() + 1 >= images.length){loops++;}
+			if (loops > 2){complete = true; 
 			//System.out.println("animation finished");
 				}
-			picNum = (picNum + 1) % images.length;
+			setPicNum((getPicNum() + 1) % images.length);
 		}
 	}
 		
@@ -67,7 +63,7 @@ public class ResultAnimation {
 	//GETTERS & SETTERS
 
 	public Image getCurrentImage(){
-		return images[picNum];
+		return images[getPicNum()];
 	}
 	
 	public Image[] getImages() {
@@ -100,6 +96,22 @@ public class ResultAnimation {
 	
 	public int getYloc() {
 		return yloc;
+	}
+
+	public int getPicNum() {
+		return picNum;
+	}
+
+	public void setPicNum(int picNum) {
+		this.picNum = picNum;
+	}
+
+	public int getLoops() {
+		return loops;
+	}
+
+	public void setLoops(int loops) {
+		this.loops = loops;
 	}
 	
 	

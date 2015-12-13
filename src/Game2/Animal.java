@@ -109,8 +109,6 @@ public class Animal implements java.io.Serializable {
 	 * makes the animal invisible, resets its timeLeftOnScreen, and sets offscreen location randomly
 	 */
 	public void regenerateAnimal(int xbound, int ybound){
-		//sets animal visibility to false (could use an animation here)
-		visible = false;
 		//gives animal a random location
 		Random r = new Random();
 		//USE SCREEN WIDTH
@@ -123,36 +121,34 @@ public class Animal implements java.io.Serializable {
 	}
 	
 	
-	/**For testing purposes only; 
-	 * updates animal's timed elements - decreases timeLeftOnScreen
-	 * @param game
-	 */
-	public void onTickTest(){
-		//decrease animal's timer; if timer is 0, regenerate animal
-		if (timeLeftOnScreen <= 0){
-			regenerateAnimal(800, 800);
-			//expired = true;			
-		}
-		else {timeLeftOnScreen--;}
-	}
 	
 	//MOVING METHODS
 	/** updates animal's timed elements (movement, animation, and offScreen check)
 	 * @param game - the game to update
 	 */
 	public void onTick(CrabCatcherGame game){
-		this.move(game);
+		this.move();
 		this.updateAnimation((int)game.getTime());
 		this.offScreen = offScreen(game.getBigGame().frameWidth, game.getBigGame().frameHeight);
 	}
 	
-	/** increases animal's location based on xdir and ydir (horizontal only)
-	 * @param game - game to update
+	/**for testing purposes only; 
+	 * updates animal's timed elements 
+	 * but only takes time and game dimensions instead of game object
+	 * @param time
+	 * @param width
+	 * @param height
 	 */
-	public void move(CrabCatcherGame game){
-		ydir = 0;
+	public void onTickTest(int time, int width, int height){
+		this.move();
+		this.updateAnimation(time);
+		this.offScreen = offScreen(width, height);
+	}
+	
+	/** increases animal's location based on xdir(horizontal only)
+	 */
+	public void move(){
 		xloc += xdir*step;
-		yloc += ydir*step;
 	}
 	
 	/**returns true if the Animal is off screen (accounting for imageWidth)
@@ -256,10 +252,17 @@ public class Animal implements java.io.Serializable {
 		this.visible = visible;
 	}
 
+	/**returns the current image in this animal's animation
+	 * @return the image at images[picnum]
+	 */
 	public Image getImage() {
 		return images[picNum];
 	}
 
+	/**sets animal's image array and image height and width.
+	 * assumes all images in the array to be of equal dimensions
+	 * @param images
+	 */
 	public void setImages(Image[] images) {
 		this.images = images;
 		this.imageHeight = this.images[0].getHeight(null);
@@ -312,6 +315,18 @@ public class Animal implements java.io.Serializable {
 
 	public void setStep(int step) {
 		this.step = step;
+	}
+
+	public int getPicNum() {
+		return picNum;
+	}
+
+	public void setPicNum(int picNum) {
+		this.picNum = picNum;
+	}
+
+	public Image[] getImages() {
+		return images;
 	}
 	
 
