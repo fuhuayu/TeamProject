@@ -1,7 +1,5 @@
 package Game3;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -107,11 +105,11 @@ public class Game3 implements java.io.Serializable{
 		this.menu = new JPopupMenu();
 		menu.add(grass);
 		menu.add(mangrove);
-		this.background = null;
+		Game3.background = null;
 		this.coins = new ArrayList<JLabel>();
 		addMoney(0);
 		try {
-			this.background = ImageIO.read(new File("images/game3Background.png")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
+			Game3.background = ImageIO.read(new File("images/game3Background.png")).getScaledInstance(gameFrame.getWidth(), gameFrame.getHeight(), 1);
 		} catch(IOException e) {
 			System.out.println("Read Error: " + e.getMessage());
 		}
@@ -196,7 +194,7 @@ public class Game3 implements java.io.Serializable{
 		for(int i=1;i<5;i++){
 		ImageIcon pipeic = new ImageIcon("images/Pipe.png");
 		pipes = new JLabel(pipeic);
-		pipes.setBounds(bigGame.frameWidth-pipeic.getIconWidth(),i*scalor, pipeic.getIconWidth() ,pipeic.getIconHeight());
+		pipes.setBounds(OverallGame.frameWidth-pipeic.getIconWidth(),i*scalor, pipeic.getIconWidth() ,pipeic.getIconHeight());
 		gamePanel.add(pipes);}
 		
 		timer = new Timer(timerInterval, new ActionListener(){
@@ -283,10 +281,12 @@ public class Game3 implements java.io.Serializable{
 		}
 		else if (getMoney() >= 100 && xLoc < xOffset + 7*scalor && yLoc > yOffset && yLoc < yOffset + 4*scalor){
 			menuRegen();
+			menu.setVisible(true);
 			final int row = (yLoc -	yOffset)	/scalor ;
 			final int col = (xLoc - xOffset)	/scalor	;
 			System.out.println("Row: " + row + "  Col: " + col);
 			timer.stop();
+			menu.setLocation(xLoc, yLoc);
 			menu.show(e.getComponent(), xLoc, yLoc);
 			if(grassListen == null) {
 				grass.removeActionListener(grassListen);
@@ -326,6 +326,7 @@ public class Game3 implements java.io.Serializable{
 		}
 		else {
 			timer.start();
+			menu.setVisible(false);
 		}
 		mangrove.addActionListener(mangroveListen);
 		
@@ -396,7 +397,7 @@ public class Game3 implements java.io.Serializable{
 			if (current.getFront() > xOffset)
 				if (getTiles().get(7*row+col) instanceof Plant) {
 					Plant plant = (Plant)getTiles().get(7*row+col);
-					battle((Plant)getTiles().get(7*row+col), current);
+					battle(plant, current);
 					
 				}
 				else {
@@ -582,11 +583,15 @@ public class Game3 implements java.io.Serializable{
 		}
 		else if (getMoney() >= 100 && xLoc < xOffset + 7*scalor && yLoc > yOffset && yLoc < yOffset + 4*scalor){
 			menuRegen();
+			menu.setVisible(true);
 			final int row = (yLoc -	yOffset)	/scalor ;
 			final int col = (xLoc - xOffset)	/scalor	;
 			System.out.println("Row: " + row + "  Col: " + col);
 			timer.stop();
-			menu.show(null, xLoc, yLoc);
+			menu.setLocation(xLoc, yLoc);
+			menu.show(getGameFrame(), xLoc, yLoc);
+			System.out.println(menu.isVisible());
+			System.out.println("x: " + menu.getLocation().getX() + " y: " + menu.getLocation().getY());
 			if(grassListen == null) {
 				grass.removeActionListener(grassListen);
 			}
@@ -625,6 +630,7 @@ public class Game3 implements java.io.Serializable{
 		}
 		else {
 			timer.start();
+			menu.setVisible(false);
 		}
 		mangrove.addActionListener(mangroveListen);
 		
@@ -832,16 +838,8 @@ public class Game3 implements java.io.Serializable{
 		return grass;
 	}
 
-	public void setGrass(JMenuItem grass) {
-		this.grass = grass;
-	}
-
 	public JMenuItem getMangrove() {
 		return mangrove;
-	}
-
-	public void setMangrove(JMenuItem mangrove) {
-		this.mangrove = mangrove;
 	}
 
 
@@ -864,18 +862,6 @@ public class Game3 implements java.io.Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public static int getScalor() {
-		return scalor;
-	}
-
-	public static int getXoffset() {
-		return xOffset;
-	}
-
-	public static int getYoffset() {
-		return yOffset;
 	}
 
 	/**

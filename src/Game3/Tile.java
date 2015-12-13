@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.imageio.ImageIO;
-import OverallGame.OverallGame;
 
 public class Tile {
 	int 	row ;

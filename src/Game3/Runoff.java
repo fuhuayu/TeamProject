@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import OverallGame.OverallGame;
 
 /**
  * @author Brendan, Danielle, David, Huayu and Zhanglong

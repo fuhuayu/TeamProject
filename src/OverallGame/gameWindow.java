@@ -28,7 +28,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import Game1.RipRapGame;
 import Game2.CrabCatcherGame;
@@ -249,6 +248,11 @@ public class gameWindow implements Serializable{
 	
 	public void gameStartAndEnd() {
 		JPanel panel	=	new JPanel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);

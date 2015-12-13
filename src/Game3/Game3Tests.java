@@ -1,13 +1,6 @@
 package Game3;
 import static org.junit.Assert.*;
 
-import java.awt.AWTException;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JMenuItem;
@@ -24,7 +17,6 @@ import OverallGame.gameWindow;
  * Handles the tests for game 3
  */
 public class Game3Tests {
-	private static Robot rob = null;
 	/**
 	 * First	Test:	Checks if the method properly adds score
 	 * Second	Test:	Checks if the mussels correctly grow per update
@@ -59,6 +51,7 @@ public class Game3Tests {
 		testGame3.setTime(-6.0);
 		testGame3.update();
 		assertEquals(true,testGame.getGamesComplete()[2]);
+		
 	}
 
 	/**
@@ -69,18 +62,11 @@ public class Game3Tests {
 	 * Third	Test:	Will Click on a tile and show that it pulls up a menu
 	 * Fourth	Test:	Will Click away from the menu to show that the menu
 	 * will go away
-	 * Fifth	Test:	Will Click on a menu and select a plant
-	 * Sixth	Test:	Will Click outside of the tiles and show that a menu
-	 * doesn't show up
+	 * Testing for adding a plant via a menu isn't possible with the way the methods are arranged
+	 * Several Tests also test whether the timer startting and stopping works correctly
 	 */
 	@Test
 	public void testOnClick() {
-		try {
-			rob	=	new Robot();
-		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		OverallGame testGame	=	new	OverallGame();
 		testGame.setGameWindow(new	gameWindow(testGame));
 		testGame.getGameWindow().getFrame().setBounds(0, 0, OverallGame.frameWidth, OverallGame.frameHeight);
@@ -89,7 +75,7 @@ public class Game3Tests {
 		testGame3.getTimer().stop();
 		int	musselX	=	testGame3.getMussels().get(0).getXLoc()+30;
 		int	musselY	=	testGame3.getMussels().get(0).getYLoc()+30;
-		//First	Test
+		//First		Test
 		assertEquals(testGame3.getMussels().get(0).getXLoc(),musselX-30);
 		assertEquals(testGame3.getMussels().get(0).getYLoc(),musselY-30);
 		testGame3.onClickForTesting(musselY, musselX); testGame3.getTimer().stop();
@@ -100,9 +86,14 @@ public class Game3Tests {
 		testGame3.onClickForTesting(musselY, musselX); testGame3.getTimer().stop();
 		assertFalse(testGame3.getMussels().get(0).getXLoc()==musselX-30);
 		assertFalse(testGame3.getMussels().get(0).getYLoc()==musselY-30);
-		testGame3.onClickForTesting(Game3.xOffset+2*Game3.scalor, Game3.yOffset+2*Game3.scalor);
-		assertTrue(testGame3.getMenu().getLocation().getY()==Game3.yOffset+2*Game3.scalor);
-		assertTrue(testGame3.getMenu().getLocation().getX()==Game3.xOffset+2*Game3.scalor);
+		//Third		Test
+		testGame3.onClickForTesting(Game3.yOffset+2*Game3.scalor, Game3.xOffset+2*Game3.scalor);
+		assertEquals(true,testGame3.getMenu().isShowing());
+		assertEquals(false,testGame3.getTimer().isRunning());
+		//Fourth	Test
+		testGame3.onClickForTesting(10, Game3.xOffset);
+		assertEquals(false,testGame3.getMenu().isVisible());
+		assertEquals(true,testGame3.getTimer().isRunning());
 		testGame3.getTimer().stop();
 		
 	}
@@ -140,7 +131,7 @@ public class Game3Tests {
 		assertTrue(testGame3.getPlants().get(0).equals(testPlant));
 		testGame3.addPlant(0, 2, "Mangrove");
 		Plant	testPlant2	=	new	Plant(0,2,"Mangrove");
-		assertTrue(testGame3.getPlants().get(0).equals(testPlant));
+		assertTrue(testGame3.getPlants().get(1).equals(testPlant2));
 	}
 	
 
@@ -192,14 +183,14 @@ public class Game3Tests {
 		assertFalse(testGame3.getEnemies().get(0).getFront() == initLoc);
 		assertEquals(2,testGame3.getEnemies().get(0).getLength());
 		testGame3.addPlant(testGame3.getEnemies().get(0).getRow(), 5, "Grass");
-		testGame3.getEnemies().get(0).setFront(5*testGame3.scalor+testGame3.xOffset);
+		testGame3.getEnemies().get(0).setFront(5*Game3.scalor+Game3.xOffset);
 		int initHealth	=	testGame3.getEnemies().get(0).getHealth().get(0);
 		testGame3.moveRunoff();
 		//Third	Test
 		assertFalse(initHealth	==	testGame3.getEnemies().get(0).getHealth().get(0));
 		//Fourth	Test
 		assertEquals(4,testGame3.getMussels().size());
-		testGame3.getEnemies().get(0).setFront(testGame3.xOffset);
+		testGame3.getEnemies().get(0).setFront(Game3.xOffset);
 		testGame3.moveRunoff();
 		assertEquals(0,testGame3.getEnemies().size());
 		assertEquals(3,testGame3.getMussels().size());
@@ -220,7 +211,7 @@ public class Game3Tests {
 		Game3		testGame3	=	new	Game3(testGame);
 		testGame3.getTimer().stop();
 		testGame3.addPlant(0, 3, "Mangrove");
-		testGame3.getEnemies().set(0, new Runoff(0,4*testGame3.scalor+testGame3.xOffset));
+		testGame3.getEnemies().set(0, new Runoff(0,4*Game3.scalor+Game3.xOffset));
 		testGame3.getEnemies().get(0).grow();
 		testGame3.getPlants().get(0).setStrength(testGame3.getEnemies().get(0).getHealth().get(1));
 		//First		Test
@@ -231,7 +222,7 @@ public class Game3Tests {
 		assertTrue(testGame3.getEnemies().get(0).hasDied	==	true);
 		assertTrue(testGame3.getEnemies().get(0).getLength()	==	1);
 		//Third		Test
-		assertTrue(testGame3.getEnemies().get(0).getFront() != 4*testGame3.scalor+testGame3.xOffset);
+		assertTrue(testGame3.getEnemies().get(0).getFront() != 4*Game3.scalor+Game3.xOffset);
 		//Fourth	Test
 		testGame3.getEnemies().get(0).setStrength(testGame3.getPlants().get(0).getHealth());
 		testGame3.battle(testGame3.getPlants().get(0), testGame3.getEnemies().get(0));
