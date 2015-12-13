@@ -4,11 +4,17 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
+
+import Game3.Mussel;
 
 /**
  * @author Dwegrzyn
@@ -38,7 +44,7 @@ public class Animal implements java.io.Serializable {
 	private static int maxSpeed = 10;
 	private int picNum = 0;
 		
-	/**All-parameter constructor. Not used publicly.
+	/**All-parameter constructor for deserialization. Not used publicly.
 	 * @param xloc
 	 * @param yloc
 	 * @param typeOfAnimal
@@ -103,7 +109,50 @@ public class Animal implements java.io.Serializable {
 		return copy;
 	}
 	
-	//METHODS
+	
+	//SERIALIZATION
+	/**Saves animal object to file.
+	 * @param obj
+	 * @param fileName
+	 */
+	public static void serialize(Object obj, String fileName) {
+		try {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	        fos.close();
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Method to read and instantiate animal from file. The reverse of the serialize function
+	 * @param fileName
+	 * @return loaded animal object
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static Object deserialize(String fileName) {
+		Animal obj = null ;
+		try {	
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			obj = (Animal)ois.readObject();
+			ois.close();
+		}
+		catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		catch (ClassNotFoundException e){
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		return obj;
+	}
+	
+	
+	//MAIN METHODS
 	/**
 	 * Call this method to regenerate animal after it is caught or time on screen expires
 	 * makes the animal invisible, resets its timeLeftOnScreen, and sets offscreen location randomly

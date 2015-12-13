@@ -64,17 +64,17 @@ public class CrabCatcherGame implements java.io.Serializable{
 	private int maxAnimalsOnScreen = 16; 
 	private boolean gameOver = false;
 	private OverallGame bigGame;
-	private JFrame frame;
-	private JPanel panel;
+	transient private JFrame frame;
+	transient private JPanel panel;
 	private Timer timer;
-	private JPanel bigpan;
+	transient private JPanel bigpan;
 	private JLabel TS;
-	private Image[] crabImages;
-	private Image[] mittencrabImages;
-	private Image[] fishImagesRight;
-	private Image[] fishImagesLeft;
-	private Image backgroundImage;
-	private Image netImage;
+	transient private Image[] crabImages;
+	transient private Image[] mittencrabImages;
+	transient private Image[] fishImagesRight;
+	transient private Image[] fishImagesLeft;
+	transient private Image backgroundImage;
+	transient private Image netImage;
 	private static int mittencrabScoreEffect = 20;
 	private static int crabScoreEffect = -15;
 	private static int fishScoreEffect = -10;
@@ -546,11 +546,11 @@ public class CrabCatcherGame implements java.io.Serializable{
 	 * @throws ClassNotFoundException
 	 */
 	public static Object deserialize(String fileName) {
-		OverallGame obj = null ;
+		CrabCatcherGame obj = null ;
 		try {	
 			FileInputStream fis = new FileInputStream(fileName);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			obj = (OverallGame)ois.readObject();
+			obj = (CrabCatcherGame)ois.readObject();
 			ois.close();
 		}
 		catch(IOException e) {
@@ -559,6 +559,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 		catch (ClassNotFoundException e){
 			System.out.println("Read Error: " + e.getMessage());
 		}
+		
+		obj.loadAllImages();
 		return obj;
 	}
 	

@@ -2,12 +2,18 @@ package Game2;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class ResultAnimation {
+public class ResultAnimation implements Serializable{
+	private static final long serialVersionUID = 202L;	
 	private Image[] images;
 	private int size;
 	private boolean positiveResult; //whether the result is positive or negative
@@ -49,6 +55,9 @@ public class ResultAnimation {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**updates the picnum (frame) of the animation in intervals of 5 milliseconds
+	 * @param time - the curret time in milliseconds
+	 */
 	public void update(int time){
 		if(time % 5 == 0){
 			if (getPicNum() + 1 >= images.length){loops++;}
@@ -59,6 +68,50 @@ public class ResultAnimation {
 		}
 	}
 		
+	
+	//SERIALIZATION
+	/**Saves resultanim object to file.
+	 * @param obj
+	 * @param fileName
+	 */
+	public static void serialize(Object obj, String fileName) {
+		try {
+	        FileOutputStream fos = new FileOutputStream(fileName);
+	        ObjectOutputStream oos = new ObjectOutputStream(fos);
+	        oos.writeObject(obj);
+	        fos.close();
+		}
+		catch (IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Method to read and instantiate resultanim from file. The reverse of the serialize function
+	 * @param fileName
+	 * @return loaded animal object
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static Object deserialize(String fileName) {
+		ResultAnimation obj = null ;
+		try {	
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			obj = (ResultAnimation)ois.readObject();
+			ois.close();
+		}
+		catch(IOException e) {
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		catch (ClassNotFoundException e){
+			System.out.println("Read Error: " + e.getMessage());
+		}
+		return obj;
+	}
+	
+	
+	
 	
 	//GETTERS & SETTERS
 

@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -76,17 +77,38 @@ public class CrabCatcherGameTest {
 		}
 	}
 	
-	/**makes a crab game for testing with only animals and a timer
+	/**makes a crab game for testing with only an empty animals list and a timer
 	 * @return
 	 */
 	public CrabCatcherGame makeTestCrabGame(){
 		ArrayList<Animal> animals = new ArrayList<Animal>();
 		CrabCatcherGame game = new CrabCatcherGame(0, animals, 0, 3, 10, null, 5, false, bigGame, frame);
-		//Animal crab = new Animal(0, 0, "crab", 5, 3, true);
-		//game.addAnimal(crab);
 		game.setTimer(new Timer(0, null));
 		return game;
 	}
+	
+	
+	
+	/**Test serialization and deserialization
+	 * @throws IOException
+	 */
+	@Test
+	public void SerializationTest() throws IOException {
+		CrabCatcherGame testGame = makeTestCrabGame();
+		testGame.setTime(10);
+		testGame.setTimer(null);
+		testGame.setScore(100);
+		testGame.addAnimal(new Animal(5, 5, "crab", -10, 1, false));
+		
+		CrabCatcherGame.serialize(testGame, "game2TestOutput.ser");
+		System.out.println("test game: " + testGame.toString());
+		
+		CrabCatcherGame loadedGame = (CrabCatcherGame)CrabCatcherGame.deserialize("game2TestOutput.ser");
+		System.out.println("loaded game: " + loadedGame.toString());
+		
+		assertEquals(loadedGame.toString(), testGame.toString());
+	}
+	
 	
 	/**
 	 * tests if tick-dependent conditions are updated in onTick()
@@ -136,7 +158,7 @@ public class CrabCatcherGameTest {
 		assertEquals(0, game.getBigGame().getGamesRunning());
 		
 	}
-	
+		
 	/**
 	 * tests if game is created correctly
 	 */
