@@ -78,7 +78,7 @@ public class Game3 implements java.io.Serializable{
 	/**
 	 * Game Constructor
 	 * Produces the initial game state 
-	 * (time = 300.0, score = 0, money = 100, no plants or runoff, 5 Mussels in pseudorandom positions)
+	 * (time = 40.0, score = 0, money = 900, no plants or runoff, 4 Mussels in pseudorandom positions)
 	 * @param bigGame - The handler for the entire game
 	 */
 	public Game3(OverallGame bigGame) {
@@ -873,20 +873,32 @@ public class Game3 implements java.io.Serializable{
 	/**
 	 * Generic Constructor For use with reinitializing with serializeable
 	 * @param time
-	 * @param score
-	 * @param money
-	 * @param plants
-	 * @param enemies
-	 * @param mussels
-	 * @param gameRunning
-	 * @param gameOver
-	 * @param bigGame
-	 * @param gamePanel
-	 * @param bigGamePanel
-	 * @param gameFrame
-	 * @param timeAndScore
-	 * @param startTime
-	 * @param timer
+	 * @param score;
+	 * @param money;
+	 * @param tickCount;
+	 * @param plants;
+	 * @param enemies;
+	 * @param mussels;
+	 * @param tiles;
+	 * @param gameRunning;
+	 * @param gameOver;
+	 * @param bigGame;
+	 * @param gamePanel;
+	 * @param bigGamePanel;
+	 * @param gameFrame;
+	 * @param timeAndScore;
+	 * @param startTime;
+	 * @param timer;
+	 * @param menu;
+	 * @param timeBar;
+	 * @param coins;
+	 * @param totalCoin;
+	 * @param pipes;
+	 * @param endImage;
+	 * @param grass;
+	 * @param mangrove;
+	 * @param grassListen;
+	 * @param mangroveListen;
 	 */
 	public Game3(double time, int score, int money, int tickCount, ArrayList<Plant> plants, ArrayList<Runoff> enemies,
 			ArrayList<Mussel> mussels, ArrayList<Tile> tiles, boolean gameRunning, boolean gameOver,
