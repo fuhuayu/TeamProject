@@ -192,14 +192,17 @@ public class Runoff implements java.io.Serializable{
 		return obj;
 	}
 
-	public Runoff(int row, int col, int row2, int col2, int strength,
-			ArrayList<Integer> health, int ticksSinceMoved, ArrayList<Image> images) {
-		row = row2;
-		col = col2;
+	public Runoff(int row, int length, int front, int strength, ArrayList<Integer> health, int ticksSinceMoved,
+			ArrayList<Image> images, boolean hasDied) {
+		super();
+		this.row = row;
+		this.length = length;
+		this.front = front;
 		this.strength = strength;
 		this.health = health;
 		this.ticksSinceMoved = ticksSinceMoved;
 		this.images = images;
+		this.hasDied = hasDied;
 	}
 	
 	

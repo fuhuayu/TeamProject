@@ -85,7 +85,7 @@ public class OverallGame implements Serializable{
 	public static void main(String [] args) throws IOException {
 		OverallGame testGame = new OverallGame() ;
 		testGame.setGameWindow(new gameWindow(testGame));
-		//OverallGame.serialize(testGame, "testSerialize.ser");
+		OverallGame.serialize(testGame, "testSerialize.ser");
 	}
 
 	
@@ -369,8 +369,8 @@ public class OverallGame implements Serializable{
 	 * @param game3
 	 * @param frame
 	 */
-	public OverallGame(int overallScore, boolean[] gamesComplete, int gamesRunning, String highscores, double timeInIdle,
-			CrabCatcherGame game1, RipRapGame game2, Game3 game3, gameWindow frame) {
+	public OverallGame(int overallScore, boolean[] gamesComplete, int gamesRunning, String highscores,
+			double timeInIdle, CrabCatcherGame game1, RipRapGame game2, Game3 game3, gameWindow frame) {
 		super();
 		this.overallScore = overallScore;
 		this.gamesComplete = gamesComplete;

@@ -65,13 +65,13 @@ public class Game3 implements java.io.Serializable{
 	private JPopupMenu menu;
 	private JProgressBar timeBar;
 	private ArrayList<JLabel> coins;
-	private JLabel	totalCoin = null;
-	private JLabel pipes = null;
+	private JLabel	totalCoin;
+	private JLabel pipes;
 	public	Image	endImage;
-	JMenuItem grass = new JMenuItem(new ImageIcon("images/GrassIcon.png"));
-	JMenuItem mangrove = new JMenuItem(new ImageIcon("images/mangroveIcon.png"));
-	ActionListener grassListen	=	null;
-	ActionListener mangroveListen	=	null;
+	private JMenuItem grass;
+	private JMenuItem mangrove;
+	private ActionListener grassListen;
+	private ActionListener mangroveListen;
 	
 	
 	
@@ -103,8 +103,12 @@ public class Game3 implements java.io.Serializable{
 		initPanel(gameFrame);
 		timer.start();
 		this.menu = new JPopupMenu();
-		menu.add(grass);
-		menu.add(mangrove);
+		this.grass = new JMenuItem(new ImageIcon("images/GrassIcon.png"));
+		this.mangrove = new JMenuItem(new ImageIcon("images/mangroveIcon.png"));
+		this.totalCoin = null;
+		this.pipes = null;
+		this.grassListen = null;
+		this.mangroveListen = null;
 		Game3.background = null;
 		this.coins = new ArrayList<JLabel>();
 		addMoney(0);
@@ -287,6 +291,8 @@ public class Game3 implements java.io.Serializable{
 			System.out.println("Row: " + row + "  Col: " + col);
 			timer.stop();
 			menu.setLocation(xLoc, yLoc);
+			menu.add(grass);
+			menu.add(mangrove);
 			menu.show(e.getComponent(), xLoc, yLoc);
 			if(grassListen == null) {
 				grass.removeActionListener(grassListen);
@@ -883,8 +889,11 @@ public class Game3 implements java.io.Serializable{
 	 * @param timer
 	 */
 	public Game3(double time, int score, int money, int tickCount, ArrayList<Plant> plants, ArrayList<Runoff> enemies,
-			ArrayList<Mussel> mussels, boolean gameRunning, boolean gameOver, OverallGame bigGame, JPanel gamePanel,
-			JPanel bigGamePanel, JFrame gameFrame, JLabel timeAndScore, long startTime, Timer timer) {
+			ArrayList<Mussel> mussels, ArrayList<Tile> tiles, boolean gameRunning, boolean gameOver,
+			OverallGame bigGame, JPanel gamePanel, JPanel bigGamePanel, JFrame gameFrame, JLabel timeAndScore,
+			long startTime, Timer timer, JPopupMenu menu, JProgressBar timeBar, ArrayList<JLabel> coins,
+			JLabel totalCoin, JLabel pipes, Image endImage, JMenuItem grass, JMenuItem mangrove,
+			ActionListener grassListen, ActionListener mangroveListen) {
 		super();
 		this.time = time;
 		this.score = score;
@@ -893,6 +902,7 @@ public class Game3 implements java.io.Serializable{
 		this.plants = plants;
 		this.enemies = enemies;
 		this.mussels = mussels;
+		this.tiles = tiles;
 		this.gameRunning = gameRunning;
 		this.gameOver = gameOver;
 		this.bigGame = bigGame;
@@ -902,8 +912,19 @@ public class Game3 implements java.io.Serializable{
 		this.timeAndScore = timeAndScore;
 		this.startTime = startTime;
 		this.timer = timer;
+		this.menu = menu;
+		this.timeBar = timeBar;
+		this.coins = coins;
+		this.totalCoin = totalCoin;
+		this.pipes = pipes;
+		this.endImage = endImage;
+		this.grass = grass;
+		this.mangrove = mangrove;
+		this.grassListen = grassListen;
+		this.mangroveListen = mangroveListen;
 	}
 	
+
 	/**
 	 * Method to serialize OverallGame, which contains the other games as params
 	 * So this output will contain the serialized version of every object
