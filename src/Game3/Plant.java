@@ -44,6 +44,12 @@ public class Plant extends Tile implements Serializable{
 		this.image= new Image[3];
 		loadPlantImages();}
 	
+	
+	/**
+	 * Loads the three plant images (healthy, hurt, dying) for the type of plant specified in the constructor from files
+	 * @param filename
+	 * @return
+	 */
 	public Image[] loadImage(String [] filename) {
 		try {
 			Image	img1 = ImageIO.read(new File("images/" + filename[0])).getScaledInstance(Game3.scalor,Game3.scalor,1);
@@ -59,6 +65,9 @@ public class Plant extends Tile implements Serializable{
 		return image;
 	}
 	
+	/**
+	 * Loads the filles to pass into the loadImage method
+	 */
 	public void loadPlantImages(){
 		String	[]	file	=	new String[3];
 		if(type=="Grass"){

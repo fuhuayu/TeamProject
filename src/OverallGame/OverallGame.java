@@ -128,6 +128,11 @@ public class OverallGame implements Serializable{
 		
 	}
 	
+	/**
+	 * This method will update the high scores after the third game is completed
+	 * if the player achieved a high score
+	 * @param fileName
+	 */
 	public void updateHighScores(String fileName) {
 		String[] lines = getHighscores().split("\n");
 		boolean newScore = false ;

@@ -246,6 +246,10 @@ public class gameWindow implements Serializable{
 		frame.repaint();
 	}
 	
+	/**
+	 * Displays the victory screen when the game is finished
+	 * NO LONGER IN USE
+	 */
 	public void gameStartAndEnd() {
 		JPanel panel	=	new JPanel() {
 			/**
@@ -266,6 +270,11 @@ public class gameWindow implements Serializable{
 		getFrame().setVisible(true);
 					
 	}
+	
+	/**
+	 * Method for displaying the intro/tutorial screens of the game
+	 * This method loads the images and starts the timer for displaying the screens for a certain amount of time
+	 */
 	public void gameIntros() {
 		screens	=	new	ArrayList<Image>();
 		if (bigGame.getGamesRunning() == 1) {
@@ -324,6 +333,10 @@ public class gameWindow implements Serializable{
 		}
 	}
 	
+	/**
+	 * This method is used to switch between screens and load each game when the intro screens are over
+	 * Each screen lasts for 3.5 seconds
+	 */
 	public void gameAnim() {
 		time++;
 		if (time	%	35	==	0) {

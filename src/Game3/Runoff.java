@@ -59,6 +59,10 @@ public class Runoff implements java.io.Serializable{
 	public boolean equals (Runoff other) {
 		return (row == other.getRow() && front == other.getFront());
 	}
+	
+	/**
+	 * Adds a segment to the runoff if it is within a certain length and hasn't lost its head yet
+	 */
 	public void grow() {
 		if (getLength() < 5 && getLength() !=0){
 			if (getHealth().get(0) > 0 && hasDied == false) {
@@ -74,6 +78,9 @@ public class Runoff implements java.io.Serializable{
 		}
 	}
 	
+	/**
+	 * removes the front segment of the runoff and make sure it can't grow anymore
+	 */
 	public void removeFront() {
 		getHealth().remove(0);
 		setLength(getLength()-1);
