@@ -167,7 +167,9 @@ public class Game3 implements java.io.Serializable{
 					if(totalCoin != null) {
 						totalCoin.setVisible(false);
 					}
-					pipes.setVisible(false);
+					if (pipes != null) {
+						pipes.setVisible(false);
+					}
 					g.drawImage(endImage, 0, 0, OverallGame.frameWidth, OverallGame.frameHeight, getGameFrame());
 				}
 			}
@@ -404,7 +406,9 @@ public class Game3 implements java.io.Serializable{
 				if (getTiles().get(7*row+col) instanceof Plant) {
 					Plant plant = (Plant)getTiles().get(7*row+col);
 					battle(plant, current);
-					
+					if (current.getHealth().size() == 0) {
+						removal = current;
+					}
 				}
 				else {
 					if (col != (current.getFront()-1 - xOffset)/scalor) {
@@ -436,8 +440,10 @@ public class Game3 implements java.io.Serializable{
 	public void battle(Plant plant, Runoff runoff) {
 		plant.setHealth(plant.getHealth() - runoff.getStrength());
 		runoff.getHealth().set(0, runoff.getHealth().get(0) - plant.getStrength());
-		if(runoff.getHealth().get(0) <= 0) {
-			runoff.removeFront();
+		if (runoff.getHealth().size() >0) {
+			if(runoff.getHealth().get(0) <= 0) {
+				runoff.removeFront();
+			}
 		}
 		if (plant.getHealth() <= 0) {
 			getPlants().remove(plant);
@@ -537,6 +543,7 @@ public class Game3 implements java.io.Serializable{
 	/**
 	 * If the game ends, passes the score to the overall score
 	 * And sets the overall shell to the running state and calls the update method on the overall shell
+	 * @param highScoreLoc - file name of high score
 	 */
 	public void endGame(String highScoreLoc) {
 		getBigGame().setOverallScore(getBigGame().getOverallScore() + getScore());

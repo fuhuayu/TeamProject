@@ -26,6 +26,8 @@ public class Mussel implements java.io.Serializable{
 	
 	/**
 	 * Constructor for Mussels, all mussels start at stage 0
+	 * @param xloc
+	 * @param yloc
 	 */
 	public Mussel(int xloc, int yloc) {
 		this.xloc	=	xloc	;
