@@ -61,7 +61,6 @@ public class OverallGame implements Serializable{
 	 * game2 = null
 	 * game3 = null
 	 * gamesRunning (0 if overall, 1 if game1, 2 if game2, 3 if game3)
-	 * @throws IOException 
 	 */
 	public OverallGame() {
 		this.overallScore = 0;
@@ -205,8 +204,8 @@ public class OverallGame implements Serializable{
 	/**
 	 * Method to serialize OverallGame, which contains the other games as params
 	 * So this output will contain the serialized version of every object
-	 * @param obj
-	 * @param fileName
+	 * @param obj serial
+	 * @param fileName name to read
 	 * @throws IOException
 	 */
 	public static void serialize(Object obj, String fileName) {
@@ -225,8 +224,7 @@ public class OverallGame implements Serializable{
 	 * Method to read a game state from file and instantiate it. The reverse of the serialize function
 	 * @param fileName
 	 * @return
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 
 	 */
 	public static Object deserialize(String fileName) {
 		OverallGame obj = null ;

@@ -47,9 +47,7 @@ public class RipRapGame implements java.io.Serializable{
 	 
 
 	
-	/**
-	 * Getters for properties
-	 */
+
 	public Crab getCrab() {return crab;}
 	public void setCrab(Crab crab) {this.crab = crab;}
 	public JumpingBar getJumpingBar() {	return jumpingBar;}
@@ -99,15 +97,9 @@ public class RipRapGame implements java.io.Serializable{
 	JLabel TS;//time&score
 	//Constructor
 	/**
-	 * @param score score that player gets
 	 * @param time time limitation
-	 * @param currtime real time
-	 * @param crab crab which the player controls
-	 * @param jumpingBar Jumping indicator that displays each time when crab encounter a obstacle
-	 * @param stones RipRap wall made of
-	 * @param sun another moving object
-	 * @param clouds a list of clouds
 	 * @param bigGame the overall lGame that consist of this game
+	 * @param frame frame of the game window
 	 */
 	public RipRapGame(int time,OverallGame bigGame,JFrame frame) {
 		this.time = time+10;
@@ -133,8 +125,11 @@ public class RipRapGame implements java.io.Serializable{
 
 	
 	
+
 	/**
 	 * initialize the game with RipRap wall and obstacles randomly displaced
+
+	 * @return
 	 */
 	public boolean initGame(){
 		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
@@ -320,7 +315,6 @@ public class RipRapGame implements java.io.Serializable{
 	 * So this output will contain the serialized version of every object
 	 * @param obj
 	 * @param fileName
-	 * @throws IOException
 	 */
 	public static void serialize(Object obj, String fileName) {
 		try {
@@ -338,8 +332,7 @@ public class RipRapGame implements java.io.Serializable{
 	 * Method to read a game state from file and instantiate it. The reverse of the serialize function
 	 * @param fileName
 	 * @return
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 
 	 */
 	public static Object deserialize(String fileName) {
 		OverallGame obj = null ;

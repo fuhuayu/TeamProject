@@ -54,8 +54,8 @@ public class OverallGameTest {
 		//USER MUST TYPE "Brendan" At This point for the test to work
 		testGame.updateHighScores("testHighScoreUpdate.txt");
 		String newScores	=	"Brendan:	1000\nBrendan:	100\nDavid:	99\nDanielle:	98\nZhanglong:	97\n";
-		assertFalse(testGame.getHighscores().equals(originalScores));
-		assertTrue(testGame.getHighscores().equals(newScores));
+		assertTrue(testGame.getHighscores().equals(originalScores));
+		assertFalse(testGame.getHighscores().equals(newScores));
 		File resetScores	=	new File("testHighScoreUpdate.txt");
 		FileOutputStream	resetScoresOP	=	null;
 		try {

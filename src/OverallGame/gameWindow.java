@@ -370,7 +370,6 @@ public class gameWindow implements Serializable{
 	 * So this output will contain the serialized version of every object
 	 * @param obj
 	 * @param fileName
-	 * @throws IOException
 	 */
 	public static void serialize(Object obj, String fileName) {
 		try {
@@ -388,8 +387,7 @@ public class gameWindow implements Serializable{
 	 * Method to read a game state from file and instantiate it. The reverse of the serialize function
 	 * @param fileName
 	 * @return
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 
 	 */
 	public static Object deserialize(String fileName) {
 		gameWindow obj = null ;
