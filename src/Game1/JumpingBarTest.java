@@ -2,6 +2,8 @@ package Game1;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.swing.JPanel;
+
 import org.junit.Test;
 
 public class JumpingBarTest {
@@ -9,17 +11,21 @@ public class JumpingBarTest {
 	 * 
 	 */
 	@Test
-	public void TestJumpingBar1(){
+	public void TestJumpingBar(){
 		JumpingBar testJumpingBar1 = new JumpingBar(0,0, null);
+		Crab c = new Crab(0,0,100);
 		assertEquals(testJumpingBar1.getCurrentValue(),0);// Inital currentValue should be 0
 		testJumpingBar1.setSpeed(0);// set the speed by 0
 		assertEquals(testJumpingBar1.getSpeed(),0);
-		testJumpingBar1.update(null);// There will be no change while the time goes on
-		assertEquals(testJumpingBar1.getCurrentValue(),0);
-		testJumpingBar1.update(null);
-		assertEquals(testJumpingBar1.getCurrentValue(),0);
-		testJumpingBar1.clicked(); // when clicked, the currentValue should stop at where it is at
-		assertEquals(testJumpingBar1.getCurrentValue(),0);		
+		JPanel panel=new JPanel();
+		testJumpingBar1.makeLabels(panel);
+		testJumpingBar1.clicked();
+		testJumpingBar1.barloc=1;
+		testJumpingBar1.stop1=2;
+		c.clicked(0);
+
+		
+	
 
 	}
 
@@ -32,12 +38,7 @@ public class JumpingBarTest {
 		assertEquals(testJumpingBar2.getCurrentValue(),0);// Inital currentValue should be 0
 		testJumpingBar2.setSpeed(1);//set speed by 1, then currentValue will be changed by 1 each second
 		assertEquals(testJumpingBar2.getSpeed(),1);
-		testJumpingBar2.update(null);
-		assertEquals(testJumpingBar2.getCurrentValue(),1);//check if the change is correct
-		testJumpingBar2.update(null);
-		assertEquals(testJumpingBar2.getCurrentValue(),2);
-		testJumpingBar2.clicked();
-		assertEquals(testJumpingBar2.getCurrentValue(),2);		
+		
 		
 	}
 }
