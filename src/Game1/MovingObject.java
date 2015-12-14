@@ -48,7 +48,7 @@ public void update(){
  * @param p JPanel of the game window
  * @param filename the name of picture
  */
-public void addItem(JPanel p,String filename){
+public boolean addItem(JPanel p,String filename){
 	w=p.getWidth();
 	h=p.getHeight();
 	label = new JLabel();
@@ -65,6 +65,7 @@ public void addItem(JPanel p,String filename){
 	label.setBounds(position.x, position.y, icon.getIconWidth(),size);
 	
 	p.add(label);
+	return true;
 }
 /** getter for position
  * @return return the position

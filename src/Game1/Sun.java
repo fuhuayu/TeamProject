@@ -59,7 +59,7 @@ public class Sun extends MovingObject {
 				sun.getBounds().width, sun.getBounds().height);
 		
 	};
-	public void addItem(JPanel p){
+	public boolean addItem(JPanel p){
 		int w=p.getWidth();
 		int h=p.getHeight();
 		sun = new JLabel();
@@ -74,6 +74,7 @@ public class Sun extends MovingObject {
 	    angle=storeangle;
 	    System.out.println(result);
 		p.add(sun);
+		return true;
 	}
 
 }
