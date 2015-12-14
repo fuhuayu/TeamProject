@@ -20,14 +20,19 @@ public class Sun extends MovingObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 107L;
-	JLabel sun;
-	Point point;
-	Double angle;
+	JLabel sun; // Jlabel
+	Point point;// position
+	Double angle;// angle where the sun moving to
 	Double storeangle;
     int picNum = 0;
-	ImageIcon[] icons = new ImageIcon[2];
+	ImageIcon[] icons = new ImageIcon[2];// animation for sun
 	int tick=0;
 	int r;
+	
+	
+	/** constructor for sun
+	 * @param size
+	 */
 	public Sun(int size) {
 		super(0, 0, size);
 		try {
@@ -41,6 +46,7 @@ public class Sun extends MovingObject {
 		}
 		// TODO Auto-generated constructor stub
 	}
+
 	public void update(){
 		
 		if(tick > 20){
@@ -59,6 +65,11 @@ public class Sun extends MovingObject {
 				sun.getBounds().width, sun.getBounds().height);
 		
 	};
+	
+	
+	/**add sun to the panel of the overall game
+	 * @param p//Jpanel
+	 */
 	public void addItem(JPanel p){
 		int w=p.getWidth();
 		int h=p.getHeight();

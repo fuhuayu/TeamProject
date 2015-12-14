@@ -15,6 +15,13 @@ public class Stone extends MovingObject {
 	int bx,by;
 	int tick;
 	int orig_speed;
+	
+	//constructor
+	/**
+	 * @param x  x-coordinate
+	 * @param y  y-coordinate
+	 * @param size  stone size
+	 */
 	public Stone(int x, int y, int size) {
 		super(x, y, size);
 		// TODO Auto-generated constructor stub
@@ -25,10 +32,22 @@ public class Stone extends MovingObject {
 		by=y;
 		tick=0;
 	}
+	
+	
+	/**  action if kicked change the speed and acceleration
+	 * 
+	 */
 	public void kicked(){
 		this.speed=(int) (Math.sqrt(orig_speed*-1)*12);
 		this.acc=1*orig_speed/-6;
 	}
+	
+	
+	/* 
+	 * @see Game1.MovingObject#update()
+	 * update function for stone
+	 * 
+	 */
 	public void update(){
 		if(tick>0)tick-=1;
 		if(this.speed+this.getPosition().x<-this.getSize()/2){
