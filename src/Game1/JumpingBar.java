@@ -84,19 +84,23 @@ public class JumpingBar implements Serializable{
 	
 	/**
 	 * Getter for speed
+	 * @return return speed
 	 */
 	public int getSpeed() {
 		return speed;
 	}
 	/**
 	 * Setter for speed
+	 * @param speed speed to set
 	 */
+	
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 	
 	/**
 	 * Getter for currentValue
+	 * @return current value of bar
 	 */
 	public int getCurrentValue() {
 		return currentValue;
@@ -121,7 +125,7 @@ public class JumpingBar implements Serializable{
 	/**
 	 * Update the location of the jumping black bar based on the Distance
 	 * Check if the crab kicked the stone
-	 * @param panel 
+	 * @param p panel 
 	 * 
 	 */
 	public void update(JPanel p){
