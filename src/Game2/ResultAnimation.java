@@ -29,6 +29,9 @@ public class ResultAnimation implements Serializable{
 	
 	/**constructor - loads images
 	 * @param size dimensions of the square result animation in pixels
+	 * @param positive - true if result is good, false if bad
+	 * @param x - x location of result
+	 * @param y - y location of result
 	 */
 	public ResultAnimation(int size, boolean positive, int x, int y) {
 		this.positiveResult = positive;

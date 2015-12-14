@@ -211,7 +211,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	
 	/**initializes the game's JPanel and layout
 	 * establishes the paintComponent method to be later called in repaint()
-	 * @return
+	 * @return true when finished
 	 */
 	public boolean initPanel(){
 		
@@ -371,7 +371,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	
 	
 	/** Add animal to animal array (for testing purposes only)
-	 * @param animal the animal to be added to the game's list
+	 * @param animal - the animal to be added to the game's list
 	 */
 	public void addAnimal(Animal animal){
 		//for testing purposesonly
@@ -430,7 +430,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	}
 	
 	/**removes animal from list and re-adds it with default values in a new offscreen location
-	 * @param animal
+	 * @param animal - animal to be readded
 	 */
 	public void reAddAnimal(Animal animal){
 		animal.setVisible(true);
@@ -451,8 +451,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 	
 	
 	/**Method for testing click events
-	 * @param x
-	 * @param y
+	 * @param x - x location of click
+	 * @param y - y location of click
 	 */
 	public void onClickTest(int x, int y){	
 		//if getAnimalClicked() returns an Animal,
@@ -477,7 +477,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	/** returns animal at the given x y coordinates if there is one
 	 * @param x the x coordinate of the mouse click
 	 * @param y the y coordinate of the mouse click
-	 * @return
+	 * @return the animal clicked (null if no animal clicked)
 	 */
 	public Animal getAnimalClicked(int x, int y){
 		//return the animal if user clicked animal, else return null;
@@ -499,6 +499,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	
 	/**
 	 * updates score with given positive/negative effect, making sure score does not go below zero
+	 * @param effect - the number to be added to the score
 	 */
 	public void updateScore(int effect){
 		if (score + effect >= 0){

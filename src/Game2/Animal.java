@@ -154,6 +154,8 @@ public class Animal implements java.io.Serializable {
 	/**
 	 * Call this method to regenerate animal after it is caught or time on screen expires
 	 * makes the animal invisible, resets its timeLeftOnScreen, and sets offscreen location randomly
+	 * @param xbound max x location
+	 * @param ybound max y location
 	 */
 	public void regenerateAnimal(int xbound, int ybound){
 		//gives animal a random location
@@ -199,8 +201,8 @@ public class Animal implements java.io.Serializable {
 	}
 	
 	/**returns true if the Animal is off screen (accounting for imageWidth)
-	 * @param frameWidth
-	 * @param frameHeight
+	 * @param frameWidth - width of game frame
+	 * @param frameHeight - height of game frame
 	 * @return
 	 */
 	public boolean offScreen(int frameWidth, int frameHeight){
@@ -308,7 +310,7 @@ public class Animal implements java.io.Serializable {
 
 	/**sets animal's image array and image height and width.
 	 * assumes all images in the array to be of equal dimensions
-	 * @param images
+	 * @param images - array to set
 	 */
 	public void setImages(Image[] images) {
 		this.images = images;
