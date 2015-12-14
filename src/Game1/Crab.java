@@ -30,6 +30,11 @@ public class Crab extends MovingObject {
 	 * Constructor of crab with x and y coordinate and size
 	 * Initialize the speed and mode both to be 1
 	 */
+	/**
+	 * @param x Location on x axis
+	 * @param y location on y axis
+	 * @param size size of the crab
+	 */
 	public Crab(int x, int y, int size) {
 		super(x, y, size);
 		// TODO Auto-generated constructor stub
@@ -60,14 +65,18 @@ public class Crab extends MovingObject {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	/* (non-Javadoc)
-	 * @see Game2.MovingObject#update()
-	 */
 	int n=2;
+	/**
+	 * @param i indicate clicked the jump button
+	 * set the jumping state;
+	 */
 	public void clicked(int i){
 		if(i==1){speed=-7*n;n+=1;};
 		
 	}
+	/* (non-Javadoc)
+	 * @see Game1.MovingObject#update()
+	 */
 	public void update(){
 		if(tick > 5){
 			picNum = (picNum + 1) % 2;

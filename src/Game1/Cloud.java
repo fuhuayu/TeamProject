@@ -29,6 +29,9 @@ public class Cloud extends MovingObject {
 		this.speed=(int) (((Math.random()*3)+1)*Math.pow(-1, (int) (Math.random()*2)));
 		// TODO Auto-generated constructor stub
 	}
+	/* (non-Javadoc)
+	 * @see Game1.MovingObject#update()
+	 */
 	public void update(){
 		if(this.speed+this.getPosition().x<-this.getSize()/2){
 			this.getPosition().setLocation(bx+this.getSize()/2, this.getPosition().y);

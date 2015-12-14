@@ -17,10 +17,8 @@ import javax.swing.JPanel;
  * Class of all moving object;
  */
 public class MovingObject implements Serializable{
-/**
-	 * 
-	 */
-	private static final long serialVersionUID = 104L;
+
+private static final long serialVersionUID = 104L;
 private Point position;
 private int size,w,h;
 protected JLabel label;
@@ -34,17 +32,22 @@ public MovingObject(int x,int y, int size) {
 	this.position = new Point(x,y);
 	this.size = size;
 }
-/**
- * update the position based on the attributes.
- * 
- */
+
 public JLabel getLabel() {
 	return label;
 }
+/**
+ * Update the location of Objects
+ */
 public void update(){
 	
 }
 
+/**
+ * Add the moving object to the  
+ * @param p JPanel of the game window
+ * @param filename the name of picture
+ */
 public void addItem(JPanel p,String filename){
 	w=p.getWidth();
 	h=p.getHeight();
@@ -80,7 +83,7 @@ public int getSize(){
 	return size;
 }
 /**
- * change the position of boject
+ * change the position of object
  * @param x location of x
  * @param y location of y
  */

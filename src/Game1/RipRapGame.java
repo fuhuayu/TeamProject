@@ -46,24 +46,7 @@ import java.util.Random;
 public class RipRapGame implements java.io.Serializable{
 	 
 
-	/**
-	 * 
-	 */
-	public  static final int scalor = (OverallGame.frameHeight < OverallGame.frameWidth) ? OverallGame.frameHeight/8 : OverallGame.frameWidth/8;
-	int nx2,mark,nx,x;
-	private static final long serialVersionUID = 105L;
-	Sun sun;
-	private OverallGame bigGame;
-	ArrayList<Stone> stones;
-	Stone stone;
-	JPanel panel;
-	boolean ends;
-	long fps=30;
-	javax.swing.Timer timer;
-	javax.swing.Timer timer2;
-	JPanel bigpan;
-	JFrame frame;
-	JLabel TS;//time&score
+	
 	/**
 	 * Getters for properties
 	 */
@@ -85,18 +68,35 @@ public class RipRapGame implements java.io.Serializable{
             " crab=" + crab +
             " JumpingBar="+ jumpingBar +
             " objects="+ objects +
+            "scalor" + scalor+
+            "nx2" + mark+
+            "nx"+nx +
+            "x"+x +
+            "sun"+sun +
+            "bigGame"+ bigGame +
+            "stone"+stone +
+            "panel"+panel +
+            "TS"+TS +
             "]";
         
-    }    
+    }  
+	
 	int score;//current game score
 	int time,currtime;//total time and current time
 	long starttime;//time when game start
 	Crab crab;
 	JumpingBar jumpingBar;
 	ArrayList<MovingObject> objects;
-	ArrayList<MovingObject> objects2;
-	private JProgressBar timeBar;
-
+	public  static final int scalor = (OverallGame.frameHeight < OverallGame.frameWidth) ? OverallGame.frameHeight/8 : OverallGame.frameWidth/8;
+	int nx2,mark,nx,x;
+	Sun sun;
+	private OverallGame bigGame;
+	Stone stone;
+	JPanel panel;
+	javax.swing.Timer timer;
+	JPanel bigpan;
+	JFrame frame;
+	JLabel TS;//time&score
 	//Constructor
 	/**
 	 * @param score score that player gets
@@ -116,7 +116,6 @@ public class RipRapGame implements java.io.Serializable{
 		this.frame=frame;
 		this.jumpingBar=new JumpingBar(20, 30, this);
 		this.objects=new ArrayList<MovingObject>();
-		this.objects2=new ArrayList<MovingObject>();
 		this.nx2 = (int) (this.frame.getWidth()*0.9);
 		this.mark = (int) (this.frame.getWidth()*0.9);
 		initPanel();
@@ -140,7 +139,7 @@ public class RipRapGame implements java.io.Serializable{
 	public boolean initGame(){
 		stone=new Stone(this.panel.getWidth(),this.panel.getHeight(),this.panel.getWidth()/15);
 		stone.addItem(panel, "images/rock.png");
-		objects2.add(stone);
+		objects.add(stone);
 		crab=new Crab((int)(this.panel.getWidth()*0.2),(int)(this.panel.getHeight()*0.8),this.panel.getWidth()/13);
 		crab.addItem(panel, "images/maincrab1.png");
 		objects.add(crab);
@@ -154,6 +153,10 @@ public class RipRapGame implements java.io.Serializable{
 		objects.add(sun);
 		return true;
 	}
+	/**
+	 * init the jpanel
+	 * @return true
+	 */
 	public boolean initPanel(){
 		try {
 			final BufferedImage image = ImageIO.read(new File("images/rockwall.jpg"));
@@ -213,15 +216,7 @@ public class RipRapGame implements java.io.Serializable{
 			}});
 		panel.add(Button);
 		
-//		//time bar
-//				timeBar = new JProgressBar(0, this.time);
-//				timeBar.setValue(this.time);
-//				timeBar.setString("");
-//				timeBar.setStringPainted(true);
-//				timeBar.setBounds(0, 0, this.frame.getWidth(), 6);
-//				
-//				panel.add(timeBar);
-		
+
 		int timerTimeInMilliSeconds = 20;
 	    timer = new javax.swing.Timer(timerTimeInMilliSeconds, new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -229,7 +224,6 @@ public class RipRapGame implements java.io.Serializable{
 	    		updatePanel();
 	    		jumpingBar.update(panel);
 	    		updateMap();
-	    		updateMap2();
 	    		nx2+=1;
 	    		
 	    		if(getTime()<=0){
@@ -240,6 +234,10 @@ public class RipRapGame implements java.io.Serializable{
 
 		return true;
 	}
+	/**
+	 * Run this for the beginning
+	 * @return ture
+	 */
 	public boolean firstRunPanel(){
 		TS = new JLabel("Score:"+this.score);
 		//Time:"+this.currtime+"    
@@ -252,6 +250,10 @@ public class RipRapGame implements java.io.Serializable{
 		
 		return true;
 	}
+	/**
+	 * update the score;
+	 * @return
+	 */
 	public boolean updatePanel(){
 		TS.setText("Score:"+this.score);
 		//"Time:"+this.currtime+"    
@@ -269,21 +271,16 @@ public class RipRapGame implements java.io.Serializable{
 		}
 	}
 	
-	public void updateMap2(){
-		for(MovingObject m:objects2){
-			m.update();
-		}
-
-	}
+	
 	
 
 	
 
 
+	
 	
 	/**
-	 * draw some MLG game stuff
-	 * @param frame
+	 * run the game
 	 */
 	public void run() {
 		

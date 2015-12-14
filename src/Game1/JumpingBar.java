@@ -17,9 +17,7 @@ import javax.swing.JPanel;
  * Jumping Bar in the game for player to click and to make the crab move.
  */
 public class JumpingBar implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 103L;
 	int currentValue,stop1,stop2;
 	int speed;
@@ -33,6 +31,7 @@ public class JumpingBar implements Serializable{
 	 * if over stop1, fail to climb over obstacle
 	 * @param stop1 value between first part of bar and second part
 	 * @param stop2 value between second part and third part 
+	 * @param game the copy of riprapgame
 	 */
 	public JumpingBar(int stop1, int stop2,RipRapGame game) {
 		this.stop1 = stop1;
@@ -42,6 +41,11 @@ public class JumpingBar implements Serializable{
 		barloc=100;
 		this.game=game;
 	}
+	/**
+	 * Add the jumping bar to the game panel
+	 * @param p copy of game panel
+	 * @return true
+	 */
 	public boolean makeLabels(JPanel p){
 		int w=(int)(0.5*p.getWidth()/16);
 		int h=(int)(0.5*p.getHeight()/9);
@@ -98,7 +102,7 @@ public class JumpingBar implements Serializable{
 		return currentValue;
 	}
 	/**
-	 * Value should stop when click.
+	 * Value should be evaluated when click.
 	 * Then action of crab vary depends on which block the currentValue at
 	 */
 	public void clicked(){
@@ -115,7 +119,8 @@ public class JumpingBar implements Serializable{
 		
 	}
 	/**
-	 * CurrentValue should increase based on real time
+	 * Update the location of the jumping black bar based on the Distance
+	 * Check if the crab kicked the stone
 	 * @param panel 
 	 * 
 	 */
