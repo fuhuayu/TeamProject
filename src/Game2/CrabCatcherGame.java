@@ -82,13 +82,13 @@ public class CrabCatcherGame implements java.io.Serializable{
 
 	//CONSTRUCTOR	
 	/**
-	 * @param time - how long the game has been running
 	 * @param speed - rate of gameplay
 	 * @param animals - array of all animals in the mini game
-	 * @param score - player's score for this mini game
-	 * @param lives - number of lives remaining (default is 3)
+	 * @param score - player's current score for this mini game
+	 * @param lives -  number of lives remaining (default is 3)
 	 * @param gameLength - time limit for the game
 	 * @param mouseListener - handles mouse clicks, checks if user clicked animal
+	 * @param gameOver - whether the game should be over (default is false)
 	 * @param maxAnimalsOnScreen - the maximum number of animals that can appear onscreen
 	 * @param bigGame - the overall game that this mini game is a part of
 	 * @param frame - the frame the game is drawn in
@@ -170,6 +170,7 @@ public class CrabCatcherGame implements java.io.Serializable{
 	
 	/**
 	 * Updates the game's timed elements
+	 * (checks for game over, ticks all animals, updates animations)
 	 */
 	public void updateGame(){
 		//check if time is up -> game over
@@ -331,7 +332,8 @@ public class CrabCatcherGame implements java.io.Serializable{
 	}
 	
 	
-	/** Makes a random animal with default values (visible, offscreen, uncaught)
+	/** Makes a random animal with default values (visible, offscreen, uncaught).
+	 * Probability of animal type is preset
 	 * @return a random animal
 	 */
 	public Animal makeRandomAnimal(){

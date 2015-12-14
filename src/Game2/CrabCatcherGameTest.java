@@ -184,33 +184,6 @@ public class CrabCatcherGameTest {
 		
 	}
 	
-	@Test
-	public void animalOverlapTest(){
-		CrabCatcherGame gamet = makeTestCrabGame();
-		gamet.setTimer(null);
-		ArrayList<Animal> animals1 = new ArrayList<Animal>();
-		
-		Animal crab = new Animal(10, 15, "crab", -5,
-				10, true);
-		Animal fish = new Animal(410, 15, "fish", -3, 10, true);
-		Animal fish2 = new Animal(400, 20, "fish", -4, 10, true);
-		Animal fish3 = new Animal(950, 950, "fish", -6, 10, true);
-		fish3.setImageWidth(250);
-		fish3.setImageHeight(200);
-		
-		animals1.add(crab);
-		animals1.add(fish);
-		gamet.setAnimals(animals1);
-		System.out.println("animal list ---- " + gamet.getAnimals());
-	
-		System.out.println("animal listNOW ---- " + gamet.getAnimals());
-		System.out.println("starting hereeee");
-		//assertTrue("fish 3 should have a unique location", gamet.uniqueLocation(fish3));
-		//assertFalse("fish 2 should have its location taken", gamet.uniqueLocation(fish2));
-		
-		
-		
-	}
 	
 	/**
 	 * tests if mouse handler detects animal clicks and adjusts score accordingly

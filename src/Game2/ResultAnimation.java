@@ -28,7 +28,7 @@ public class ResultAnimation implements Serializable{
 	
 	
 	/**constructor - loads images
-	 * @param size
+	 * @param size dimensions of the square result animation in pixels
 	 */
 	public ResultAnimation(int size, boolean positive, int x, int y) {
 		this.positiveResult = positive;
@@ -56,7 +56,7 @@ public class ResultAnimation implements Serializable{
 	}
 	
 	/**updates the picnum (frame) of the animation in intervals of 5 milliseconds
-	 * @param time - the curret time in milliseconds
+	 * @param time - the current time in milliseconds
 	 */
 	public void update(int time){
 		if(time % 5 == 0){

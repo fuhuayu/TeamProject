@@ -45,17 +45,16 @@ public class Animal implements java.io.Serializable {
 	private int picNum = 0;
 		
 	/**All-parameter constructor for deserialization. Not used publicly.
-	 * @param xloc
-	 * @param yloc
-	 * @param typeOfAnimal
-	 * @param scoreEffect
-	 * @param displayDuration
-	 * @param timeLeftOnScreen
-	 * @param visible
-	 * @param label
-	 * @param image
-	 * @param imageWidth
-	 * @param imageHeight
+	 * @param xloc x location of animal
+	 * @param yloc y location of animal
+	 * @param typeOfAnimal - mittencrab, fish, or crab
+	 * @param scoreEffect - number to be added to score if this animal is clicked (can be pos or neg)
+	 * @param displayDuration - time limit for animal to appear onscreen
+	 * @param timeLeftOnScreen - how long animal has left on screen
+	 * @param visible - whether animal should be drawn or not
+	 * @param images - array of images for this animal's animation (must all be same size)
+	 * @param imageWidth - width of images in array
+	 * @param imageHeight - height of images in array
 	 */
 	private Animal(int xloc, int yloc, String typeOfAnimal, int scoreEffect,
 			double displayDuration, double timeLeftOnScreen, boolean visible, Image[] images, int imageWidth, int imageHeight) {
@@ -98,10 +97,9 @@ public class Animal implements java.io.Serializable {
 	}
 	
 	//COPIER
-	/**returns a copy of the animal that shares the major values:
+	/**
+	 * @return a copy of the animal that shares the major values:
 	 * [location, type, scoreEffect, displayDuration, visibility, image]
-	 * 
-	 * @return
 	 */
 	public Animal copy(){
 		Animal copy = new Animal(xloc, yloc, typeOfAnimal, scoreEffect, displayDuration, visible);
